@@ -10,14 +10,29 @@ import ExplorePage from '../../pages/ExplorePage';
 import BookmarksPage from '../../pages/BookmarksPage';
 import SettingsPage from '../../pages/SettignsRoute';
 import UserPage from '../../pages/UserPage';
+import { useAppSelector } from '../../hooks/redux';
+import { useGetMeQuery } from '../../services/AuthApiSlice';
+import Loader from '../Loader';
+import UnathorizedPage from '../../pages/UnathorizedPage';
 
-const AppRouter = () => {
+interface AppRouterProps {
 
+}
+
+const AppRouter: React.FC<AppRouterProps>= () => {
+
+    const {data: userData, isLoading, isError} = useGetMeQuery();
     const dispatch = useDispatch();
+    const user: any = useAppSelector(state => state?.auth?.user);
 
     const location = useLocation();
 
+    if (isLoading || (!user && !isError)) {
+        return <Loader/>
+    }
+
     return (
+        user ?
         <Routes>
             <Route path="/" element={<UserSmMdLayout/>}>
                 <Route index element={<HomePage/>}/>
@@ -29,6 +44,13 @@ const AppRouter = () => {
             </Route>
             <Route path="*" element={<Navigate to={"/"} replace/>}/>
         </Routes>
+         :
+         <Routes>
+             <Route path="/">
+                 <Route index element={<UnathorizedPage/>}/>
+             </Route>
+             <Route path="*" element={<Navigate to="/" replace/>}/>
+         </Routes>
     )
 };
 
