@@ -46,10 +46,9 @@ const AppRouter: React.FC<AppRouterProps>= () => {
         </Routes>
          :
          <Routes>
-             <Route path="/">
-                 <Route index element={<UnathorizedPage/>}/>
-             </Route>
-             <Route path="*" element={<Navigate to="/" replace/>}/>
+            <Route path="/signIn" element={<UnathorizedPage/>}/>
+            <Route path="/signUp" element={<UnathorizedPage/>}/>
+            <Route path="*" element={<Navigate to="/signIn" replace/>}/>
          </Routes>
     )
 };

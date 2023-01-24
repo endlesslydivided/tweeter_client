@@ -4,6 +4,35 @@
     padding: 0;
 }
 
+html {
+    height: 100%;
+}
+body, #root, .ant-row, .login, .register,.auth-page-content {
+    min-height: 100%;
+    height:100%
+}
+
+.auth-page-content
+{
+    overflow-x: hidden;
+}
+
+.sign-up-header .content
+{
+    text-align: center;
+}
+
+.login .form-col, .register .form-col
+{
+    padding:0 10% 0 10%;
+}
+
+.login .content-col, .register .content-col
+{
+    text-align: center;
+}
+
+
 .header-col.header-nav {
     margin-left: auto;
     width: 100%;
@@ -25,3 +54,59 @@ header.ant-layout-header {
     height: 64px;
     line-height: 64px;
   }
+
+.fade-enter .register {
+    opacity: 0.5;
+    transform: translateX(-25%);
+}
+
+.fade-enter-active .register {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.fade-exit .register {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.fade-exit-active .register {
+    opacity: 0.1;
+    transform: translateX(-25%);
+}
+
+.fade-enter-active .register {
+    transition: opacity 300ms, transform 300ms;
+}
+
+.fade-exit-active .register {
+    transition: opacity 300ms, transform 300ms;
+}
+
+.fade-enter .login {
+    opacity: 0.5;
+    transform: translateX(25%);
+}
+
+.fade-enter-active .login {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.fade-exit .login {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.fade-exit-active .login {
+    opacity: 0.1;
+    transform: translateX(25%);
+}
+
+.fade-enter-active .login {
+    transition: opacity 300ms, transform 300ms;
+}
+
+.fade-exit-active .login {
+    transition: opacity 300ms, transform 300ms;
+}

@@ -22,8 +22,7 @@ root.render(
           {
             Layout:
             {
-              colorBgHeader:'white',
-              
+              colorBgHeader:'white',            
             }
           }
          

@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { Col, Grid, Row } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import {CSSTransition, SwitchTransition} from 'react-transition-group';
 import SignInForm from "../components/forms/SignInForm";
@@ -20,35 +21,43 @@ const UnathorizedPage = () => {
                 nodeRef?.current?.addEventListener("transitionend", done, false);
             }} classNames="fade"
             >
-                <>
+                <div ref={nodeRef} className={"auth-page-content"}>
                     {
                         isLogin ?
-                            <div className="register" style={{display: 'flex', width: "100%"}}>
-                                <>
-                                    <h1 >
-                                        Tweeter
-                                    </h1>
-                                    <p >
-                                        Some text
-                                    </p>
-                                </>
-                                <SignUpForm animState={isLogin} setAnimState={setIsLogin}/>
+                            <div className="register ">
+                                <Row align="middle" justify="space-between">
+                                    <Col span={12} className="content-col">
+                                        <h1 >
+                                            Tweeter
+                                        </h1>
+                                        <p >
+                                            Some text
+                                        </p>
+                                    </Col>
+                                    <Col span={12} className="form-col">
+                                        <SignUpForm animState={isLogin} setAnimState={setIsLogin}/>
+                                    </Col>
+                                </Row>
+
                             </div>
                             :
-                            <div className="login" style={{display: 'flex', width: "100%"}}>
-                                <SignInForm animState={isLogin} setAnimState={setIsLogin}/>
-                                <>
-                                    <h1 >
-                                        Tweeter
-                                    </h1>
-                                    <p >
-                                        Some text
-                                    </p>
-                                </>
+                            <div className="login"> 
+                                <Row align="middle" justify="space-around">
+                                    <Col span={12} className="form-col">
+                                        <SignInForm animState={isLogin} setAnimState={setIsLogin}/>
+                                    </Col>
+                                    <Col span={12} className="content-col">
+                                        <h1 >
+                                            Tweeter
+                                        </h1>
+                                        <p >
+                                            Some text
+                                        </p>
+                                    </Col>
+                                </Row>
                             </div>
                     }
-                </>
-
+                </div>
             </CSSTransition>
         </SwitchTransition>
     );

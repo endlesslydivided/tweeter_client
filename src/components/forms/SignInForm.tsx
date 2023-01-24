@@ -6,16 +6,14 @@ import React, { Component } from "react";
 import {Layout,Menu,Button,Row,Col,Typography,Form,Input,Switch,} from "antd";
 import {DribbbleOutlined,TwitterOutlined,InstagramOutlined} from "@ant-design/icons";
 
-const { Title } = Typography;
-
-interface AppRouterProps {
+interface SignInFormProps {
 
     animState:boolean,
     setAnimState:Function
 }
 
 
-const SignInForm: React.FC<AppRouterProps> = ({animState,setAnimState})  =>
+const SignInForm: React.FC<SignInFormProps> = ({animState,setAnimState})  =>
 {
 
     const [signIn, {isLoading, isError}] = useSignInMutation();
@@ -25,14 +23,13 @@ const SignInForm: React.FC<AppRouterProps> = ({animState,setAnimState})  =>
     const dispatch = useDispatch();
 
     return (
-        <Row gutter={[24, 0]} justify="space-around">
-              <Col xs={{ span: 24, offset: 0 }} lg={{ span: 6, offset: 2 }} md={{ span: 12 }}>
+        <React.Fragment>
 
-                <Title className="mb-15">Sign In</Title>
+                <Typography.Title style={{textAlign:'center'}} level={1}>Sign In</Typography.Title>
 
-                <Title className="font-regular text-muted" level={5}>
+                <Typography.Title type='secondary' style={{textAlign:'center'}} level={5}>
                   Enter your email and password to sign in
-                </Title>
+                </Typography.Title>
 
                 <Form layout="vertical" className="row-col">
 
@@ -63,20 +60,16 @@ const SignInForm: React.FC<AppRouterProps> = ({animState,setAnimState})  =>
                     </Button>
                   </Form.Item>
 
-                  <p className="font-semibold text-muted">
+                  <Typography.Paragraph type='secondary'>
                     Don't have an account?{" "}
-                    <Link to="/singUp"  onClick={() => setAnimState(!animState)} className="text-dark font-bold">
+                    <Link to="/signUp"  onClick={() => setAnimState(!animState)} >
                       Sign Up
                     </Link>
-                  </p>
+                  </Typography.Paragraph>
 
                 </Form>
-              </Col>
 
-              <Col style={{ padding: 12 }} xs={{ span: 24 }} lg={{ span: 12 }} md={{ span: 12 }}>
-              </Col>
-
-            </Row>
+            </React.Fragment>
     )
 }
 
