@@ -110,3 +110,25 @@ header.ant-layout-header {
 .fade-exit-active .login {
     transition: opacity 300ms, transform 300ms;
 }
+
+
+.profile-card-info-row
+{
+    align-items: baseline
+}
+
+.profile-card-info-row .profile-card-description
+{
+    white-space: pre-line;
+}
+
+.profile-card-avatar
+{
+   position: absolute 
+}
+
+.profile-card-info-col
+{
+    padding-top: 20px;
+    padding-left: 130px;
+}

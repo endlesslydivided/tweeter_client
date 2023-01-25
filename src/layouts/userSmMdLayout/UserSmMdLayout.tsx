@@ -55,7 +55,7 @@ export default function UserSmMdLayout()
     };
     
     return (
-        <Layout style={{    background: "none"}}>
+        <Layout style={{ background: "none"}}>
             <Header  style={{display:'flex'}}>
                 <div>
                     <Image preview={false} width={120} src={logo}/>
@@ -76,7 +76,7 @@ export default function UserSmMdLayout()
                     </Link>
                 </div>
             </Header>
-            <Content style={{display:'grid'}}>
+            <Content style={{display:'grid',width:'100vw'}}>
                 <Outlet/>
             </Content>
         </Layout>
