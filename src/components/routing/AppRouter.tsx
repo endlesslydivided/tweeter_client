@@ -32,7 +32,7 @@ const AppRouter: React.FC<AppRouterProps>= () => {
     }
 
     return (
-        user ?
+        !user ?
         <Routes>
             <Route path="/" element={<UserSmMdLayout/>}>
                 <Route index element={<HomePage/>}/>

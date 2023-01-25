@@ -1,28 +1,42 @@
 import {Outlet} from 'react-router-dom';
 import {FC, useState} from 'react';
-import {Col, Image, Layout, Menu, Row } from 'antd';
+import {Avatar, Col, Image, Layout, Menu, Row, Typography } from 'antd';
 import type { MenuProps } from 'antd';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { BOOKMARKS_ROUTE, EXPLORE_ROUTE } from '../../utils/consts';
 import {UserOutlined} from '@ant-design/icons'
-const logo = require('../../assets/headerLogo.png');
+import styled from "styled-components";
 
+const logo = require('../../assets/headerLogo.png');
 const { Header,Content} = Layout;
 
-
+const StyledMenu = styled(Menu)`
+.ant-menu-item-selected.ant-menu-item-only-child::after, 
+.ant-menu-item-active.ant-menu-item-only-child:hover::after
+{
+    border-bottom-width: 3px;
+    rotate: 180deg;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}`
 
 const items: MenuProps['items'] = [
     {
-        label: (<NavLink to={`../`}>Home</NavLink>),
+        label: (<Typography.Text strong type='secondary'>
+                    <NavLink to={`../`}>Home</NavLink>
+                </Typography.Text>),
         key: 'home',
     },
     {
-        label: (<NavLink to={`../${EXPLORE_ROUTE}`}>Explore</NavLink>),
+        label: (<Typography.Text strong type='secondary'>
+                    <NavLink to={`../${EXPLORE_ROUTE}`}>Explore</NavLink>
+                </Typography.Text>),
         key: 'explore',
     },
     {
-      label: (<NavLink to={`../${BOOKMARKS_ROUTE}`}>Bookmarks</NavLink> 
-      ),
+      label: (<Typography.Text strong type='secondary'>
+                <NavLink to={`../${BOOKMARKS_ROUTE}`}>Bookmarks</NavLink>
+              </Typography.Text>),
       key: 'bookmarks',
     },
   ];
@@ -41,24 +55,28 @@ export default function UserSmMdLayout()
     };
     
     return (
-        <Layout>
+        <Layout style={{    background: "none"}}>
             <Header  style={{display:'flex'}}>
                 <div>
                     <Image preview={false} width={120} src={logo}/>
                 </div>
                 <div className='header-col header-nav'>
-                    <Menu onClick={onClick} 
+                    <StyledMenu 
+                    style={{borderBottom:'none'}}
+                    onClick={onClick}  
                     selectedKeys={[current]} mode="horizontal"
                     items={items} defaultSelectedKeys={['0']}/>
                 </div>
                 <div style={{whiteSpace: 'nowrap'}}>
-                <Link to="/sign-in" >
-                    <UserOutlined />
-                    <span>Sign in</span>
-                </Link>
+                    <Link to="/sign-in" >
+                    <Avatar.Group>
+                        <Avatar icon={<UserOutlined />} shape="square" />
+                        <Typography.Text style={{margin: '5px 0px 0px 10px'}} strong>Name Surname</Typography.Text>
+                    </Avatar.Group>
+                    </Link>
                 </div>
             </Header>
-            <Content>
+            <Content style={{display:'grid'}}>
                 <Outlet/>
             </Content>
         </Layout>
