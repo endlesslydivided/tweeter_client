@@ -55,14 +55,13 @@ export default function UserSmMdLayout()
     };
     
     return (
-        <Layout style={{ background: "none"}}>
+        <Layout style={{ background: "#F2F2F2",height:'100vh'}}>
             <Header  style={{display:'flex'}}>
                 <div>
                     <Image preview={false} width={120} src={logo}/>
                 </div>
                 <div className='header-col header-nav'>
-                    <StyledMenu 
-                    style={{borderBottom:'none'}}
+                    <StyledMenu             
                     onClick={onClick}  
                     selectedKeys={[current]} mode="horizontal"
                     items={items} defaultSelectedKeys={['0']}/>

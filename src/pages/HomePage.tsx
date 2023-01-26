@@ -1,62 +1,101 @@
 import { UserOutlined } from "@ant-design/icons";
-import { Card,Row,Col,Avatar, Typography } from "antd";
+import { Card,Row,Col,Avatar, Typography, MenuProps, Space } from "antd";
 import styled from "styled-components";
+import VerticalSideMenu from "../components/VerticalSideMenu";
 
 const BgProfile = require('../assets/abstractBG/colorfulWaves.jpg');
 
 const ProfileBackground = styled.div`
-    background: url(${BgProfile}) center center no-repeat;
-    background-size: cover;
-    height:40vh;
+background: url(${BgProfile}) center center no-repeat;
+background-size: cover;
+height:100%;
 `
 const UserCard = styled(Card)`
 justify-self: center;
-width: 80vw;
 margin: -30px 0 0 0
 `
-
 const UserAvatar= styled(Avatar)`
 background: gainsboro;
-margin: -35px -10px 0px;
+margin: -40px -10px 0px;
 border: solid white 4px;
 `
+const items: MenuProps['items'] = [
+    {
+        label: (<Typography.Text strong type='secondary'>
+                    Tweets
+                </Typography.Text>),
+        className:'vertical-menu-item',
+        key: 'tweets',
+    },
+    {
+        label: (<Typography.Text strong type='secondary'>
+                    Tweets & replies
+                </Typography.Text>),
+        className:'vertical-menu-item',
+        key: 'tweetsReplies',
+    },
+    {
+        label: (<Typography.Text strong type='secondary'>
+                    Media
+              </Typography.Text>),
+        className:'vertical-menu-item',
+        key: 'media',
+    },
+    {
+        label: (<Typography.Text strong type='secondary'>
+                      Likes
+                </Typography.Text>),
+        className:'vertical-menu-item',
+        key: 'likes',
+      },
+];
 const HomePage = () => {
    
     return (
-        <>
+        <div style={{display:'grid'}}>
             <ProfileBackground></ProfileBackground>
+            <Space direction="vertical" size='middle' style={{width: '75vw',justifySelf:'center'}}>
+                    <UserCard bordered={false} bodyStyle={{ display: "none" }} title=
+                    {
+                        <Row  className='profile-card-row'>
+                            <Col span={6} className='profile-card-avatar'>
+                                <UserAvatar size={120} shape="square"
+                                icon={<UserOutlined/>}/>
+                            </Col>
+                            <Col span={24} className='profile-card-info-col'>
+                                <Row gutter={[20,0]} className='profile-card-info-row'>
+                                    <Col>
+                                        <Typography.Title level={4}>Name Surname</Typography.Title>                             
+                                    </Col>
+                                    <Col >
+                                        <Typography.Text type="secondary"><Typography.Text>12</Typography.Text> Following</Typography.Text>
+                                    </Col>
+                                    <Col >
+                                        <Typography.Text type="secondary"><Typography.Text>3312</Typography.Text> Followers</Typography.Text>
+                                    </Col>
+                                    <Col span={18}>
+                                        <Typography.Paragraph className="profile-card-description" type="secondary" >
+                                            Приветики всем! Меня зовут Name Surname. Я занимаюсь программированием, интересуюсь фотографией и ищу новых друзей)
+                                        </Typography.Paragraph>
+                                    </Col >
+                                </Row>
+                                    
+                            </Col>
 
-            <UserCard bodyStyle={{ display: "none" }} title=
-            {
-                <Row className='profile-card-row'>
-                    <Col span={6} className='profile-card-avatar'>
-                            <UserAvatar size={110} shape="square"
-                            icon={<UserOutlined/>}/>
-                    </Col>
-                    <Col span={18} className='profile-card-info-col'>
-                        <Row gutter={[80,0]} className='profile-card-info-row'>
-                            <Col>
-                                <Typography.Title level={4}>Name Surname</Typography.Title>                             
-                            </Col>
-                            <Col >
-                                <Typography.Text type="secondary">Following</Typography.Text>
-                            </Col>
-                            <Col >
-                                <Typography.Text type="secondary">Followers</Typography.Text>
-                            </Col>
-                            <Col span={24}>
-                                <Typography.Paragraph className="profile-card-description" type="secondary" >
-                                    Приветики всем! Меня зовут Name Surname. Я занимаюсь программированием, интересуюсь фотографией и ищу новых друзей)
-                                </Typography.Paragraph>
-                            </Col >
                         </Row>
-                            
+                    }>              
+                    </UserCard>
+                <Row>
+                    <Col span={6}>
+               
+                        <Card bordered={false} bodyStyle={{ display: "none" }} headStyle={{paddingLeft:'0px'}} title={
+                            <VerticalSideMenu items={items}/>
+                        }>
+                        </Card>
                     </Col>
-
                 </Row>
-            }>              
-            </UserCard>
-        </>
+            </Space>
+        </div>
     );
 };
 

@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import {store} from './store/store';
 import App from './App';
-import { ConfigProvider,theme  } from 'antd';
+import { Card, ConfigProvider,theme  } from 'antd';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,7 +16,8 @@ root.render(
           algorithm: theme.defaultAlgorithm,
           token: {
             colorPrimary: '#2F80ED',
-            colorBgBase:'white'
+            colorBgBase:'white',
+            fontFamily: 'Poppins, Montserrat'
           },
           components:
           {
