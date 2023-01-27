@@ -11,27 +11,22 @@ interface VerticalSideMenuProps
 {
     isLeftSided?: boolean;
     items: MenuProps['items'];
+    selectedKey: string;
+    setSelecteKey:Function;
 }
 
-const VerticalSideMenu:React.FC<VerticalSideMenuProps> = ({isLeftSided = true,items}) =>
+const VerticalSideMenu:React.FC<VerticalSideMenuProps> = ({isLeftSided = true,items,selectedKey,setSelecteKey}) =>
 {
     const token = useToken();
     const ThemedVerticalMenu = styled(Menu)`--theme-color:${token.token.colorPrimary}`
 
-    const [current, setCurrent] = useState('home');
+    const onClick: MenuProps['onClick'] = e => setSelecteKey(e.key);
 
-    const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key);
-
-    };
 
     return (
-        <ThemedVerticalMenu 
-        className="vertical-menu"
-        onClick={onClick}  
-        selectedKeys={[current]} mode='vertical'
-        items={items} defaultSelectedKeys={['0']}/>
+        <ThemedVerticalMenu className="vertical-menu" onClick={onClick}  
+        selectedKeys={[selectedKey]} mode='vertical'
+        items={items} defaultSelectedKeys={[`0`]}/>
     )
 }
 

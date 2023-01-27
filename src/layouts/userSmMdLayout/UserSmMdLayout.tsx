@@ -55,7 +55,7 @@ export default function UserSmMdLayout()
     };
     
     return (
-        <Layout style={{ background: "#F2F2F2",height:'100vh'}}>
+        <Layout style={{ background: "#F2F2F2",height:'100%'}}>
             <Header  style={{display:'flex'}}>
                 <div>
                     <Image preview={false} width={120} src={logo}/>

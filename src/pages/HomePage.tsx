@@ -1,6 +1,9 @@
 import { UserOutlined } from "@ant-design/icons";
 import { Card,Row,Col,Avatar, Typography, MenuProps, Space } from "antd";
+import { useState } from "react";
 import styled from "styled-components";
+import PostItem from "../components/PostItem";
+import PostList from "../components/PostList";
 import VerticalSideMenu from "../components/VerticalSideMenu";
 
 const BgProfile = require('../assets/abstractBG/colorfulWaves.jpg');
@@ -51,6 +54,8 @@ const items: MenuProps['items'] = [
 ];
 const HomePage = () => {
    
+    const [content, setContent] = useState('tweets');
+
     return (
         <div style={{display:'grid'}}>
             <ProfileBackground></ProfileBackground>
@@ -85,13 +90,16 @@ const HomePage = () => {
                         </Row>
                     }>              
                     </UserCard>
-                <Row>
+                <Row gutter={[20,0]}>
                     <Col span={6}>
                
                         <Card bordered={false} bodyStyle={{ display: "none" }} headStyle={{paddingLeft:'0px'}} title={
-                            <VerticalSideMenu items={items}/>
+                            <VerticalSideMenu selectedKey={content} setSelecteKey={setContent} items={items}/>
                         }>
                         </Card>
+                    </Col>
+                    <Col span={18}>
+                        <PostList/>
                     </Col>
                 </Row>
             </Space>

@@ -5,12 +5,14 @@
     padding: 0;
 }
 
-html {
-    height: 100%;
+body 
+{
+    min-height: 100vh;
 }
-body, #root, .ant-row, .login, .register,.auth-page-content {
-    min-height: 100%;
-    height:100%
+
+.ant-row, .login, .register,.auth-page-content
+{
+    height: 100%;
 }
 /*#endregion*/
 
@@ -188,5 +190,32 @@ header.ant-layout-header {
 .vertical-menu .ant-menu-item
 {
     overflow: unset;
+}
+/*#endregion*/
+
+/*#region Post item */
+.post-item-card .ant-card-meta-title,
+.post-item-card .ant-card-meta-description
+{
+    margin-bottom: 0px !important;
+    margin-top: -5px !important;
+}
+
+.post-item-card .post-item-card-description
+{
+    font-size: 12px;
+}
+
+.post-item-card .ant-card-meta-description
+{
+    margin-top: -2px !important;
+}
+/*#endregion*/
+
+/*#region Post list*/
+.post-list,
+.post-list .ant-space-item
+{
+    width: 100%;
 }
 /*#endregion*/
