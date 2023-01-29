@@ -8,7 +8,7 @@ import {UserOutlined} from '@ant-design/icons'
 import styled from "styled-components";
 
 const logo = require('../../assets/headerLogo.png');
-const { Header,Content} = Layout;
+const { Header,Content,Footer} = Layout;
 
 const StyledMenu = styled(Menu)`
 .ant-menu-item-selected.ant-menu-item-only-child::after, 
@@ -55,7 +55,7 @@ export default function UserSmMdLayout()
     };
     
     return (
-        <Layout style={{ background: "#F2F2F2",height:'100%'}}>
+        <Layout style={{ background: "#F2F2F2"}}>
             <Header  style={{display:'flex'}}>
                 <div>
                     <Image preview={false} width={120} src={logo}/>
@@ -78,6 +78,9 @@ export default function UserSmMdLayout()
             <Content style={{display:'grid',width:'100vw'}}>
                 <Outlet/>
             </Content>
+            <Footer style={{ background: "#F2F2F2",position:'sticky',height:'100%',textAlign:'center'}}>
+                <Typography.Title disabled level={5}> created by endlesslydivided, 2023</Typography.Title>
+            </Footer>
         </Layout>
     );
 }

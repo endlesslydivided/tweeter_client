@@ -7,6 +7,7 @@
 
 body 
 {
+    overflow-x: hidden;
     min-height: 100vh;
 }
 
@@ -157,6 +158,20 @@ header.ant-layout-header {
 }
 /*#endregion*/
 
+/*#region Profile background image */
+.ant-image .profile-bg-image
+{
+    object-fit: cover;
+    height: 100%;
+    width:100%;
+}
+
+.home-page-container > .ant-image
+{
+    height: 40vh;
+}
+/*#endregion*/
+
 /*#region Vertical menu */
 .vertical-menu-item
 {
@@ -210,11 +225,28 @@ header.ant-layout-header {
 {
     margin-top: -2px !important;
 }
+
+.post-item-stats
+{
+    display: flex;
+}
+
+.post-item-stats span
+{
+    font-size: 12px;
+}
+
+.post-item-stats
+{
+    width:max-content;
+    margin-right: 0;
+    margin-left: auto;
+}
 /*#endregion*/
 
 /*#region Post list*/
 .post-list,
-.post-list .ant-space-item
+.post-item-card-space
 {
     width: 100%;
 }
