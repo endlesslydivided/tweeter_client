@@ -1,9 +1,9 @@
-import {Outlet} from 'react-router-dom';
+import {Outlet, useLocation} from 'react-router-dom';
 import {FC, useState} from 'react';
 import {Avatar, Col, Image, Layout, Menu, Row, Typography } from 'antd';
 import type { MenuProps } from 'antd';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { BOOKMARKS_ROUTE, EXPLORE_ROUTE } from '../../utils/consts';
+import { BOOKMARKS_ROUTE, EXPLORE_ROUTE, HOME_ROUTE } from '../../utils/consts';
 import {UserOutlined} from '@ant-design/icons'
 import styled from "styled-components";
 
@@ -25,27 +25,27 @@ const items: MenuProps['items'] = [
         label: (<Typography.Text strong type='secondary'>
                     <NavLink to={`../`}>Home</NavLink>
                 </Typography.Text>),
-        key: 'home',
+        key: HOME_ROUTE,
     },
     {
         label: (<Typography.Text strong type='secondary'>
                     <NavLink to={`../${EXPLORE_ROUTE}`}>Explore</NavLink>
                 </Typography.Text>),
-        key: 'explore',
+        key: EXPLORE_ROUTE,
     },
     {
       label: (<Typography.Text strong type='secondary'>
                 <NavLink to={`../${BOOKMARKS_ROUTE}`}>Bookmarks</NavLink>
               </Typography.Text>),
-      key: 'bookmarks',
+      key: BOOKMARKS_ROUTE,
     },
   ];
 
 
 export default function UserSmMdLayout() 
 {
-
-    const [current, setCurrent] = useState('home');
+    const location = useLocation();
+    const [current, setCurrent] = useState(location.pathname);
     const navigate = useNavigate();
 
     const onClick: MenuProps['onClick'] = (e) => {
@@ -64,7 +64,7 @@ export default function UserSmMdLayout()
                     <StyledMenu             
                     onClick={onClick}  
                     selectedKeys={[current]} mode="horizontal"
-                    items={items} defaultSelectedKeys={['0']}/>
+                    items={items}/>
                 </div>
                 <div style={{whiteSpace: 'nowrap'}}>
                     <Link to="/sign-in" >

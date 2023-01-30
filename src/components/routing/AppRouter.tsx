@@ -6,7 +6,7 @@ import UserSmMdLayout from '../../layouts/userSmMdLayout/UserSmMdLayout';
 import ProfilePage from '../../pages/ProfilePage';
 import { BOOKMARKS_ROUTE, EXPLORE_ROUTE, HOME_ROUTE, PROFILE_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import HomePage from '../../pages/HomePage';
-import ExplorePage from '../../pages/ExplorePage';
+import ExplorePage from '../../pages/HomeFeedPage';
 import BookmarksPage from '../../pages/BookmarksPage';
 import SettingsPage from '../../pages/SettignsRoute';
 import UserPage from '../../pages/UserPage';

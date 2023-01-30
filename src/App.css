@@ -226,22 +226,12 @@ header.ant-layout-header {
     margin-top: -2px !important;
 }
 
-.post-item-stats
-{
-    display: flex;
-}
-
 .post-item-stats span
 {
     font-size: 12px;
 }
 
-.post-item-stats
-{
-    width:max-content;
-    margin-right: 0;
-    margin-left: auto;
-}
+
 /*#endregion*/
 
 /*#region Post list*/
@@ -249,5 +239,59 @@ header.ant-layout-header {
 .post-item-card-space
 {
     width: 100%;
+}
+/*#endregion*/
+
+/*#region Post form */
+.post-form-card .ant-card-body
+{
+    padding: 15px;
+}
+.post-form-card .ant-card-meta-title,
+.post-form-card .ant-card-meta-description
+{
+    margin-bottom: 0px !important;
+    margin-top: -5px !important;
+}
+
+.post-form-card .post-form-card-description
+{
+    font-size: 12px;
+}
+
+.post-form-card .ant-card-meta-description
+{
+    margin-top: -2px !important;
+}
+
+.post-form-card .ant-card-meta-title .post-form-card-title
+{
+    font-size: 12px !important;
+}
+
+.post-form-card .post-form-card-space
+{
+    width: 100%;
+}
+
+.post-form-card .ant-input-textarea
+{
+    margin-top: 5px;
+    width: 100%;
+}
+
+.post-form-card .post-form-textarea .ant-input 
+{
+    resize: none;
+    padding-right: 0;
+    border:none !important;
+    box-shadow: none !important;
+}
+/*#endregion*/
+
+/*#region Hove feed page */
+.home-feed-page-container
+{
+    margin-top: 2%;
 }
 /*#endregion*/
