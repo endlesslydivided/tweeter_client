@@ -1,6 +1,7 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Card, Divider, List, Space, Typography } from "antd";
+import { PlusOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, Col, Divider, Image, List, Row, Typography } from "antd";
 import React from "react";
+const BgProfile = require('../assets/abstractBG/colorfulWaves.jpg');
 
 interface ToFollowSectionProps {
 
@@ -18,7 +19,7 @@ const ToFollowSection: React.FC<ToFollowSectionProps> = ({})  =>
             <Divider type="horizontal"style={{margin:'7.5px 0px'}}/>
 
             <List className="follow-section-card-list"
-                split={false}
+                itemLayout="vertical"
                 dataSource={[
                     {   
                         userPhotoPath:'123',
@@ -38,23 +39,31 @@ const ToFollowSection: React.FC<ToFollowSectionProps> = ({})  =>
                     },
                 ]}
                 renderItem={(item) => (
-                    <List.Item style={{margin:0}}>
-                       <Card style={{width:'100%',overflow:'hidden'}} bordered={false} className="follow-section-item-card">
-                            <Space direction="vertical" className="follow-section-item-card-space" size='middle'>
-                                <Card.Meta className="follow-section-card-meta"
-                                    avatar={<Avatar icon={<UserOutlined />} size={36} shape="square" />}
-                                    title={<Typography.Text className="follow-section-card-title" strong>Name Surname</Typography.Text>}
-                                    description={<Typography.Text  className="follow-section-card-description" type="secondary">24 August at 20:43</Typography.Text>}
-                                />  
+                    <List.Item  className="follow-section-item">
+                        <Row wrap align='middle'>
+                            <Col span={18}>
+                                <Avatar.Group >
+                                    <Avatar icon={<UserOutlined />} size={36} shape="square" />
+                                    <div className="follow-section-item-header" >
+                                        <Typography.Text className="follow-section-item-title" strong>Name Surname</Typography.Text>
+                                        <Typography.Text  className="follow-section-item-description" type="secondary">24 August at 20:43</Typography.Text>
+                                    </div>
+                                </Avatar.Group>
+                            </Col>
+                            <Col span={6}>
+                                <Button type="primary" size="small" style={{fontSize:'10px'}} icon={<PlusOutlined/>}>Follow</Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Typography.Text className="follow-section-item-text">
+                                Travelling - it leaves you speechless, then turns you into storyteller.
+                            </Typography.Text>
+                        </Row>
+                        <Row>
+                            <Image src={BgProfile} className="profile-bg-image"> </Image>
 
-                                <Typography.Text>
-                                    Travelling - it leaves you speechless, then turns you into storyteller.
-                                </Typography.Text>
-
-                                
-                            </Space>
-                        </Card>
-                       
+                        </Row>
+                      
                     </List.Item>
                 )}
             />

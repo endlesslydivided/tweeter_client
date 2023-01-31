@@ -1,8 +1,5 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Card,Row,Col,Avatar,Image, Typography, MenuProps, Space } from "antd";
+import { Card, Col, Image, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
-import styled from "styled-components";
-import PostItem from "../components/PostItem";
 import PostList from "../components/PostList";
 import VerticalSideMenu from "../components/VerticalSideMenu";
 import UserCard from "../sections/homeUserDataSection/UserCard";
