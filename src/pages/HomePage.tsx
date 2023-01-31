@@ -48,7 +48,7 @@ const HomePage = () => {
         <div style={{display:'grid'}} className='home-page-container'>
             <Image src={BgProfile} className="profile-bg-image"> </Image>
             <Space direction="vertical" size='middle' style={{width: '75vw',justifySelf:'center'}}>
-                <Row>
+                <Row style={{marginTop:'-40px'}}>
                     <Col span={24}>
                         <UserCard/>
                     </Col>

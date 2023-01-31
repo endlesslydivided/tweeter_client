@@ -287,6 +287,23 @@ header.ant-layout-header {
     border:none !important;
     box-shadow: none !important;
 }
+
+.ant-popover-arrow
+{
+    display: none !important;
+}
+
+.ant-radio-button-wrapper::before
+{
+    content: none !important;
+}
+
+
+
+.post-form-card .post-form-buttons .post-form-popover-content
+{
+    width: 100%;
+}
 /*#endregion*/
 
 /*#region Hove feed page */
