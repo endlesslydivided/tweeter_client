@@ -1,9 +1,4 @@
-import { UserOutlined } from "@ant-design/icons";
-import { Avatar, Card, Menu, MenuProps, Space, theme, Typography } from "antd";
-import { ItemType } from "antd/es/menu/hooks/useItems";
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import { Space, theme } from "antd";
 import PostItem from "./PostItem";
 
 const { useToken } = theme;

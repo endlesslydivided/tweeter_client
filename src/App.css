@@ -245,13 +245,13 @@ header.ant-layout-header {
 /*#region Post form */
 .post-form-card .ant-card-body
 {
-    padding: 15px;
+    padding: 15px 15px 10px 15px;
 }
 .post-form-card .ant-card-meta-title,
 .post-form-card .ant-card-meta-description
 {
     margin-bottom: 0px !important;
-    margin-top: -5px !important;
+    margin-top: 0px !important;
 }
 
 .post-form-card .post-form-card-description
@@ -298,7 +298,10 @@ header.ant-layout-header {
     content: none !important;
 }
 
-
+#replyPopover
+{
+    width:80%;
+}
 
 .post-form-card .post-form-buttons .post-form-popover-content
 {
@@ -306,9 +309,58 @@ header.ant-layout-header {
 }
 /*#endregion*/
 
-/*#region Hove feed page */
+/*#region Home feed page */
 .home-feed-page-container
 {
     margin-top: 2%;
+}
+/*#endregion*/
+
+/*#region Trends section */
+.trends-section-card .trends-section-card-list .ant-list-item
+{
+    padding: 0;
+}
+
+.ant-list.trends-section-card-list
+{
+    margin-top: 20px;
+}
+
+.trends-section-card  .ant-card-body
+{
+    padding: 15px 15px 10px 15px;
+}
+
+.trends-section-card .ant-card-meta-title .trends-section-card-title
+{
+    font-size: 12px !important;
+}
+/*#endregion*/
+
+/*#region ToFollow section */
+.follow-section-card .follow-section-card-list .ant-list-item
+{
+    padding: 0;
+}
+
+.ant-list.follow-section-card-list
+{
+    margin-top: 20px;
+}
+
+.follow-section-card  .ant-card-body
+{
+    padding: 15px 15px 10px 15px;
+}
+
+.follow-section-card .ant-card-meta-title .follow-section-card-title
+{
+    font-size: 12px !important;
+}
+
+.ant-card.follow-section-item-card
+{
+    box-shadow: none;
 }
 /*#endregion*/
