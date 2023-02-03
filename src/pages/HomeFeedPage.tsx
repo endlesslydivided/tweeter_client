@@ -1,8 +1,8 @@
 import { Col, Row, Space } from "antd";
 import PostList from "../components/PostList";
-import PostForm from "../sections/explorePostsSection/PostForm";
-import ToFollowSection from "../sections/explorePostsSection/ToFollowSection";
-import TrendsSection from "../sections/explorePostsSection/TrendsSection";
+import PostForm from "../sections/feedPostsSections/PostForm";
+import ToFollowSection from "../sections/feedPostsSections/ToFollowSection";
+import TrendsSection from "../sections/feedPostsSections/TrendsSection";
 
 
 const HomeFeedPage = () => {

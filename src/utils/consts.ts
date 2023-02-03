@@ -1,6 +1,7 @@
 export const MAIN_ROUTE = '/'
 
 export const HOME_ROUTE = '/'
+export const FEED_PAGE = '/feed'
 export const EXPLORE_ROUTE = '/explore'
 export const BOOKMARKS_ROUTE = '/bookmarks'
 

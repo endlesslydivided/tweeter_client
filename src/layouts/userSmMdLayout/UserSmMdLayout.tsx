@@ -1,10 +1,10 @@
 import {Outlet, useLocation} from 'react-router-dom';
 import {FC, useState} from 'react';
-import {Avatar, Col, Image, Layout, Menu, Row, Typography } from 'antd';
+import {Avatar, Button, Col, Divider, Image, Layout, Menu, Popover, Row, Space, Typography } from 'antd';
 import type { MenuProps } from 'antd';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { BOOKMARKS_ROUTE, EXPLORE_ROUTE, HOME_ROUTE } from '../../utils/consts';
-import {UserOutlined} from '@ant-design/icons'
+import {ArrowDownOutlined, CaretDownOutlined, GlobalOutlined, ImportOutlined, MailFilled, MailOutlined, ProfileOutlined, SettingFilled, UserOutlined} from '@ant-design/icons'
 import styled from "styled-components";
 
 const logo = require('../../assets/headerLogo.png');
@@ -70,7 +70,33 @@ export default function UserSmMdLayout()
                     <Link to="/sign-in" >
                     <Avatar.Group>
                         <Avatar icon={<UserOutlined />} shape="square" />
-                        <Typography.Text style={{margin: '5px 0px 0px 10px'}} strong>Name Surname</Typography.Text>
+                        <Popover id='headerPopover' placement="bottomRight"
+                            content=
+                            {   <>
+                                    <Space direction='vertical' size={0} className='user-header-popover-content'>
+                                        <Button block className='user-header-button-profile' type='text' icon={<UserOutlined/>}>
+                                            My profile
+                                        </Button>
+                                        <Button block className='user-header-button-chat'  type='text' icon={<MailFilled/>}>
+                                            Group chat
+                                        </Button>
+                                        <Button block className='user-header-button-settings'  type='text' icon={<SettingFilled/>}>
+                                            Settings
+                                        </Button>
+                                    </Space>
+                                    <Divider type='horizontal' style={{margin:'10px 0px'}}/>
+                                    <Space direction='vertical' className='user-header-popover-content'>
+                                        <Button block danger className='user-header-button-logout'  type='text' color='red' icon={<ImportOutlined/>} >
+                                            Logout 
+                                        </Button>
+                                    </Space>
+                                </>
+                            } 
+                            trigger="click"
+                        >
+                            <Typography.Text style={{margin: '5px 0px 0px 10px'}} strong>Name Surname <CaretDownOutlined/></Typography.Text>  
+                        </Popover>
+
                     </Avatar.Group>
                     </Link>
                 </div>

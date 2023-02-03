@@ -2,7 +2,7 @@ import { Card, Col, Image, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
 import PostList from "../components/PostList";
 import VerticalSideMenu from "../components/VerticalSideMenu";
-import UserCard from "../sections/homeUserDataSection/UserCard";
+import UserCard from "../sections/homeUserDataSections/UserCard";
 
 const BgProfile = require('../assets/abstractBG/colorfulWaves.jpg');
 

@@ -2,6 +2,7 @@ import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
 import PostList from "../components/PostList";
 import VerticalSideMenu from "../components/VerticalSideMenu";
+import SearchBar from "../sections/exploreSections/SearchBar";
 import PostForm from "../sections/feedPostsSections/PostForm";
 import ToFollowSection from "../sections/feedPostsSections/ToFollowSection";
 import TrendsSection from "../sections/feedPostsSections/TrendsSection";
@@ -37,13 +38,13 @@ const items: MenuProps['items'] = [
       },
 ];
 
-const BookmarksPage = () => {
+const ExplorePage = () => {
 
     const [content, setContent] = useState('tweets');
 
    
     return (
-        <div style={{display:'grid'}} className='bookmarks-page-container'>
+        <div style={{display:'grid'}} className='explore-page-container'>
             <Row gutter={[25,10]} style={{width: '75vw',justifySelf:'center'}}>              
                 <Col span={6}>
                 <Card bordered={false} bodyStyle={{ display: "none" }} headStyle={{paddingLeft:'0px'}} title=
@@ -53,6 +54,7 @@ const BookmarksPage = () => {
                 </Col>
                 <Col span={18}>
                     <Space direction="vertical" size='large' style={{width: '100%',justifySelf:'center'}}>
+                        <SearchBar/>
                         <PostList/>
                     </Space>
                 </Col>
@@ -61,5 +63,5 @@ const BookmarksPage = () => {
     );
 };
 
-export default BookmarksPage;
+export default ExplorePage;
 

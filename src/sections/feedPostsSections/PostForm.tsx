@@ -49,7 +49,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 									content=
 									{
 										<Space direction='vertical' className='post-form-popover-content'>
-											<Radio.Group defaultValue={false}>
+											<Radio.Group onChange={e => setReplyRule(e.target.value)} defaultValue={false}>
 												<Radio.Button className='post-form-button-everyone' value={false} style={{width:'100%',border:'none'}}>
 													<Space>
 														<GlobalOutlined /> Everyone

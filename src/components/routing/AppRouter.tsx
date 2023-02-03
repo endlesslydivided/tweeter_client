@@ -4,9 +4,9 @@ import {useDispatch} from 'react-redux';
 
 import UserSmMdLayout from '../../layouts/userSmMdLayout/UserSmMdLayout';
 import ProfilePage from '../../pages/ProfilePage';
-import { BOOKMARKS_ROUTE, EXPLORE_ROUTE, HOME_ROUTE, PROFILE_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
+import { BOOKMARKS_ROUTE, EXPLORE_ROUTE, FEED_PAGE, HOME_ROUTE, PROFILE_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import HomePage from '../../pages/HomePage';
-import ExplorePage from '../../pages/HomeFeedPage';
+import HomeFeedPage from '../../pages/HomeFeedPage';
 import BookmarksPage from '../../pages/BookmarksPage';
 import SettingsPage from '../../pages/SettignsRoute';
 import UserPage from '../../pages/UserPage';
@@ -14,6 +14,7 @@ import { useAppSelector } from '../../hooks/redux';
 import { useGetMeQuery } from '../../services/AuthApiSlice';
 import Loader from '../Loader';
 import UnathorizedPage from '../../pages/UnathorizedPage';
+import ExplorePage from '../../pages/Explore page';
 
 interface AppRouterProps {
 
@@ -36,6 +37,8 @@ const AppRouter: React.FC<AppRouterProps>= () => {
         <Routes>
             <Route path="/" element={<UserSmMdLayout/>}>
                 <Route index element={<HomePage/>}/>
+                <Route path={`/${FEED_PAGE}`} element={<HomeFeedPage/>}/>
+
                 <Route path={`/${BOOKMARKS_ROUTE}`} element={<BookmarksPage/>}/>
                 <Route path={`/${EXPLORE_ROUTE}`} element={<ExplorePage/>}/>
                 <Route path={`/${PROFILE_ROUTE}`} element={<ProfilePage/>}/>
