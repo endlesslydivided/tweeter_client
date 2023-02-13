@@ -4,17 +4,18 @@ import {useDispatch} from 'react-redux';
 
 import UserSmMdLayout from '../../layouts/userSmMdLayout/UserSmMdLayout';
 import ProfilePage from '../../pages/ProfilePage';
-import { BOOKMARKS_ROUTE, EXPLORE_ROUTE, FEED_PAGE, HOME_ROUTE, PROFILE_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
+import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, FEED_PAGE, HOME_ROUTE, PROFILE_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import HomePage from '../../pages/HomePage';
 import HomeFeedPage from '../../pages/HomeFeedPage';
 import BookmarksPage from '../../pages/BookmarksPage';
-import SettingsPage from '../../pages/SettignsRoute';
+import SettingsPage from '../../pages/SettignsPage';
 import UserPage from '../../pages/UserPage';
 import { useAppSelector } from '../../hooks/redux';
 import { useGetMeQuery } from '../../services/AuthApiSlice';
 import Loader from '../Loader';
 import UnathorizedPage from '../../pages/UnathorizedPage';
-import ExplorePage from '../../pages/Explore page';
+import ExplorePage from '../../pages/ExplorePage';
+import ChatPage from '../../pages/ChatPage';
 
 interface AppRouterProps {
 
@@ -44,6 +45,9 @@ const AppRouter: React.FC<AppRouterProps>= () => {
                 <Route path={`/${PROFILE_ROUTE}`} element={<ProfilePage/>}/>
                 <Route path={`/${SETTINGS_ROUTE}`} element={<SettingsPage/>}/>
                 <Route path={`/${PROFILE_ROUTE}/:id`} element={<UserPage/>}/>
+                <Route path={`/${CHAT_ROUTE}`} element={<ChatPage/>}/>
+                <Route path={`/${CHAT_ROUTE}/:id`} element={<ChatPage/>}/>
+
             </Route>
             <Route path="*" element={<Navigate to={"/"} replace/>}/>
         </Routes>

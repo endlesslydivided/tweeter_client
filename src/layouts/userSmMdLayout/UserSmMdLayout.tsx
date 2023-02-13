@@ -3,7 +3,7 @@ import {FC, useState} from 'react';
 import {Avatar, Button, Col, Divider, Image, Layout, Menu, Popover, Row, Space, Typography } from 'antd';
 import type { MenuProps } from 'antd';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { BOOKMARKS_ROUTE, EXPLORE_ROUTE, HOME_ROUTE } from '../../utils/consts';
+import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, HOME_ROUTE, PROFILE_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import {ArrowDownOutlined, CaretDownOutlined, GlobalOutlined, ImportOutlined, MailFilled, MailOutlined, ProfileOutlined, SettingFilled, UserOutlined} from '@ant-design/icons'
 import styled from "styled-components";
 
@@ -67,20 +67,19 @@ export default function UserSmMdLayout()
                     items={items}/>
                 </div>
                 <div style={{whiteSpace: 'nowrap'}}>
-                    <Link to="/sign-in" >
                     <Avatar.Group>
                         <Avatar icon={<UserOutlined />} shape="square" />
                         <Popover id='headerPopover' placement="bottomRight"
                             content=
                             {   <>
                                     <Space direction='vertical' size={0} className='user-header-popover-content'>
-                                        <Button block className='user-header-button-profile' type='text' icon={<UserOutlined/>}>
+                                        <Button block className='user-header-button-profile'  onClick={() => navigate(`${PROFILE_ROUTE}`)} type='text' icon={<UserOutlined/>}>
                                             My profile
                                         </Button>
-                                        <Button block className='user-header-button-chat'  type='text' icon={<MailFilled/>}>
+                                        <Button block className='user-header-button-chat'  onClick={() => navigate(`${CHAT_ROUTE}`)}  type='text' icon={<MailFilled/>}>
                                             Group chat
                                         </Button>
-                                        <Button block className='user-header-button-settings'  type='text' icon={<SettingFilled/>}>
+                                        <Button block className='user-header-button-settings'  onClick={() => navigate(`${SETTINGS_ROUTE}`)}  type='text' icon={<SettingFilled/>}>
                                             Settings
                                         </Button>
                                     </Space>
@@ -98,7 +97,6 @@ export default function UserSmMdLayout()
                         </Popover>
 
                     </Avatar.Group>
-                    </Link>
                 </div>
             </Header>
             <Content style={{display:'grid',width:'100vw'}}>

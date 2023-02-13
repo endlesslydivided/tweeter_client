@@ -15,16 +15,14 @@ const SearchBar: React.FC<SearchBarProps> = ({})  =>
 
     return (
         <Card className='search-bar-card'>
-
-
-
                 <Row >
                     <Col flex={22} >
-                        <Input.Search addonBefore={<SearchOutlined color="rgb(0,0,0,0.2)"/>} enterButton={<Button type="primary">Search</Button>}  className='search-bar-input 'placeholder="Search" />      
+                        <Input.Search 
+                        addonBefore={<SearchOutlined color="rgb(0,0,0,0.2)"/>} 
+                        enterButton={<Button type="primary">Search</Button>}  className='search-bar-input 'placeholder="Search" />      
                     </Col>
                 </Row>
-
-
+                
         </Card>
     )
 }

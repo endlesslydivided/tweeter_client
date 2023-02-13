@@ -42,7 +42,6 @@ const ExplorePage = () => {
 
     const [content, setContent] = useState('tweets');
 
-   
     return (
         <div style={{display:'grid'}} className='explore-page-container'>
             <Row gutter={[25,10]} style={{width: '75vw',justifySelf:'center'}}>              
@@ -53,7 +52,7 @@ const ExplorePage = () => {
                         }/>
                 </Col>
                 <Col span={18}>
-                    <Space direction="vertical" size='large' style={{width: '100%',justifySelf:'center'}}>
+                    <Space direction="vertical" size='middle' style={{width: '100%',justifySelf:'center'}}>
                         <SearchBar/>
                         <PostList/>
                     </Space>
