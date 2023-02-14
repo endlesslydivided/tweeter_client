@@ -1,4 +1,4 @@
-import { BookOutlined, CommentOutlined, HeartOutlined, MailOutlined, PictureOutlined, RetweetOutlined, SoundOutlined, StarOutlined, UserOutlined } from "@ant-design/icons";
+import { BookOutlined, CommentOutlined, HeartOutlined, MailOutlined, PictureOutlined, RetweetOutlined, SendOutlined, SoundOutlined, StarOutlined, UserOutlined } from "@ant-design/icons";
 
 import { Avatar, Button, Col,theme, List, Radio, Row, Space, Typography, Empty, Input, Tooltip } from "antd";
 import { useState } from "react";
@@ -143,11 +143,11 @@ const ChatPage = () => {
                     {
                         selectedDialog?
                         <div className="chat-window">
-                            <div className="header">
+                            <section className="header">
                                 <Typography.Title type="secondary" level={3}>Name Surname</Typography.Title>
                                 <Avatar size={45} icon={<UserOutlined/>} />
-                            </div>
-                            <div className="messages-list">
+                            </section>
+                            <section className="messages-list">
                             <List className="messages"
                                 
                                 dataSource={messages}
@@ -169,22 +169,21 @@ const ChatPage = () => {
                                 </List.Item>
                                 )}
                             />
-                            </div>
-                            <div className="message-form">
-                            <Space direction='horizontal' style={{width:'100%'}}>
-                                    <Input.TextArea autoSize={true}  maxLength={2000}  placeholder="Text a message..."/>
-                                    <div style={{display:'flex'}} >
+                            </section>
+                            <section className="message-form">
+                                <Input.TextArea autoSize={{minRows:2,maxRows:4}}  maxLength={2000} className='textarea'  
+                                placeholder="Text a message..."/>
+                                <div style={{display:'flex',alignItems:'center',margin:'0 10px 0 10px',width:'auto'}} >
 
-                                        <Tooltip  title="Add photo">
-                                            <Button type="link" shape='circle'  icon={<PictureOutlined />} />
-                                        </Tooltip>
+                                    <Tooltip  title="Add photo">
+                                        <Button type="link" shape='circle'  icon={<PictureOutlined />} />
+                                    </Tooltip>
 
-                                        <Button style={{marginLeft:'auto'}} type="primary" >Tweet</Button>
+                                    <Button style={{marginLeft:'auto'}} type="text" icon={<SendOutlined />}/>
 
-                                    </div>
+                                </div>
 
-                                </Space>
-                            </div>
+                            </section>
                         </div>
                         :
                         <Empty

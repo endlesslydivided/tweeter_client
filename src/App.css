@@ -567,8 +567,8 @@ header.ant-layout-header {
 .dialogs-col
 {
     background:var(--theme-color);
-    border-radius: 0 25px 25px 0;
-    margin: 15px 0 20px 0;
+    border-radius: 0 25px 0 0;
+    margin: 15px 0 0 0;
 }
 
 .dialogs-list .ant-list-item:hover
@@ -626,8 +626,13 @@ header.ant-layout-header {
 
 .chat-window .message-form
 {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 25%;
+    top: 87%;
     display: flex;
-    height: 15%;
+    height: 13%;
     box-shadow:10px 0px 10px 0 rgba(0,0,0,0.1);
 }
 
@@ -654,6 +659,13 @@ header.ant-layout-header {
     overflow-y: scroll;
 }
 
-
+.message-form .textarea
+{
+    resize: none;
+    padding-right: 0;
+    border:none !important;
+    box-shadow: none !important;
+    background: none;
+}
 
 /*#endregion*/
