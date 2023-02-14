@@ -15,6 +15,18 @@ body
 {
     height: 100%;
 }
+
+#root
+{
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.smMd-layout
+{
+    background: "#F2F2F2";
+}
 /*#endregion*/
 
 /*#region Fonts*/
@@ -461,7 +473,7 @@ header.ant-layout-header {
 
 /*#endregion*/
 
-
+/*#region Search card*/
 .search-bar-card .ant-input-group-addon:last-child .ant-input-search-button
 {
     border-radius:6px !important;
@@ -484,3 +496,135 @@ header.ant-layout-header {
     border: none;
     background-color: transparent;
 }
+/*#endregion*/
+
+/*#region Chat dilogs radio group*/
+
+.dialogs-radio-group
+{
+    width:100%;
+    text-align:center; 
+    margin:10px 0 10px 0;
+}
+
+.dialogs-radio-group .ant-radio-button-wrapper
+{
+    width:33%;
+    border:none;
+    background-color: transparent;
+    color: rgb(255,255,255,0.5);
+}
+
+.dialogs-radio-group .ant-radio-button-wrapper .anticon
+{
+    font-size: 25px;
+
+}
+
+.dialogs-radio-group .ant-radio-button-wrapper.ant-radio-button-wrapper-checked
+{
+    color:white;
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.20));
+
+}
+/*#endregion*/
+
+/*#region Chat page*/
+
+.chat-layout
+{
+    top: 0;
+    bottom: 0;
+    position: absolute;
+}
+
+.dialogs-col
+{
+    background:var(--theme-color);
+    border-radius: 0 25px 25px 0;
+}
+
+.dialogs-list .ant-list-item:hover
+{
+    background:rgba(255, 255, 255,0.3);
+}
+
+.dialogs-list .ant-list-item.ant-list-item-active
+{
+    background:rgba(255, 255, 255,0.3);
+}
+
+.empty-chat-window
+{
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.empty-chat-window .ant-empty-image
+{
+    height: unset;
+}
+
+.chat-window
+{
+    height:100%;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-window .header
+{
+    height: 10%;
+    display: flex;
+    align-items: center;
+    box-Shadow:10px 5px 10px 0 rgba(0,0,0,0.1);
+    justify-content: space-between;
+    padding: 10px 20px 10px 30px;
+}
+
+.chat-window .header .ant-typography
+{
+    margin:0;
+}
+
+.chat-window .messages-list
+{
+    height: 80%;
+}
+
+.chat-window .message-form
+{
+    display: flex;
+    height: 20%;
+    box-shadow:10px 0px 10px 0 rgba(0,0,0,0.1);
+}
+
+.chat-page-container
+{
+    height:100%;
+}
+
+.messages,
+.messages .ant-spin-container,
+.messages .ant-spin-nested-loading,
+.messages .ant-spin-container,
+.messages .ant-list-items
+{
+    height: 100%;
+}
+
+.messages .ant-list-items
+{
+    display: flex;
+    flex-direction: column-reverse;
+    overflow: hidden;
+}
+
+
+
+/*#endregion*/

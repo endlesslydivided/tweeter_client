@@ -15,16 +15,16 @@ root.render(
         theme={{
           algorithm: theme.defaultAlgorithm,
           token: {
-            colorPrimary: '#2F80ED',
+            colorPrimary: 'rgb(47,128,250,1)',
             colorBgBase:'white',
-            fontFamily: 'Poppins, Montserrat'
+            fontFamily: 'Poppins, Montserrat',
           },
           components:
           {
             Layout:
             {
               colorBgHeader:'white',            
-            }
+            },
           }
          
         }}

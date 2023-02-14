@@ -55,7 +55,7 @@ export default function UserSmMdLayout()
     };
     
     return (
-        <Layout style={{ background: "#F2F2F2"}}>
+        <Layout className={`smMd-layout ${window.location.pathname === CHAT_ROUTE ? 'chat-layout' : ''}`}>
             <Header  style={{display:'flex'}}>
                 <div>
                     <Image preview={false} width={120} src={logo}/>
@@ -102,9 +102,9 @@ export default function UserSmMdLayout()
             <Content style={{display:'grid',width:'100vw'}}>
                 <Outlet/>
             </Content>
-            <Footer style={{ background: "#F2F2F2",position:'sticky',height:'100%',textAlign:'center'}}>
+            {/* <Footer style={{ background: "#F2F2F2",position:'sticky',height:'100%',textAlign:'center'}}>
                 <Typography.Title disabled level={5}> created by endlesslydivided, 2023</Typography.Title>
-            </Footer>
+            </Footer> */}
         </Layout>
     );
 }
