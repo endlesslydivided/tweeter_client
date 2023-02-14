@@ -16,6 +16,7 @@ import Loader from '../Loader';
 import UnathorizedPage from '../../pages/UnathorizedPage';
 import ExplorePage from '../../pages/ExplorePage';
 import ChatPage from '../../pages/ChatPage';
+import styled from 'styled-components';
 
 interface AppRouterProps {
 
@@ -27,6 +28,7 @@ const AppRouter: React.FC<AppRouterProps>= () => {
     const dispatch = useDispatch();
     const user: any = useAppSelector(state => state?.auth?.user);
 
+    
     const location = useLocation();
 
     if (isLoading || (!user && !isError)) {

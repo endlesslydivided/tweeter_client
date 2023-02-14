@@ -1,8 +1,10 @@
-import { BookOutlined, CommentOutlined, HeartOutlined, MailOutlined, RetweetOutlined, SoundOutlined, StarOutlined, UserOutlined } from "@ant-design/icons";
+import { BookOutlined, CommentOutlined, HeartOutlined, MailOutlined, PictureOutlined, RetweetOutlined, SoundOutlined, StarOutlined, UserOutlined } from "@ant-design/icons";
 
-import { Avatar, Button, Col,theme, List, Radio, Row, Space, Typography, Empty } from "antd";
+import { Avatar, Button, Col,theme, List, Radio, Row, Space, Typography, Empty, Input, Tooltip } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
+import SearchBar from "../sections/exploreSections/SearchBar";
+import PostForm from "../sections/feedPostsSections/PostForm";
 
 const { useToken } = theme;
 
@@ -77,7 +79,7 @@ const ChatPage = () => {
             surname:'Surname',
             lastMessage:'Hello!',
             time:'10 January 10:04'
-        },
+         },
         {
             id:'1',
             name:'Name',
@@ -147,6 +149,7 @@ const ChatPage = () => {
                             </div>
                             <div className="messages-list">
                             <List className="messages"
+                                
                                 dataSource={messages}
                                 split={false}
                                 renderItem={(item) => (
@@ -168,7 +171,19 @@ const ChatPage = () => {
                             />
                             </div>
                             <div className="message-form">
-                                <Typography.Title level={3}>Name Surname</Typography.Title>
+                            <Space direction='horizontal' style={{width:'100%'}}>
+                                    <Input.TextArea autoSize={true}  maxLength={2000}  placeholder="Text a message..."/>
+                                    <div style={{display:'flex'}} >
+
+                                        <Tooltip  title="Add photo">
+                                            <Button type="link" shape='circle'  icon={<PictureOutlined />} />
+                                        </Tooltip>
+
+                                        <Button style={{marginLeft:'auto'}} type="primary" >Tweet</Button>
+
+                                    </div>
+
+                                </Space>
                             </div>
                         </div>
                         :

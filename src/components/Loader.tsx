@@ -8,9 +8,7 @@ interface LoaderProps {
 
 const Loader: FC<LoaderProps> = ({containerStyle,spinProps}) => {
     return (
-        <div style={{height: '95vh',...containerStyle}}>
-            <Spin {...spinProps} />
-        </div>
+            <Spin {...spinProps} size="large" style={{position:'fixed',top:'50%',bottom:'50%',left:'50%',right:'50%'}}/>
     );
 };
 
