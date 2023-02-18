@@ -1,11 +1,9 @@
 
-import React, {useEffect} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {useSignUpMutation} from '../../services/AuthApiSlice';
-import {useDispatch} from 'react-redux';
-import {setCredentials} from '../../store/reducers/AuthSlice';
-import {Layout,Menu,Button,Row,Col,Typography,Form,Input,Switch, Card, Checkbox, Select, Divider, Space,} from "antd";
-import {DribbbleOutlined,TwitterOutlined,InstagramOutlined} from "@ant-design/icons";
+import { Button, Form, Input, Select, Space, Typography } from "antd";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSignUpMutation } from '../../services/AuthApiSlice';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -33,7 +31,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({animState,setAnimState})  =>
 
               <Title style={{textAlign:'center'}} level={1}>Sign up</Title>
 
-              <Title type='secondary' style={{textAlign:'center'}} level={5}>
+              <Title style={{textAlign:'center'}} type='secondary'  level={5}>
               Enter your data to create an account
               </Title>
 
@@ -56,7 +54,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({animState,setAnimState})  =>
 
                     <Input.Group compact>
 
-                      <Form.Item noStyle name="Country" rules={[{ required: true, message: "Please enter your county!" },]}>
+                      <Form.Item noStyle name="Country" rules={[{ required: true, message: "Please enter your country!" },]}>
                         <Input style={{ width: '50%' }} placeholder="Country" />
                       </Form.Item>
 

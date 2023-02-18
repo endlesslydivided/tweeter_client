@@ -21,6 +21,7 @@ body
     top: 0;
     bottom: 0;
     position: absolute;
+    width: 100%;
 }
 
 .smMd-layout
@@ -470,9 +471,11 @@ header.ant-layout-header {
 /*#region Page containers */
 .home-feed-page-container,
 .bookmarks-page-container,
-.explore-page-container
+.explore-page-container,
+.setting-page-container
 {
-    margin-top: 2%;
+    display:grid;
+    margin-top: 15px;
 }
 /*#endregion*/
 
@@ -557,6 +560,12 @@ header.ant-layout-header {
 
 /*#region Chat page*/
 
+.dialogs-list .ant-list-item
+{
+    cursor: pointer;
+}
+ 
+
 .chat-layout
 {
     top: 0;
@@ -566,7 +575,6 @@ header.ant-layout-header {
 
 .dialogs-col
 {
-    background:var(--theme-color);
     border-radius: 0 25px 0 0;
     margin: 15px 0 0 0;
 }
@@ -669,3 +677,11 @@ header.ant-layout-header {
 }
 
 /*#endregion*/
+
+/*#region Settings page*/
+.user-data-settings .ant-upload 
+{
+    width: 120px !important;
+    height: 120px !important;
+}
+/*endregion*/

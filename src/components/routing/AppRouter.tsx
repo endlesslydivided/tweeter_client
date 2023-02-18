@@ -41,7 +41,6 @@ const AppRouter: React.FC<AppRouterProps>= () => {
             <Route path="/" element={<UserSmMdLayout/>}>
                 <Route index element={<HomePage/>}/>
                 <Route path={`/${FEED_PAGE}`} element={<HomeFeedPage/>}/>
-
                 <Route path={`/${BOOKMARKS_ROUTE}`} element={<BookmarksPage/>}/>
                 <Route path={`/${EXPLORE_ROUTE}`} element={<ExplorePage/>}/>
                 <Route path={`/${PROFILE_ROUTE}`} element={<ProfilePage/>}/>

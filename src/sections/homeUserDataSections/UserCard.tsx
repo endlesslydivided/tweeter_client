@@ -8,7 +8,7 @@ justify-self: center;
 margin: -30px 0 0 0
 width:100%
 `
-const UserAvatar= styled(Avatar)`
+export const UserAvatar= styled(Avatar)`
 background: gainsboro;
 margin: -40px -10px 0px;
 border: solid white 4px;

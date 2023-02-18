@@ -44,15 +44,7 @@ const items: MenuProps['items'] = [
 
 export default function UserSmMdLayout() 
 {
-    const location = useLocation();
-    const [current, setCurrent] = useState(location.pathname);
     const navigate = useNavigate();
-
-    const onClick: MenuProps['onClick'] = (e) => {
-        console.log('click ', e);
-        setCurrent(e.key);
-
-    };
     
     return (
         <Layout className={`smMd-layout ${window.location.pathname === CHAT_ROUTE ? 'chat-layout' : ''}`}>
@@ -61,39 +53,36 @@ export default function UserSmMdLayout()
                     <Image preview={false} width={120} src={logo}/>
                 </div>
                 <div className='header-col header-nav'>
-                    <StyledMenu             
-                    onClick={onClick}  
-                    selectedKeys={[current]} mode="horizontal"
-                    items={items}/>
+                    <StyledMenu selectedKeys={[window.location.pathname]} mode="horizontal" items={items}/>
                 </div>
                 <div style={{whiteSpace: 'nowrap'}}>
                     <Avatar.Group>
-                        <Avatar icon={<UserOutlined />} shape="square" />
+                        <Avatar icon={<UserOutlined />} onClick={() => navigate(`${HOME_ROUTE}`)}  style={{cursor: 'pointer'}} shape="square" />
                         <Popover id='headerPopover' placement="bottomRight"
                             content=
-                            {   <>
-                                    <Space direction='vertical' size={0} className='user-header-popover-content'>
-                                        <Button block className='user-header-button-profile'  onClick={() => navigate(`${PROFILE_ROUTE}`)} type='text' icon={<UserOutlined/>}>
-                                            My profile
-                                        </Button>
-                                        <Button block className='user-header-button-chat'  onClick={() => navigate(`${CHAT_ROUTE}`)}  type='text' icon={<MailFilled/>}>
-                                            Group chat
-                                        </Button>
-                                        <Button block className='user-header-button-settings'  onClick={() => navigate(`${SETTINGS_ROUTE}`)}  type='text' icon={<SettingFilled/>}>
-                                            Settings
-                                        </Button>
-                                    </Space>
-                                    <Divider type='horizontal' style={{margin:'10px 0px'}}/>
-                                    <Space direction='vertical' className='user-header-popover-content'>
-                                        <Button block danger className='user-header-button-logout'  type='text' color='red' icon={<ImportOutlined/>} >
-                                            Logout 
-                                        </Button>
-                                    </Space>
-                                </>
+                            {<>
+                                <Space direction='vertical' size={0} className='user-header-popover-content'>
+                                    <Button block className='user-header-button-profile'  onClick={() => navigate(`${HOME_ROUTE}`)} type='text' icon={<UserOutlined/>}>
+                                        My profile
+                                    </Button>
+                                    <Button block className='user-header-button-chat'  onClick={() => navigate(`${CHAT_ROUTE}`)}  type='text' icon={<MailFilled/>}>
+                                        Group chat
+                                    </Button>
+                                    <Button block className='user-header-button-settings'  onClick={() => navigate(`${SETTINGS_ROUTE}`)}  type='text' icon={<SettingFilled/>}>
+                                        Settings
+                                    </Button>
+                                </Space>
+                                <Divider type='horizontal' style={{margin:'10px 0px'}}/>
+                                <Space direction='vertical' className='user-header-popover-content'>
+                                    <Button block danger className='user-header-button-logout'  type='text' color='red' icon={<ImportOutlined/>} >
+                                        Logout 
+                                    </Button>
+                                </Space>
+                            </>
                             } 
                             trigger="click"
                         >
-                            <Typography.Text style={{margin: '5px 0px 0px 10px'}} strong>Name Surname <CaretDownOutlined/></Typography.Text>  
+                            <Typography.Text style={{margin: '5px 0px 0px 10px', cursor: 'pointer'}} strong>Name Surname <CaretDownOutlined/></Typography.Text>  
                         </Popover>
 
                     </Avatar.Group>
