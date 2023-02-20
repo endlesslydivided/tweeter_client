@@ -1,8 +1,8 @@
 import { Col, Row } from "antd";
 import { useRef, useState } from "react";
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import SignInForm from "../../components/forms/SignInForm";
-import SignUpForm from "../../components/forms/SignUpForm";
+import SignInForm from "../../sections/unauthorizedSections/SignInForm";
+import SignUpForm from "../../sections/unauthorizedSections/SignUpForm";
 import './UnauthorizedPage.scss'
 
 const UnathorizedPage = () => {

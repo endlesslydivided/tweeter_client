@@ -10,6 +10,8 @@ body
 {
     overflow-x: hidden;
     min-height: 100vh;
+    background: #F2F2F2;
+
 }
 
 .ant-row
@@ -33,7 +35,7 @@ body
 
 /* Track */
 ::-webkit-scrollbar-track {
-background: white;
+    background: white;
 }
 
 /* Handle */

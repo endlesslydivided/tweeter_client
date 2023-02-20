@@ -2,6 +2,7 @@ import { LockOutlined, SettingOutlined } from "@ant-design/icons";
 import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
+import SessionSection from "../../sections/settingsSections/SessionsSection";
 import UpdatePasswordSection from "../../sections/settingsSections/UpdatePasswordSection";
 import UserDataFormSection from "../../sections/settingsSections/UserDataFormSection";
 import './SettingsPage.scss';
@@ -19,13 +20,32 @@ const items: MenuProps['items'] = [
                     Security <LockOutlined/>
                 </Typography.Text>), 
         className:'vertical-menu-item',
-        key: 'tweetsReplies',
+        key: 'security',
     },
 ];
 
 const SettingsPage = () => {
 
     const [content, setContent] = useState('general');
+
+    const renderContent = () =>
+    {
+        switch(content)
+        {
+            case 'general': return (
+                <>
+                    <UserDataFormSection/>
+                    <UpdatePasswordSection/>
+                </>
+            )
+
+            case 'security': return (
+                <>
+                    <SessionSection/>
+                </>
+            )
+        }
+    }
 
     return (
         <div  className='setting-page-container'>
@@ -41,8 +61,7 @@ const SettingsPage = () => {
                 </Col>
                 <Col span={18} className='settings-page-general-col'>
                     <Space direction="vertical">
-                        <UserDataFormSection/>
-                        <UpdatePasswordSection/>
+                        {renderContent()}
                     </Space>
                 
                 </Col>
