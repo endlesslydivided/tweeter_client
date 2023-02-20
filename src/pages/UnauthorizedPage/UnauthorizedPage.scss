@@ -1,0 +1,76 @@
+.auth-page-container
+{
+    overflow-x: hidden;
+    height: 100%;
+
+    .fade-enter
+    {
+        .register
+        {
+            opacity: 0.5;
+            transform: translateX(-25%);
+        }
+
+        .login
+        {
+            opacity: 0.5;
+            transform: translateX(25%);
+        }
+    }
+    
+    .fade-enter-active
+    {
+        .register, .login
+        {
+            opacity: 1;
+            transform: translateX(0%);
+            transition: opacity 300ms, transform 300ms;
+        }
+    }
+
+    .fade-exit
+    {
+        .register, .login
+        {
+            opacity: 1;
+            transform: translateX(0%);
+        }
+    }
+    
+    .fade-exit-active
+    {
+        .register
+        {
+            opacity: 0.1;
+            transform: translateX(-25%);
+            transition: opacity 300ms, transform 300ms;
+        }
+
+        .login
+        {
+            opacity: 0.1;
+            transform: translateX(25%);
+            transition: opacity 300ms, transform 300ms;
+
+        }
+    }
+
+    .login, .register
+    {
+        height: 100%;
+
+        .form-col
+        {
+            padding:0 10% 0 10%;
+        }
+
+        .content-col
+        {
+            text-align: center;
+        }
+    }
+
+}
+
+
+

@@ -1,0 +1,117 @@
+@import '../../_variables.scss';
+
+.post-form-card 
+{
+
+    .ant-divider
+    {
+        margin:7.5px 0px;
+    }
+
+    .ant-card-body
+    {
+        padding: 15px 15px 10px 15px;
+    }
+
+    .ant-card-meta-title,
+    .ant-card-meta-description
+    {
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
+    }
+
+    .ant-card-meta-title .post-form-card-title
+    {
+        font-size: 12px !important;
+    }
+
+    .post-form-card-space
+    {
+        width: 100%;
+
+        .post-form-space
+        {
+            width: 100%;
+        }
+    }
+
+    .ant-input-textarea
+    {
+        margin-top: 5px;
+        width: 100%;
+
+        .ant-input 
+        {
+            resize: none;
+            padding-right: 0;
+            border:none !important;
+            box-shadow: none !important;
+        }
+    }
+
+    .post-form-textarea-content
+    {
+        display: flex;
+        
+        .post-form-tweet-col
+        {
+            margin-left: auto;
+        }
+    }
+
+    @media(max-width: $md) 
+    {
+        .post-form-avatar
+        {
+            display: none;
+        }
+    }
+    
+
+    
+
+
+}
+
+
+
+
+.ant-popover-arrow
+{
+    display: none !important;
+}
+
+.ant-radio-button-wrapper::before
+{
+    content: none !important;
+}
+
+.post-form-popover-content
+{
+    width: 100%;
+
+    .post-form-button-follow,
+    .post-form-button-everyone
+    {
+        width: 100%;
+        border:none;
+    }
+}
+
+#replyPopover
+{
+    width:80%;
+
+    .post-form-popover-title
+    {
+        margin:0;
+        font-size:14px;
+    }
+
+    .post-form-popover-description
+    {
+        color: rgba(0,0,0,.45);
+        font-weight:normal;
+        font-size:12px ;
+    }
+}

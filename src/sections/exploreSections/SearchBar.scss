@@ -1,0 +1,26 @@
+.search-bar-card
+{
+    .ant-input-group-addon:last-child .ant-input-search-button
+    {
+        border-radius:6px !important;
+    }
+
+    .ant-card-body
+    {
+        padding: 10px 15px 10px 15px;
+    }
+
+    .search-bar-input .ant-input 
+    {
+        resize: none;
+        padding-right: 0;
+        border:none !important;
+        box-shadow: none !important;
+    }
+
+    .ant-input-group-addon
+    {
+        border: none;
+        background-color: transparent;
+    }
+}

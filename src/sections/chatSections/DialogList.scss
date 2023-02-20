@@ -1,0 +1,53 @@
+.dialog-space
+{
+    width: 100%;
+    justify-self:center;
+
+    .dialogs-radio-group
+    {
+        width:100%;
+        text-align:center; 
+        margin:10px 0 10px 0;
+
+        .ant-radio-button-wrapper
+        {
+            width:33%;
+            border:none;
+            background-color: transparent;
+            color: rgba(255,255,255,0.5);
+
+            .anticon
+            {
+                font-size: 25px;
+            }
+
+            &.ant-radio-button-wrapper-checked
+            {
+                color:white;
+                filter: drop-shadow(0 0 5px rgba(0,0,0,0.20));
+            }
+        }
+    }
+
+    .dialogs-list
+    {
+        .title
+        {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .ant-list-item
+        {
+            cursor: pointer;
+
+        }
+
+        .ant-list-item:hover,
+        .ant-list-item.ant-list-item-active
+        {
+            background:rgba(255, 255, 255,0.3);
+
+        }
+    }
+}

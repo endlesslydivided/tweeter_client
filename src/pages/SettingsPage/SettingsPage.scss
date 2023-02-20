@@ -1,0 +1,27 @@
+
+.setting-page-container
+{
+    display:grid;
+    margin: 15px 0px;
+
+    .user-data-settings .ant-upload 
+    {
+        width: 120px !important;
+        height: 120px !important;
+    }
+
+    .settings-page-row
+    {
+        width: 75vw;
+        justify-self:center;
+    }
+
+    .settings-page-general-col
+    {
+        .ant-space
+        {
+            width: 100%;
+        }
+    }
+
+}

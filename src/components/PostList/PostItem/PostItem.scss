@@ -1,0 +1,63 @@
+.post-item-card
+{
+    width: 100%;
+
+    .ant-image
+    {
+        width: 25%;
+    }
+
+    .ant-card-meta-title
+    {
+        margin-bottom: 0px !important;
+        margin-top: -5px !important;
+    }
+
+    .ant-card-meta-description
+    {
+        margin-top: -2px !important;
+    }
+
+    .post-item-stats span
+    {
+        font-size: 12px;
+    }
+
+    .post-item-card-description
+    {
+        font-size: 12px;
+    }
+
+    .ant-divider
+    {
+        margin-top: -13px;
+        margin-bottom: 0;
+    }
+
+    .ant-row
+    {
+        margin-top: -25px;
+    }
+
+    .reply-row.ant-row
+    {
+        margin-top: -15px;
+        flex-wrap: nowrap;
+
+        .ant-input-affix-wrapper
+        {
+            margin-left: 10px;
+
+            .anticon 
+            {
+                color: rgba(0,0,0,.45);
+            }
+        }
+        
+    }
+}
+
+.post-item-card-space
+{
+    width: 100%;
+}

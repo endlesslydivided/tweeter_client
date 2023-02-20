@@ -1,0 +1,22 @@
+.home-feed-page-container
+{
+    display:grid;
+    margin: 15px 0px;
+
+    .home-feed-row
+    {
+        width: 75vw;
+        justify-self:center;
+
+        .ant-col
+        {
+            .ant-space
+            {
+                width: 100%;
+                justify-self:center;
+            }
+        }
+    }
+
+   
+}

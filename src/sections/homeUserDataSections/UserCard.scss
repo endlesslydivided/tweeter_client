@@ -1,0 +1,34 @@
+.user-card
+{
+    justify-self: center;
+    margin: -30px 0 0 0;
+    width:100%;
+
+    .user-avatar
+    {
+        background: gainsboro;
+        margin: -40px -10px 0px;
+        border: solid white 4px;
+    }
+
+    .user-card-info-row
+    {
+        align-items: baseline;
+        
+        .user-card-description
+        {
+            white-space: pre-line;
+        }
+    }
+
+    .user-card-avatar-container
+    {
+        position: absolute 
+    }
+
+    .user-card-info-col
+    {
+        padding-top: 20px;
+        padding-left: 130px;
+    } 
+}

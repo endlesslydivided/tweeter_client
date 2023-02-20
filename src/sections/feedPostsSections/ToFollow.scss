@@ -1,0 +1,114 @@
+.follow-section-card 
+{
+    .follow-section-title-divider
+    {
+        margin:7.5px 0px;
+    }
+
+    .follow-list-item-divider
+    {
+        margin:10px 0px;
+    }
+
+    .follow-section-item-button
+    {
+        font-size:10px;
+    }
+
+    .follow-section-card-list 
+    {
+        margin:2 !important;
+
+        .ant-list-item
+        {
+            padding: 0;
+        }
+
+        &.ant-list
+        {
+            margin-top: 20px;
+        }
+
+        .follow-section-item-description
+        {
+            margin-top: 0px !important;
+
+        }
+    }
+
+    .follow-image-row 
+    {
+        .ant-image
+        {
+            height: 100px;
+            width: 100%;
+        }
+        
+
+        .ant-image-mask
+        {
+            border-radius: 8px;
+        }
+    }
+
+    .follow-image
+    {
+        border-radius: 8px;
+        object-fit: cover;
+        height: 100%;
+        width:100%;
+       
+
+  
+    }
+
+    .follow-section-item
+    {
+        padding:20px 0px;
+        margin-bottom:10px
+    }
+
+    .follow-section-item-header
+    {
+        display:flex;
+        flex-direction:column;
+        margin:2px 0 0 10px;
+    }
+
+    .follow-section-item-title,
+    .follow-section-item-description
+    {
+        margin-bottom: 0px !important;
+        margin-top: -4px !important;
+    }
+
+    .follow-section-item-text
+    {
+        margin:5px 0 0 0;
+        font-size: 13px;
+        color: rgba(0,0,0,.45);
+    }
+
+    .follow-section-item-description
+    {
+        font-size: 12px;
+    }
+    
+    .ant-card-body
+    {
+        padding: 15px 15px 10px 15px;
+    }
+
+    .ant-card-meta-title 
+    {
+        .follow-section-card-title
+        {
+            font-size: 12px !important;
+        }
+    }
+
+    .ant-card.follow-section-item-card
+    {
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,33 @@
+.trends-section-card
+{
+
+    .ant-divider
+    {
+        margin:7.5px 0px;
+    }
+    .ant-card-body
+    {
+        padding: 15px 15px 5px 15px;
+    }
+
+    .ant-card-meta-title 
+    {
+        .trends-section-card-title
+        {
+            font-size: 12px !important;
+        }
+    }
+
+    .trends-section-card-list 
+    {
+        .ant-list-item
+        {
+            padding: 0;
+        }    
+    }
+    
+    .trends-list-item
+    {
+        margin:0;
+    }
+}

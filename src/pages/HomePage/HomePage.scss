@@ -1,0 +1,30 @@
+.home-page-container
+{
+    display:grid;
+    margin-bottom: 15px;
+
+    .home-page-space
+    {
+        width: 75vw;
+        justify-self:center;
+
+        .home-page-usercard-row
+        {
+            margin-top: -40px;
+        }
+    }
+
+    & > .ant-image
+    {
+        height: 40vh;
+    }
+
+    .ant-image .profile-bg-image
+    {   
+        object-fit: cover;
+        height: 100%;
+        width:100%;
+    }
+}
+
+    

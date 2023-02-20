@@ -1,0 +1,112 @@
+
+.chat-window
+{
+    height:100%;
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    
+    .header
+    {
+        height: 10%;
+        display: flex;
+        align-items: center;
+        box-Shadow:10px 5px 10px 0 rgba(0,0,0,0.1);
+        justify-content: space-between;
+        padding: 10px 20px 10px 30px;
+
+        .ant-typography
+        {
+            margin:0;
+
+        }
+    }
+
+    .messages-list
+    {
+        height: 75%;
+
+        .messages,
+        .messages .ant-spin-container,
+        .messages .ant-spin-nested-loading,
+        .messages .ant-spin-container,
+        .messages .ant-list-items
+        {
+            height: 100%;
+        }
+
+        .messages 
+        {
+            .ant-list-items
+            {
+                display: flex;
+                flex-direction: column-reverse;
+                overflow-y: scroll;
+            }
+
+            .ant-list-item
+            {
+                .ant-typography.ant-typography-secondary
+                {
+                    margin:10px;
+                }
+            }
+        }
+    }
+
+    .message-form
+    {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 25%;
+        top: 87%;
+        display: flex;
+        height: 13%;
+        box-shadow:10px 0px 10px 0 rgba(0,0,0,0.1);
+
+        .message-form-textarea
+        {
+            resize: none;
+            padding-right: 0;
+            border:none !important;
+            box-shadow: none !important;
+            background: none;
+        }
+
+        .message-form-tooltip-container
+        {
+            display:flex;
+            align-items:center;
+            margin:0 10px 0 10px;
+            width:auto;
+
+            .ant-button
+            {
+                margin-left: auto;
+            }
+        }
+    } 
+}
+
+.empty-chat-window
+{
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .ant-empty-image
+    {
+        height: unset;
+        font-size: 55px;
+
+    }
+
+    .ant-empty-description
+    {
+        font-size: 25px;
+    }
+}
