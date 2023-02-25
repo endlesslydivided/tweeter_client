@@ -3,64 +3,17 @@
     overflow-x: hidden;
     height: 100%;
 
-    .fade-enter
-    {
-        .register
-        {
-            opacity: 0.5;
-            transform: translateX(-25%);
-        }
-
-        .login
-        {
-            opacity: 0.5;
-            transform: translateX(25%);
-        }
-    }
-    
-    .fade-enter-active
-    {
-        .register, .login
-        {
-            opacity: 1;
-            transform: translateX(0%);
-            transition: opacity 300ms, transform 300ms;
-        }
-    }
-
-    .fade-exit
-    {
-        .register, .login
-        {
-            opacity: 1;
-            transform: translateX(0%);
-        }
-    }
-    
-    .fade-exit-active
-    {
-        .register
-        {
-            opacity: 0.1;
-            transform: translateX(-25%);
-            transition: opacity 300ms, transform 300ms;
-        }
-
-        .login
-        {
-            opacity: 0.1;
-            transform: translateX(25%);
-            transition: opacity 300ms, transform 300ms;
-
-        }
-    }
-
     .login, .register
     {
         height: 100%;
 
         .form-col
         {
+            display: flex;
+            height: 100%;
+            background: white;
+            flex-direction: column;
+            justify-content: center;
             padding:0 10% 0 10%;
         }
 
@@ -74,3 +27,47 @@
 
 
 
+.fade-enter .register {
+    opacity: 0.5;
+    transform: translateX(-25%);
+}
+
+.fade-enter-active .register {
+    opacity: 1;
+    transform: translateX(0%);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.fade-exit .register {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.fade-exit-active .register {
+    opacity: 0.1;
+    transform: translateX(-25%);
+    transition: opacity 300ms, transform 300ms;
+}
+
+.fade-enter .login {
+    opacity: 0.5;
+    transform: translateX(25%);
+}
+
+.fade-enter-active .login {
+    opacity: 1;
+    transform: translateX(0%);
+    transition: opacity 300ms, transform 300ms;
+
+}
+
+.fade-exit .login {
+    opacity: 1;
+    transform: translateX(0%);
+}
+
+.fade-exit-active .login {
+    opacity: 0.1;
+    transform: translateX(25%);
+    transition: opacity 300ms, transform 300ms;
+}

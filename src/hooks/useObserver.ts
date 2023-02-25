@@ -1,8 +1,7 @@
-//@ts-nocheck
 import {useEffect, useRef} from "react";
 
-export const useObserver = (ref, page, totalPages, isLoading, callback) => {
-    const observer = useRef();
+export const useObserver = (ref:any, page:any, totalPages:any, isLoading:any, callback:any) => {
+    const observer:React.MutableRefObject<any> = useRef();
 
     useEffect(() => {
         if (isLoading)
@@ -10,7 +9,7 @@ export const useObserver = (ref, page, totalPages, isLoading, callback) => {
         if (observer.current)
             observer.current.disconnect();
 
-        var cb = function (entries, observer) {
+        var cb = function (entries:any, observer:any) {
             if (entries[0].isIntersecting && page <= totalPages) {
                 callback()
             }

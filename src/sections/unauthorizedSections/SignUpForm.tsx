@@ -1,52 +1,62 @@
 
-import { Button, Form, Input, Select, Space, Typography } from "antd";
-import React from 'react';
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+import { Button, Form, Input, notification, Select, Space, Typography } from "antd";
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNotify } from "../../hooks/useNotify";
 import { useSignUpMutation } from '../../services/AuthApiSlice';
+import { LOGIN_ROUTE } from "../../utils/consts";
 
 const { Title } = Typography;
 const { Option } = Select;
 
 interface SignUpFormProps {
 
-    animState:boolean,
-    setAnimState:Function
 }
 
-
-const SignUpForm: React.FC<SignUpFormProps> = ({animState,setAnimState})  =>
+ 
+const SignUpForm: React.FC<SignUpFormProps> = ({})  =>
 {
     const [form] = Form.useForm();
 
-
-    const [singUp, {isLoading, isError}] = useSignUpMutation();
+    const [singUp, result] = useSignUpMutation(); 
 
     const navigate = useNavigate();
-    const location = useLocation();
-    const dispatch = useDispatch();
+
+    useNotify(result,'User successfully registered! Go to your email account to verify', () => navigate((`${LOGIN_ROUTE}`)));
+
+    const submitHandler = (values:any) =>
+    {
+      singUp(values);
+    }
 
     return (
         <React.Fragment>
 
               <Title style={{textAlign:'center'}} level={1}>Sign up</Title>
 
-              <Title style={{textAlign:'center'}} type='secondary'  level={5}>
-              Enter your data to create an account
-              </Title>
+              <Typography.Text style={{textAlign:'center'}} type='secondary'>
+                Enter your data to create an account
+              </Typography.Text>
 
-              <Form name="basic" initialValues={{ remember: true }} layout='vertical' form={form}>
+              <Form 
+              onFinish={submitHandler} 
+              name="basic" 
+              initialValues={{ remember: true }} 
+              layout='vertical' 
+              form={form}>
 
                 <Form.Item label="User data:"  style={{margin:'0'}}>
                   <Space direction="vertical" size="middle" style={{display:'flex'}}>
 
                     <Input.Group compact>
 
-                      <Form.Item noStyle name="Name" rules={[{ required: true, message: "Please enter your name!" },]}>
-                        <Input style={{ width: '50%' }} placeholder="Name" />
+                      <Form.Item noStyle name="firstname" rules={[{ required: true, message: "Please enter your name!" },]}>
+                        <Input style={{ width: '50%' }} placeholder="Firstname" />
                       </Form.Item>
 
-                      <Form.Item  noStyle name="Surname" rules={[{ required: true, message: "Please enter your surname!" },]}> 
+                      <Form.Item  noStyle name="surname" rules={[{ required: true, message: "Please enter your surname!" },]}> 
                         <Input style={{ width: '50%' }} placeholder="Surname" />
                       </Form.Item>
 
@@ -54,11 +64,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({animState,setAnimState})  =>
 
                     <Input.Group compact>
 
-                      <Form.Item noStyle name="Country" rules={[{ required: true, message: "Please enter your country!" },]}>
+                      <Form.Item noStyle name="country" rules={[{ required: true, message: "Please enter your country!" },]}>
                         <Input style={{ width: '50%' }} placeholder="Country" />
                       </Form.Item>
 
-                      <Form.Item  noStyle name="City" rules={[{ required: true, message: "Please enter your city!" },]}> 
+                      <Form.Item  noStyle name="city" rules={[{ required: true, message: "Please enter your city!" },]}> 
                         <Input style={{ width: '50%' }} placeholder="City" />
                       </Form.Item>
 
@@ -78,7 +88,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({animState,setAnimState})  =>
 
                   <Space direction="vertical" size="middle" style={{display:'flex'}}>
 
-                    <Form.Item noStyle name="Email" rules={[{ required: true, message: "Please enter your email!" },]}>
+                    <Form.Item noStyle name="email" rules={[{ required: true, message: "Please enter your email!" },]}>
                       <Input placeholder="Email" />
                     </Form.Item>
 
@@ -94,12 +104,17 @@ const SignUpForm: React.FC<SignUpFormProps> = ({animState,setAnimState})  =>
                 </Form.Item>
                
                 <Form.Item>
-                  <Button style={{ width: "100%" }} type="primary" htmlType="submit">
+                  <Button style={{ width: "100%" }} loading={result.isLoading}   type="primary" htmlType="submit">
                     SIGN UP
                   </Button>
                 </Form.Item>
               </Form>
-              <Typography.Paragraph type='secondary'>Already have an account?{" "}<Link to="/signIn" onClick={() => setAnimState(!animState)}>Sign In</Link></Typography.Paragraph>
+              <Typography.Paragraph type='secondary'>
+                Already have an account?{" "}
+                <Link to="/signIn">
+                  Sign In
+                </Link>
+              </Typography.Paragraph>
         </React.Fragment>
     )
 }

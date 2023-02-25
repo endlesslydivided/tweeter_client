@@ -2,6 +2,7 @@ import { CaretDownOutlined, ImportOutlined, MailFilled, SettingFilled, UserOutli
 import type { MenuProps } from 'antd';
 import { Avatar, Button, Divider, Image, Layout, Menu, Popover, Space, Typography } from 'antd';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useSignOutMutation } from '../../services/AuthApiSlice';
 import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, HOME_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import './SmMdLayout.scss';
 
@@ -32,8 +33,16 @@ const items: MenuProps['items'] = [
 
 export default function SmMdLayout() 
 {
+
+    const [signOut, result] = useSignOutMutation(); 
+
     const navigate = useNavigate();
-    
+
+
+    const signOutHandler:Function = () =>
+    {
+        signOut();
+    }
     return (
         <Layout className={`smMd-layout ${window.location.pathname === CHAT_ROUTE ? 'chat-layout' : ''}`}>
             <Header>
@@ -64,7 +73,7 @@ export default function SmMdLayout()
                                 <Divider type='horizontal'/>
 
                                 <Space direction='vertical' className='user-header-popover-content'>
-                                    <Button block danger className='user-header-button-logout'  type='text' color='red' icon={<ImportOutlined/>} >
+                                    <Button block danger className='user-header-button-logout' onClick={() => signOutHandler()}  type='text' color='red' icon={<ImportOutlined/>} >
                                         Logout 
                                     </Button>
                                 </Space>

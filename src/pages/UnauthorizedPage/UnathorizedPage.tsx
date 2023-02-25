@@ -1,29 +1,29 @@
 import { Col, Row } from "antd";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import SignInForm from "../../sections/unauthorizedSections/SignInForm";
 import SignUpForm from "../../sections/unauthorizedSections/SignUpForm";
+import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
 import './UnauthorizedPage.scss'
 
 const UnathorizedPage = () => {
    
-    const [mode, setMode] = useState("out-in");
-
-    const [isLogin, setIsLogin]:any = useState(false);
+    const location = useLocation();
     const loginRef:any = useRef(null);
     const registerRef:any = useRef(null);
-    const nodeRef = isLogin ? loginRef : registerRef;
-
+    const nodeRef = location.pathname ===`${REGISTRATION_ROUTE}` ? registerRef: loginRef;
 
     return (
         <SwitchTransition>
-            <CSSTransition  key={isLogin} nodeRef={nodeRef} addEndListener={(done:any) =>{
+            <CSSTransition  key={location.pathname} nodeRef={nodeRef} addEndListener={(done:any) =>
+            {
                 nodeRef?.current?.addEventListener("transitionend", done, false);
             }} classNames="fade"
             >
                 <div ref={nodeRef} className='auth-page-container'>
                     {
-                        isLogin ?
+                        location.pathname ===`${REGISTRATION_ROUTE}` ?
                             <div className='register'>
                                 <Row align='middle' justify='space-between'>
                                     <Col span={12} className='content-col'>
@@ -35,7 +35,7 @@ const UnathorizedPage = () => {
                                         </p>
                                     </Col>
                                     <Col span={12} className='form-col'>
-                                        <SignUpForm animState={isLogin} setAnimState={setIsLogin}/>
+                                        <SignUpForm/>
                                     </Col>
                                 </Row>
 
@@ -44,7 +44,7 @@ const UnathorizedPage = () => {
                             <div className='login'> 
                                 <Row align='middle' justify='space-around'>
                                     <Col span={12} className='form-col'>
-                                        <SignInForm animState={isLogin} setAnimState={setIsLogin}/>
+                                        <SignInForm/>
                                     </Col>
                                     <Col span={12} className='content-col'>
                                         <h1 >

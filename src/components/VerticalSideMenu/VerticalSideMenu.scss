@@ -19,6 +19,11 @@
             height: 75%;
             top: 12.5%;
         } 
+
+        &.ant-menu-item
+        {
+            cursor: pointer;
+        }
     }
 
     .ant-menu-title-content

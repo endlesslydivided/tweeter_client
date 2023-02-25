@@ -6,7 +6,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         signIn: builder.mutation({
             query: (credentials) => ({
-                url: 'api//auth/signIn',
+                url: '/auth/signIn',
                 method: 'POST',
                 body: {...credentials}
             })
@@ -32,7 +32,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
         signOut: builder.mutation<void, void>({
             query: () => ({
                 url: '/auth/signOut',
-                method: 'GET',
+                method: 'POST',
                 credentials: 'include',
             }),
             invalidatesTags: ['CurrentUser']
