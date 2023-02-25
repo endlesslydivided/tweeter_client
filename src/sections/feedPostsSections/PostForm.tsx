@@ -1,17 +1,52 @@
 
 import { GlobalOutlined, PictureOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Divider, Input, Popover, Radio, Row, Space, Tooltip, Typography } from "antd";
+import { Avatar, Button, Card, Col, Divider,Image, Input, List, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
 import React, { useState } from "react";
+import PostFormImages from "../../components/ImageList/PostFormImages";
 import './PostForm.scss'
+
 interface PostFormProps {
 
+}
+
+const initialPost = {
+	text: '',
+	isComment: false,
+	isPublic: true,
+	authorId: null
 }
 
 
 const PostForm: React.FC<PostFormProps> = ({})  =>
 {
+	const [postValues,setPostValues] = useState(initialPost);
+	const [files, setFiles] : any = useState([]);
 
-	const [replyRule,setReplyRule] = useState(false);
+	const onTextAreaChange= (e:any) =>  setPostValues(previous => ({...previous,text:e.target.value}));
+	const onPublicChange= (e:any) =>  setPostValues(previous => ({...previous,isPublic:e.target.value}));
+
+	const handleChange: UploadProps['onChange'] = (info) => {
+		let newFileList = [...info.fileList];
+	
+		newFileList = newFileList.map((file) => {
+		  if (file.response) {
+			file.url = file.response.url;
+		  }
+		  return file;
+		});
+		setFiles(newFileList);
+	};
+
+	const props: UploadProps = {
+		name: 'file',
+		maxCount: 10,
+		onChange: handleChange,
+		itemRender:(originNode, file) => { return <></>},
+		multiple:true
+	  };
+	
+	
+	
 
     return (
         <Card className='post-form-card'>
@@ -43,6 +78,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 
                             <Input.TextArea 
 							autoSize={true} 
+							onChange={(e) => onTextAreaChange(e)}
 							showCount maxLength={1000}  
 							className='post-form-textarea'
 							placeholder="What's happening?"/>
@@ -51,7 +87,9 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 
 								<Col >
 									<Tooltip  title="Add photo">
-										<Button type="link" shape='circle'  icon={<PictureOutlined />} />
+										<Upload {...props} fileList={files} accept="image/*">
+											<Button type="link" shape='circle'  icon={<PictureOutlined />} />
+										</Upload>
 									</Tooltip>
 
 									<Popover id='replyPopover' placement="bottomRight"
@@ -69,7 +107,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 										content=
 										{
 											<Space direction='vertical' className='post-form-popover-content'>
-												<Radio.Group onChange={e => setReplyRule(e.target.value)} defaultValue={false}>
+												<Radio.Group onChange={e => onPublicChange(e)} defaultValue={false}>
 													<Radio.Button className='post-form-button-everyone' value={false}>
 														<Space>
 															<GlobalOutlined /> Everyone
@@ -87,7 +125,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 										trigger="click"
 									>
 										{
-											replyRule ? <Button type="link" shape='circle'icon={<TeamOutlined/>}>People you follow</Button>
+											postValues.isPublic ? <Button type="link" shape='circle'icon={<TeamOutlined/>}>People you follow</Button>
 											: <Button type="link" shape='circle'icon={<GlobalOutlined />}>Everyone</Button>
 										}
 									
@@ -99,8 +137,13 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 								</Col>
                             </Row>
 
+ 							
                         </Space>
                     </Col>
+                </Row>
+
+				<Row>
+					<PostFormImages files={files} setFiles={setFiles}/>
                 </Row>
             </Space>
         </Card>

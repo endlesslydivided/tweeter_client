@@ -52,6 +52,11 @@
     .post-form-textarea-content
     {
         display: flex;
+
+        .ant-upload-list 
+        {
+            display: none;
+        }
         
         .post-form-tweet-col
         {

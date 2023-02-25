@@ -2,6 +2,7 @@ import { Card, Col, Image, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
 import PostList from "../../components/PostList/PostList";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
+import PostForm from "../../sections/feedPostsSections/PostForm";
 import UserCard from "../../sections/homeUserDataSections/UserCard";
 import './HomePage.scss'
 
@@ -69,7 +70,10 @@ const HomePage = () => {
                     </Col>
 
                     <Col span={18}>
-                        <PostList/>
+                        <Space direction="vertical" style={{width:'100%'}} size='large'>
+                            <PostForm/>
+                            <PostList/>
+                        </Space>
                     </Col>
 
                 
