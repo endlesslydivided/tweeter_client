@@ -9,7 +9,8 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: post,
                 credentials: 'include',
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'}]
         }),
 
         deleteTweet: builder.mutation({
@@ -19,7 +20,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                     method: 'DELETE',
                     credentials: 'include',
                 }),
-            invalidatesTags: (result, error, arg) => [{type: 'Tweet', id: arg.id}]
+            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'}]
 
         }),
 
@@ -32,7 +33,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
         }),
         getAllTweets: builder.query({
             query: ({filters}) => ({
-                url: `/posts`,
+                url: `/tweets`,
                 method: 'GET',
                 credentials: 'include',
                 params: filters

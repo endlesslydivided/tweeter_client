@@ -1,6 +1,6 @@
 import {useEffect, useRef} from "react";
 
-export const useObserver = (ref:any, page:any, totalPages:any, isLoading:any, callback:any) => {
+export const useObserver = (ref:any, canLoad:any, isLoading:any, callback:any) => {
     const observer:React.MutableRefObject<any> = useRef();
 
     useEffect(() => {
@@ -10,7 +10,7 @@ export const useObserver = (ref:any, page:any, totalPages:any, isLoading:any, ca
             observer.current.disconnect();
 
         var cb = function (entries:any, observer:any) {
-            if (entries[0].isIntersecting && page <= totalPages) {
+            if (entries[0].isIntersecting && canLoad) {
                 callback()
             }
         };

@@ -1,4 +1,5 @@
-import { Space, theme } from "antd";
+import { List, Skeleton, Space, theme } from "antd";
+import { useAppSelector } from "../../hooks/redux";
 import PostItem from "./PostItem/PostItem";
 import "./PostList.scss"
 
@@ -6,20 +7,27 @@ const { useToken } = theme;
 
 interface PostListProps
 {
-    post: object;
-    currentUser: object;
+    result: any;
 }
 
-const PostList:React.FC = ({}) =>
+const PostList:React.FC<PostListProps> = ({result}) =>
 {
+
+    const userState:any = useAppSelector(state => state.auth.user);
+
     return (
-        <Space direction="vertical" className="post-list">
+        <List 
+        className="post-list"
+        split={false}
+        dataSource={result.data?.rows}
+        renderItem={(item:any) => (
+            <List.Item key={item.id}>
+            <Skeleton loading={result.loading}  active avatar>
+              <PostItem post={item} currentUser={userState}/>
+            </Skeleton>
+          </List.Item>)
+        }/>
 
-            <PostItem />
-            <PostItem />
-            <PostItem />
-
-        </Space>
     )
 }
 

@@ -18,9 +18,13 @@
         margin-top: -2px !important;
     }
 
-    .post-item-stats span
+    .post-item-stats 
     {
-        font-size: 12px;
+        padding:15px 0 0 0;
+        span
+        {
+            font-size: 12px;
+        }
     }
 
     .post-item-card-description

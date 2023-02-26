@@ -1,2 +1,2 @@
-export {default} from './PostList';
-export * from './PostItem/PostItem';
+export {default} from '../PostList/PostList';
+export * from '../PostList/PostItem/PostItem';

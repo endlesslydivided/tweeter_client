@@ -1,10 +1,13 @@
 import { Card, Col, Image, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
-import PostList from "../../components/PostList/PostList";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
+import { useAppSelector } from "../../hooks/redux";
 import PostForm from "../../sections/feedPostsSections/PostForm";
 import UserCard from "../../sections/homeUserDataSections/UserCard";
-import './HomePage.scss'
+import UserLikedTweets from "../../sections/contentSections/UserLikedTweets";
+import UserMedia from "../../sections/contentSections/UserMedia";
+import UserTweets from "../../sections/contentSections/UserTweets";
+import './HomePage.scss';
 
 const BgProfile = require('../../assets/abstractBG/colorfulWaves.jpg');
 
@@ -43,6 +46,18 @@ const HomePage = () => {
    
     const [content, setContent] = useState('tweets');
 
+    const userState:any = useAppSelector(state => state.auth.user);
+
+    const renderPostsList = () => {
+        switch(content)
+        {
+            case 'tweets':{return <><PostForm/> <UserTweets userId={userState?.user?.id}/></>};
+            case 'tweetsReplies':{return <UserTweets userId={userState?.user?.id}/>};
+            case 'media':{return <UserMedia userId={userState?.user?.id}/>};
+            case 'likes':{return <UserLikedTweets userId={userState?.user?.id}/>};
+        }
+    }
+
     return (
         <div className='home-page-container'>
             <Image src={BgProfile} className="profile-bg-image"/>
@@ -70,9 +85,11 @@ const HomePage = () => {
                     </Col>
 
                     <Col span={18}>
-                        <Space direction="vertical" style={{width:'100%'}} size='large'>
-                            <PostForm/>
-                            <PostList/>
+                        <Space direction="vertical" style={{width:'100%'}} size='small'>
+                            
+                            {
+                                renderPostsList()
+                            }
                         </Space>
                     </Col>
 

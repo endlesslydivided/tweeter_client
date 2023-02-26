@@ -1,8 +1,10 @@
 
 import { GlobalOutlined, PictureOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Divider,Image, Input, List, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
+import { Avatar, Button, Card, Col, Divider,Image, Input, List, notification, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
 import React, { useState } from "react";
 import PostFormImages from "../../components/ImageList/PostFormImages";
+import { useAppSelector } from "../../hooks/redux";
+import { useCreateTweetMutation } from "../../services/TweetApiSlice";
 import './PostForm.scss'
 
 interface PostFormProps {
@@ -11,9 +13,9 @@ interface PostFormProps {
 
 const initialPost = {
 	text: '',
-	isComment: false,
 	isPublic: true,
-	authorId: null
+	authorId: null,
+	isComment: false
 }
 
 
@@ -21,39 +23,61 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 {
 	const [postValues,setPostValues] = useState(initialPost);
 	const [files, setFiles] : any = useState([]);
+	const userState: any = useAppSelector(state => state.auth.user);
+
+
+	const [createTweet, result] = useCreateTweetMutation();
+
 
 	const onTextAreaChange= (e:any) =>  setPostValues(previous => ({...previous,text:e.target.value}));
 	const onPublicChange= (e:any) =>  setPostValues(previous => ({...previous,isPublic:e.target.value}));
+	const onCreatePostSubmit= async (e:any) =>  
+	{
+		const formData = new FormData();
+        files.forEach((file:any) => {
+            formData.append('files', file, file.name);
+        })
 
-	const handleChange: UploadProps['onChange'] = (info) => {
-		let newFileList = [...info.fileList];
-	
-		newFileList = newFileList.map((file) => {
-		  if (file.response) {
-			file.url = file.response.url;
-		  }
-		  return file;
-		});
-		setFiles(newFileList);
+        formData.append('text', postValues.text);
+        formData.append('isComment', postValues.isComment.toString());
+		formData.append('isPublic', postValues.isPublic.toString());
+		formData.append('isComment', 'false');
+
+        formData.append('authorId', userState.user.id);
+
+        const result:any = await createTweet(formData);
+
+        if(result.data)
+		{
+			setPostValues((previous:any) => initialPost);
+			setFiles([]);
+		}
+		else if(result.error)
+		{
+			notification.error({message:result.error.message,placement:'topRight',duration:2})
+		}
 	};
 
 	const props: UploadProps = {
 		name: 'file',
 		maxCount: 10,
-		onChange: handleChange,
 		itemRender:(originNode, file) => { return <></>},
-		multiple:true
-	  };
-	
-	
-	
+		multiple:true,
+		beforeUpload: (file,fileList) => {
+			if(fileList.length > 1)
+				setFiles([...files,...fileList]);
+			else
+				setFiles([...files,file]);
+
+			return false;
+		},
+	};
 
     return (
         <Card className='post-form-card'>
 
             <Card.Meta className="post-form-card-meta" title=
-			{<Typography.Text className="post-form-card-title" strong>Tweet something</Typography.Text>}
-			/>
+			{<Typography.Text className="post-form-card-title" strong>Tweet something</Typography.Text>}/>
 
             <Divider type="horizontal"/>
 
@@ -78,6 +102,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 
                             <Input.TextArea 
 							autoSize={true} 
+							value={postValues.text}
 							onChange={(e) => onTextAreaChange(e)}
 							showCount maxLength={1000}  
 							className='post-form-textarea'
@@ -107,13 +132,13 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 										content=
 										{
 											<Space direction='vertical' className='post-form-popover-content'>
-												<Radio.Group onChange={e => onPublicChange(e)} defaultValue={false}>
-													<Radio.Button className='post-form-button-everyone' value={false}>
+												<Radio.Group onChange={e => onPublicChange(e)} defaultValue={postValues.isPublic}>
+													<Radio.Button className='post-form-button-everyone' value={true}>
 														<Space>
 															<GlobalOutlined /> Everyone
 														</Space>
 													</Radio.Button>
-													<Radio.Button className='post-form-button-follow' value={true}>
+													<Radio.Button className='post-form-button-follow' value={false}>
 														<Space>
 															<TeamOutlined/> People you follow
 														</Space>
@@ -125,15 +150,16 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 										trigger="click"
 									>
 										{
-											postValues.isPublic ? <Button type="link" shape='circle'icon={<TeamOutlined/>}>People you follow</Button>
-											: <Button type="link" shape='circle'icon={<GlobalOutlined />}>Everyone</Button>
+											postValues.isPublic ?<Button type="link" shape='circle'icon={<GlobalOutlined />}>Everyone</Button>:
+											 <Button type="link" shape='circle'icon={<TeamOutlined/>}>People you follow</Button>
+											
 										}
 									
 									</Popover>
 								</Col>
 
 								<Col className="post-form-tweet-col">		
-                                	<Button  type="primary" >Tweet</Button>
+                                	<Button  type="primary" onClick={(e) => onCreatePostSubmit(e)} >Tweet</Button>
 								</Col>
                             </Row>
 

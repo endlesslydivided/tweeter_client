@@ -18,7 +18,7 @@ const PostFormImages: FC<IPostFormImagesProps> = ({files, setFiles}) => {
             dataSource={files}
             renderItem={(item) => (
             <List.Item >
-                <Image src={URL.createObjectURL(item.originFileObj)}/>
+                <Image src={URL.createObjectURL(item)}/>
                 <Button 
                     icon={<CloseOutlined/>} 
                     danger block

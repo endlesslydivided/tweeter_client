@@ -1,11 +1,16 @@
 import { Col, Row, Space } from "antd";
 import PostList from "../../components/PostList/PostList";
+import { useAppSelector } from "../../hooks/redux";
 import PostForm from "../../sections/feedPostsSections/PostForm";
 import ToFollowSection from "../../sections/feedPostsSections/ToFollow";
 import TrendsSection from "../../sections/feedPostsSections/TrendsSection";
+import UserFeed from "../../sections/contentSections/UserFeed";
 import './HomeFeedPage.scss'
 
 const HomeFeedPage = () => {
+
+    const userState:any = useAppSelector(state => state.auth.user);
+
    
     return (
         <div className='home-feed-page-container'>
@@ -14,7 +19,7 @@ const HomeFeedPage = () => {
                 <Col span={18}>
                     <Space direction="vertical" size='large'>
                         <PostForm/>
-                        <PostList/>
+                        <UserFeed userId={userState.user.id}/>
                     </Space>
                 </Col>
 
