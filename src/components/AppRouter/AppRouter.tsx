@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
 import {useDispatch} from 'react-redux';
 import UserSmMdLayout from '../../layouts/SmMdLayout/SmMdLayout';
@@ -24,6 +24,7 @@ const AppRouter: React.FC<AppRouterProps>= () => {
     const dispatch = useDispatch();
     const user: any = useAppSelector(state => state?.auth?.user);
 
+    useEffect(() => {},[user]);
     
     const location = useLocation();
 

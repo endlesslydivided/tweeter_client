@@ -7,6 +7,46 @@
         width: 25%;
     }
 
+    .retweet-button,
+    .like-button,
+    .save-button
+    {
+        cursor:pointer;
+    }
+
+    .active
+    {
+        &.retweet-button
+        {
+            color: rgba(39, 174, 96, 1);
+            
+            &:hover
+            {
+                background-color: rgba(39, 174, 96, 0.1);
+            }
+        }
+
+        &.like-button
+        {
+            color: rgba(235, 87, 87, 1);
+
+            &:hover
+            {
+                background-color: rgba(235, 87, 87, 0.1);
+            }
+        }
+
+        &.save-button
+        {
+            color: rgba(45, 156, 219, 1);
+            &:hover
+            {
+                background-color: rgba(45, 156, 219, 0.1);
+            }
+        }
+    }
+    
+
     .ant-card-meta-title
     {
         margin-bottom: 0px !important;

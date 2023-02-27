@@ -1,9 +1,10 @@
 import { BookFilled, BookOutlined, CommentOutlined, FileImageOutlined, HeartFilled, HeartOutlined, InfoCircleOutlined, LikeFilled, LikeOutlined, PictureOutlined, RetweetOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Divider, Input, Row, Space, theme, Tooltip, Typography } from "antd";
+import { Avatar, Button, Card, Col, Divider, Input, notification, Row, Space, theme, Tooltip, Typography } from "antd";
 import { Image } from 'antd';
 import { useState } from "react";
 import { useNotify } from "../../../hooks/useNotify";
 import { useLikeTweetMutation, useSaveTweetMutation, useUnlikeTweetMutation, useUnsaveTweetMutation } from "../../../services/TweetActionsApiSlice";
+import { useCreateTweetMutation, useDeleteTweetMutation } from "../../../services/TweetApiSlice";
 import { fDateTime } from "../../../utils/formatTime";
 import "./PostItem.scss"
 const { useToken } = theme;
@@ -15,6 +16,13 @@ interface PostItemProps
     currentUser: any;
 }
 
+const initialPost = {
+	text: '',
+	isPublic: true,
+	authorId: null,
+	isComment: false
+}
+
 const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
 {
 
@@ -22,22 +30,37 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
     const [unlike,unlikeResult] = useUnlikeTweetMutation();
     const [save,saveResult] = useSaveTweetMutation();
     const [unsave,unsaveResult] = useUnsaveTweetMutation();
-
+	const [retweet, retweetResult] = useCreateTweetMutation();
+	const [unretweet, unretweetResult] = useDeleteTweetMutation();
+ 
     const [isLiked,setIsLiked] = useState(post.isLiked === undefined || post.isLiked?.length !== 0)
     const [isSaved,setIsSaved] = useState(post.isSaved === undefined || post.isSaved?.length !== 0)
-    const [isRetweeted,setIsRetweeted] = useState(post.isRetweeted === undefined || post.isRetweeted?.length !== null)
+    const [isRetweeted,setIsRetweeted] = useState(post.isRetweeted !== null)
 
     useNotify(likeResult,undefined,() => {setIsLiked(true)},'Some error occured on server');
     useNotify(unlikeResult,undefined,() => {setIsLiked(false)},'Some error occured on server');
     useNotify(saveResult,undefined,() => {setIsSaved(true)},'Some error occured on server');
     useNotify(unsaveResult,undefined,() => {setIsSaved(false)},'Some error occured on server');
+    useNotify(retweetResult,undefined,() => {setIsRetweeted(true)},'Some error occured on server');
+    useNotify(unretweetResult,undefined,() => {setIsRetweeted(false)},'Some error occured on server');
 
     const onLikeClickHandler =() => isLiked ? unlike({tweetId:post.id,userId:currentUser.user?.id}):
                                             like({tweetId:post.id,userId:currentUser.user?.id});
         
     const onSaveClickHandler =() => isSaved ? unsave({tweetId:post.id,userId:currentUser.user?.id}):
                                                 save({tweetId:post.id,userId:currentUser.user?.id});
-    
+
+    const onRetweetClickHandler =() => isRetweeted ? unretweet({id:post.isRetweeted?.id}):
+    retweet(
+        {
+            isComment:false,
+            isPublic:true,
+            parentRecordAuthorId: post?.author?.id,
+            parentRecordId:  post.id,
+            authorId:currentUser.user.id
+        }
+    );;
+
 
 
     return (
@@ -50,15 +73,23 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                 />  
 
                 
-                    {post.text &&<Typography.Text>{post.text}</Typography.Text>}
+                    {
+                        post.parentRecord?                     
+                        post.parentRecord.text &&<Typography.Text>{post.parentRecord.text}</Typography.Text>
+                        :
+                        post.text &&<Typography.Text>{post.text}</Typography.Text>
+                    }
                 
 
                 <Image.PreviewGroup >
                     {
-                        post.tweetMedia?.map((item:any) => <Image style={{padding:3}}
-                        src={process.env.REACT_APP_BACK_SERVER + item?.path} alt={item.id}/>)
-                    }
-                    
+                         post.parentRecord?  
+                            post.parentRecord.tweetMedia?.map((item:any) => <Image style={{padding:3}}
+                            src={process.env.REACT_APP_BACK_SERVER + item?.path} alt={item.id}/>)
+                         :
+                            post.tweetMedia?.map((item:any) => <Image style={{padding:3}}
+                            src={process.env.REACT_APP_BACK_SERVER + item?.path} alt={item.id}/>)
+                    }         
                 </Image.PreviewGroup>
 
                 <Row gutter={[10,0]} justify='end'  className='post-item-stats'>
@@ -71,22 +102,30 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                 
                 <Row>
                     <Col flex={1}>
-                        <Button icon={<CommentOutlined/>} type="text" style={{cursor:'pointer'}} block>
+                        <Button 
+                        icon={<CommentOutlined/>} type="text" block>
                             Comment
                         </Button>
                     </Col>
                     <Col flex={1}>
-                        <Button icon={<RetweetOutlined/>}  type="text" style={{cursor:'pointer !important'}}  block>
+                        <Button 
+                        disabled={post.parentRecord}
+                        icon={<RetweetOutlined/>}
+                        className={`retweet-button ${isRetweeted && 'active'}`} onClick={() => onRetweetClickHandler()}  type="text" block>
                             Retweet
                         </Button>
                     </Col>
                     <Col flex={1}>
-                        <Button icon={isLiked ? <HeartFilled/> : <HeartOutlined/>} style={{color:`${isLiked? 'rgba(235, 87, 87, 1)' : 'black'}`,cursor:'pointer'}}  onClick={() => onLikeClickHandler()} type="text"  block>
+                        <Button 
+                        icon={isLiked ? <HeartFilled/> : <HeartOutlined/>}
+                        className={`like-button ${isLiked && 'active'}`}  onClick={() => onLikeClickHandler()} type="text"  block>
                             Like
                         </Button>
                     </Col>
                     <Col flex={1}>
-                        <Button icon={isSaved ? <BookFilled/> :<BookOutlined/>} style={{color:`${isSaved? 'rgba(45, 156, 219, 1)' : 'black'}`,cursor:'pointer'}} onClick={() => onSaveClickHandler()}  type="text"  block>
+                        <Button 
+                        icon={isSaved ? <BookFilled/> :<BookOutlined/>} 
+                        className={`save-button ${isSaved && 'active'}`} onClick={() => onSaveClickHandler()}  type="text"  block>
                             Save
                         </Button>
                     </Col>

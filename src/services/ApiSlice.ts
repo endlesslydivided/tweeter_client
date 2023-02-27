@@ -45,6 +45,7 @@ export const apiSlice = createApi({
     baseQuery: baseQueryWithReauth,
     tagTypes: [
         'UserTweet',
+        'Feed',
         'Media',
         'Reply',
         'Subscribtion',

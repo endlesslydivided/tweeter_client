@@ -10,17 +10,17 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 body: post,
                 credentials: 'include',
             }),
-            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'}]
+            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'},{type:'Feed'}]
         }),
 
         deleteTweet: builder.mutation({
-            query: (id) =>
+            query: ({id}) =>
                 ({
                     url: `/tweets/${id}`,
                     method: 'DELETE',
                     credentials: 'include',
                 }),
-            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'}]
+            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'},{type:'Feed'},{type:'LikedTweet'},{type:'SavedTweet'}]
 
         }),
 
