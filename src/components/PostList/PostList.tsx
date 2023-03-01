@@ -26,9 +26,10 @@ const PostList:React.FC<PostListProps> = ({result}) =>
             <Skeleton loading={result.loading}  active avatar>
               <Space direction="vertical">
               {item.parentRecord && 
-              <>
-                
-                <Typography.Text type={"secondary"}><RetweetOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Retweeted'}</Typography.Text>
+              <>      
+                <Typography.Text type={"secondary"}>
+                  <RetweetOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Retweeted'}
+                </Typography.Text>
               </>}
               <PostItem post={item} currentUser={userState}/>
               </Space>          

@@ -1,0 +1,81 @@
+@import '../../../_variables.scss';
+
+.reply-form-container
+{
+    width:100%;
+    padding: 0;
+
+    .reply-form-row
+    {
+        display: flex;
+        align-items: center;
+
+        @media(max-width: $md) 
+        {
+            .reply-form-avatar
+            {
+                display: none;
+            }
+        }
+    }
+
+
+    .reply-form-textarea-col
+    {
+       
+        .reply-form-space
+        {
+            width: 100%;
+            background-color: rgba(162, 162, 162,0.05);
+            border: rgba(162, 162, 162,0.3) solid 1px;
+
+            padding:5px;
+            border-radius: 10px;
+            margin:0 0 0 10px;
+            .ant-space-item:nth-child(1)
+            {
+                width: 100%;
+            }
+        }
+    }
+
+
+
+    .reply-form-textarea
+    {
+        margin: 0 0 0 10px;
+        width: 100%;
+
+        &.ant-input 
+        {
+            background-color: transparent;
+            resize: none;
+            padding-left:0;
+            cursor: pointer;
+            padding-right: 0;
+            border:none !important;
+            box-shadow: none !important;
+        }
+    }
+
+
+
+    .reply-form-textarea-content
+    {
+        display: flex;
+
+       
+        .ant-upload-list 
+        {
+            display: none;
+        }
+        
+        .reply-form-tweet-col
+        {
+            margin-left: auto;
+        }
+    }
+
+   
+
+}
