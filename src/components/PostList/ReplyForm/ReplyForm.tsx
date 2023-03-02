@@ -75,10 +75,10 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost})  =>
 
     return (
 		<div className="reply-form-container">
-            <Row className="reply-form-row">
+            <Row className="reply-form-row" gutter={[10,0]}>
 
 				<Col className="reply-form-avatar" md={{flex:1}}>
-					<Avatar icon={<UserOutlined />} size={40} shape="square" />
+					<Avatar icon={<UserOutlined />} size={'large'} shape="square" />
 				</Col>
 				
 				<Col flex='auto' className="reply-form-textarea-col">

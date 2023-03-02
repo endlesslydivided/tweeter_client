@@ -2,6 +2,7 @@ import { CaretDownOutlined, ImportOutlined, MailFilled, SettingFilled, UserOutli
 import type { MenuProps } from 'antd';
 import { Avatar, Button, Divider, Image, Layout, Menu, Popover, Space, Typography } from 'antd';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
 import { useSignOutMutation } from '../../services/AuthApiSlice';
 import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, HOME_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import './SmMdLayout.scss';
@@ -37,7 +38,7 @@ export default function SmMdLayout()
     const [signOut, result] = useSignOutMutation(); 
 
     const navigate = useNavigate();
-
+    const userState:any = useAppSelector(state => state.auth?.user);
 
     const signOutHandler:Function = () =>
     {
@@ -54,7 +55,7 @@ export default function SmMdLayout()
                 </div>
                 <div className='header-popover-container'>
                     <Avatar.Group>
-                        <Avatar icon={<UserOutlined />} onClick={() => navigate(`${HOME_ROUTE}`)}  shape="square" />
+                        <Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + userState?.user.mainPhoto?.path} onClick={() => navigate(`${HOME_ROUTE}`)}  shape="square" />
                         <Popover id='headerPopover' placement="bottomRight"
                             content=
                             {<>
@@ -81,7 +82,7 @@ export default function SmMdLayout()
                             } 
                             trigger="click"
                         >
-                            <Typography.Text strong>Name Surname <CaretDownOutlined/></Typography.Text>  
+                            <Typography.Text strong>{`${userState?.user.firstname} ${userState?.user.surname}`}<CaretDownOutlined/></Typography.Text>  
                         </Popover>
 
                     </Avatar.Group>

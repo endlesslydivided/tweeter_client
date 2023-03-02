@@ -33,6 +33,9 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
     const [isRetweeted,setIsRetweeted] = useState(post.isRetweeted !== null  || post.parentRecord !== null)
     const [isCommentOpened,setisCommentOpened] = useState(false);
 
+
+    const hasMedia = post.parentRecord?.tweetMedia?.length !== 0  || post.tweetMedia?.length !== 0;
+
     useNotify(likeResult,undefined,() => {setIsLiked(true)},'Some error occured on server');
     useNotify(unlikeResult,undefined,() => {setIsLiked(false)},'Some error occured on server');
     useNotify(saveResult,undefined,() => {setIsSaved(true)},'Some error occured on server');
@@ -78,7 +81,8 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                 </Button>
             </Dropdown>
         }>
-            <Space direction="vertical" className="post-item-card-space" size='middle'>
+            <Space direction="vertical" className={"post-item-card-space " + 
+            (!hasMedia ? 'post-item-display-none' : '')} size='middle'>
                 <Card.Meta className="post-item-card-meta"
                     avatar={<Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + post?.author?.mainPhoto?.path} size={36} shape="square" />}
                     title={<Typography.Text className="post-item-card-title" strong>{post.author?.firstname + ' ' + post.author?.surname}</Typography.Text>}

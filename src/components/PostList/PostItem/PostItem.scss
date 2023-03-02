@@ -2,6 +2,14 @@
 {
     width: 100%;
 
+    .post-item-display-none
+    {
+        .ant-space-item:nth-child(3)
+        {
+            display: none;
+        }
+    }
+
     .post-item-images-container .ant-image
     {
         width: 25%;
@@ -74,7 +82,7 @@
 
     .post-item-stats 
     {
-        padding:15px 0 0 0;
+        padding:5px 0 0 0;
         span
         {
             font-size: 12px;
@@ -123,3 +131,4 @@
         margin:-20px 0 0 0;
     }
 }
+

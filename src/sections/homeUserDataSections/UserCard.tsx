@@ -28,7 +28,7 @@ const UserCard: React.FC<UserCardProps> = ({userData}) => {
                 <Col span={24} className='user-card-info-col'>
                     <Row gutter={[20,0]} className='user-card-info-row'>
                         <Col>
-                            <Typography.Title level={4}>Name Surname</Typography.Title>                             
+                            <Typography.Title level={4}>{`${userData.user.firstname} ${userData.user.surname}`}</Typography.Title>                             
                         </Col>
                         <Col >
                             <Typography.Text type="secondary"><Typography.Text>12</Typography.Text> Following</Typography.Text>

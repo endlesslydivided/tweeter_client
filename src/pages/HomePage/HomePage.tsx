@@ -66,7 +66,7 @@ const HomePage = () => {
                 <Row className="home-page-usercard-row">
 
                     <Col span={24}>
-                        <UserCard/>
+                        <UserCard userData={userState}/>
                     </Col>
 
                 </Row>
