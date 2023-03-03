@@ -1,0 +1,105 @@
+.comment-item-card
+{
+    width: 100%;
+    border:none;
+    
+    .ant-card-body
+    {
+        padding:0px 0px !important;
+    }
+
+    .comment-content-row
+    {
+        flex-wrap: nowrap;
+    }
+
+    .ant-col
+    {
+        height: 100%;
+    }
+  
+
+    .comment-content-space
+    {
+        width: 100%;
+        background-color: rgba(162, 162, 162,0.05);
+        padding:5px 10px;
+        border-radius: 10px;
+
+        .comment-meta-space
+        {
+            .ant-space-item:nth-last-child(1)
+            {
+                margin: 0 0 0 auto;
+            }
+        }
+    }
+
+    .comment-item-images-container .ant-image
+    {
+        width: 25%;
+    }
+  
+
+    .retweet-button,
+    .like-button,
+    .save-button
+    {
+        cursor:pointer;
+        border-radius: 10px;
+        padding: 1px 3px;
+
+        &:hover
+        {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+
+ 
+
+    .active
+    {
+        &.retweet-button
+        {
+            color: rgba(39, 174, 96, 1);
+            
+            &:hover
+            {
+                background-color: rgba(39, 174, 96, 0.1);
+            }
+        }
+
+        &.like-button
+        {
+            color: rgba(235, 87, 87, 1);
+
+            &:hover
+            {
+                background-color: rgba(235, 87, 87, 0.1);
+            }
+        }
+
+        &.save-button
+        {
+            color: rgba(45, 156, 219, 1);
+            &:hover
+            {
+                background-color: rgba(45, 156, 219, 0.1);
+            }
+        }
+    }
+  
+    .comment-item-stats 
+    {
+        padding:5px 0 0 0;
+        span
+        {
+            font-size: 12px;
+        }
+    }
+
+    
+}
+
+
+

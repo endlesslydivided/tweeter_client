@@ -1,12 +1,9 @@
 import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
-import PostList from "../../components/PostList/PostList";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
-import LatestSection from "../../sections/contentSections/LatestSection";
-import MediaSection from "../../sections/contentSections/MediaSection";
-import PeopleSection from "../../sections/contentSections/PeopleSection";
-import TopTweets from "../../sections/contentSections/TopTweets";
+import ContentSection from "../../sections/contentSections/ContentSection";
 import SearchBar from "../../sections/exploreSections/SearchBar";
+import { useGetFeedQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
 import './ExplorePage.scss'
 
 const items: MenuProps['items'] = [
@@ -47,10 +44,27 @@ const ExplorePage = () => {
     const renderPostsList = () => {
         switch(content)
         {
-            case 'top':{return <TopTweets/>};
-            case 'latest':{return <LatestSection/>};
-            case 'people':{return <PeopleSection/>};
-            case 'media':{return <MediaSection/>};
+            case 'top':{ return (
+                    <ContentSection  
+                    fetchCB={useGetFeedQuery} 
+                    errorMessage={'Server error occured during getting top tweets'}/>
+                )};
+            case 'latest':{
+                return (
+                    <ContentSection  
+                    fetchCB={useGetUserTweetsQuery} 
+                    errorMessage={'Server error occured during getting top tweets'}/>
+                )};
+            case 'people':{ return (
+                    <ContentSection  
+                    fetchCB={useGetFeedQuery} 
+                    errorMessage={'Server error occured during getting users data'}/>
+                )};
+            case 'media':{ return (
+                    <ContentSection  
+                    fetchCB={useGetFeedQuery} 
+                    errorMessage={'Server error occured during getting media'}/>
+                )};
         }
     }
 

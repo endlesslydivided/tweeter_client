@@ -6,7 +6,9 @@ import { useNotify } from "../../../hooks/useNotify";
 import { useLikeTweetMutation, useSaveTweetMutation, useUnlikeTweetMutation, useUnsaveTweetMutation } from "../../../services/TweetActionsApiSlice";
 import { useCreateTweetMutation, useDeleteTweetMutation } from "../../../services/TweetApiSlice";
 import { fDateTime } from "../../../utils/formatTime";
-import ReplyForm from "../ReplyForm/ReplyForm";
+import CommentsList from "../../CommentsList/CommentsList";
+import ReplyForm from "../../ReplyForm/ReplyForm";
+import PostActions from "../PostActions/PostActions";
 import "./PostItem.scss"
 const { useToken } = theme;
 
@@ -20,47 +22,14 @@ interface PostItemProps
 const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
 {
 
-    /*#region PostItem state control*/
-    const [like,likeResult] = useLikeTweetMutation();
-    const [unlike,unlikeResult] = useUnlikeTweetMutation();
-    const [save,saveResult] = useSaveTweetMutation();
-    const [unsave,unsaveResult] = useUnsaveTweetMutation();
-	const [retweet, retweetResult] = useCreateTweetMutation();
 	const [deleteTweet, deleteTweetResult] = useDeleteTweetMutation();
- 
-    const [isLiked,setIsLiked] = useState(post.isLiked === undefined || post.isLiked?.length !== 0)
-    const [isSaved,setIsSaved] = useState(post.isSaved === undefined || post.isSaved?.length !== 0)
-    const [isRetweeted,setIsRetweeted] = useState(post.isRetweeted !== null  || post.parentRecord !== null)
-    const [isCommentOpened,setisCommentOpened] = useState(false);
-
+    const [isCommentOpen,setIsCommentOpen] = useState(false);
 
     const hasMedia = post.parentRecord?.tweetMedia?.length !== 0  || post.tweetMedia?.length !== 0;
 
-    useNotify(likeResult,undefined,() => {setIsLiked(true)},'Some error occured on server');
-    useNotify(unlikeResult,undefined,() => {setIsLiked(false)},'Some error occured on server');
-    useNotify(saveResult,undefined,() => {setIsSaved(true)},'Some error occured on server');
-    useNotify(unsaveResult,undefined,() => {setIsSaved(false)},'Some error occured on server');
-    useNotify(retweetResult,undefined,() => {setIsRetweeted(true)},'Some error occured on server');
     useNotify(deleteTweetResult,undefined,undefined,'Some error occured on server');
 
-    const onLikeClickHandler =() => isLiked ? unlike({tweetId:post.id,userId:currentUser.user?.id}):
-                                            like({tweetId:post.id,userId:currentUser.user?.id});
-        
-    const onSaveClickHandler =() => isSaved ? unsave({tweetId:post.id,userId:currentUser.user?.id}):
-                                                save({tweetId:post.id,userId:currentUser.user?.id});
-
     const onDeleteClickHandler = () => deleteTweet({id:post.id});
-    const onRetweetClickHandler =() => 
-    retweet(
-        {
-            isComment:false,
-            isPublic:true,
-            parentRecordAuthorId: post.parentRecord ? post.parentRecord.author?.id : post.author?.id,
-            parentRecordId: post.parentRecord ?  post.parentRecord.id : post.id,
-            authorId:currentUser.user.id
-        }
-    );;
-    /*#endregion*/
     
     const items: MenuProps['items'] = [
         {
@@ -81,21 +50,25 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                 </Button>
             </Dropdown>
         }>
-            <Space direction="vertical" className={"post-item-card-space " + 
-            (!hasMedia ? 'post-item-display-none' : '')} size='middle'>
+            <Space 
+                direction="vertical" 
+                className={
+                "post-item-card-space " +
+                (!hasMedia ? 'post-media-display-none' : '')+
+                (!isCommentOpen ? 'post-form-display-none' : '')} 
+                size='middle'>
                 <Card.Meta className="post-item-card-meta"
                     avatar={<Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + post?.author?.mainPhoto?.path} size={36} shape="square" />}
                     title={<Typography.Text className="post-item-card-title" strong>{post.author?.firstname + ' ' + post.author?.surname}</Typography.Text>}
                     description={<Typography.Text  className="post-item-card-description" type="secondary">{fDateTime(post.createdAt)}</Typography.Text>}
                 />  
-
-                
-                    {
-                        post.parentRecord?                     
-                        post.parentRecord.text &&<Typography.Text>{post.parentRecord.text}</Typography.Text>
-                        :
-                        post.text &&<Typography.Text>{post.text}</Typography.Text>
-                    }
+                       
+                {
+                    post.parentRecord?                     
+                    post.parentRecord.text &&<Typography.Text>{post.parentRecord.text}</Typography.Text>
+                    :
+                    post.text &&<Typography.Text>{post.text}</Typography.Text>
+                }
                 
                 <div className='post-item-images-container'>
                     <Image.PreviewGroup >
@@ -116,43 +89,29 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                     <Col><Typography.Text className='post-item-stats-saved' type="secondary">234 saved</Typography.Text></Col>
                 </Row> 
 
-                <Divider type="horizontal"/>
+                <Divider type="horizontal" className={'stats-actions-divider'}/>
                 
                 <Row className={'action-row'}>
-                    <Col flex={1}>
-                        <Button 
-                        icon={<CommentOutlined/>} onClick={() => setisCommentOpened(!isCommentOpened)} type="text" block>
-                            Comment
-                        </Button>
-                    </Col>
-                    <Col flex={1}>
-                        <Button 
-                        icon={<RetweetOutlined/>}
-                        className={`retweet-button ${isRetweeted && 'active'}`} onClick={() => onRetweetClickHandler()}  type="text" block>
-                            Retweet
-                        </Button>
-                    </Col>
-                    <Col flex={1}>
-                        <Button 
-                        icon={isLiked ? <HeartFilled/> : <HeartOutlined/>}
-                        className={`like-button ${isLiked && 'active'}`}  onClick={() => onLikeClickHandler()} type="text"  block>
-                            Like
-                        </Button>
-                    </Col>
-                    <Col flex={1}>
-                        <Button 
-                        icon={isSaved ? <BookFilled/> :<BookOutlined/>} 
-                        className={`save-button ${isSaved && 'active'}`} onClick={() => onSaveClickHandler()}  type="text"  block>
-                            Save
-                        </Button>
-                    </Col>
+                   <PostActions 
+                        post={post} 
+                        currentUser={currentUser} 
+                        setIsCommentsOpen={setIsCommentOpen}
+                        isCommentOpen={isCommentOpen}/>
                 </Row>
 
-                <Divider type="horizontal" style={{marginBottom:'0'}}/>
-
-                <Row style={isCommentOpened ? {display: 'none'} : {}}>
+                <Divider type="horizontal" className={'actions-form-divider'}/>
+            
+                <Row >
                     <ReplyForm parentPost={post}/>        
                 </Row>
+
+                <Divider type="horizontal"  className={'form-comments-divider'}/>
+
+                <Row >
+                    <CommentsList post={post} currentUser={currentUser}/>     
+                </Row>
+
+                
             </Space>
         </Card>
     )

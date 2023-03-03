@@ -4,10 +4,9 @@ import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu
 import { useAppSelector } from "../../hooks/redux";
 import PostForm from "../../sections/feedPostsSections/PostForm";
 import UserCard from "../../sections/homeUserDataSections/UserCard";
-import UserLikedTweets from "../../sections/contentSections/UserLikedTweets";
-import UserMedia from "../../sections/contentSections/UserMedia";
-import UserTweets from "../../sections/contentSections/UserTweets";
 import './HomePage.scss';
+import ContentSection from "../../sections/contentSections/ContentSection";
+import { useGetLikedTweetsQuery, useGetMediaQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
 
 const BgProfile = require('../../assets/abstractBG/colorfulWaves.jpg');
 
@@ -51,10 +50,30 @@ const HomePage = () => {
     const renderPostsList = () => {
         switch(content)
         {
-            case 'tweets':{return <><PostForm/> <UserTweets userId={userState?.user?.id}/></>};
-            case 'tweetsReplies':{return <UserTweets userId={userState?.user?.id}/>};
-            case 'media':{return <UserMedia userId={userState?.user?.id}/>};
-            case 'likes':{return <UserLikedTweets userId={userState?.user?.id}/>};
+            case 'tweets':{return (<><PostForm/> 
+                    <ContentSection  
+                    params={{id:userState.user.id}}
+                    fetchCB={useGetUserTweetsQuery} 
+                    errorMessage={'Server error occured during getting user tweets'}/>
+                </>)};
+            case 'tweetsReplies':{return (
+                    <ContentSection
+                    params={{id:userState.user.id}}
+                    fetchCB={useGetUserTweetsQuery} 
+                    errorMessage={'Server error occured during getting user tweets and replies'}/>
+                )};
+            case 'media':{ return (
+                    <ContentSection  
+                    params={{id:userState.user.id}}
+                    fetchCB={useGetMediaQuery} 
+                    errorMessage={'Server error occured during getting user media'}/>
+                )};
+            case 'likes':{ return (
+                    <ContentSection  
+                    params={{id:userState.user.id}}
+                    fetchCB={useGetLikedTweetsQuery} 
+                    errorMessage={'Server error occured during getting user liked tweets'}/>
+                )};
         }
     }
 
@@ -85,15 +104,13 @@ const HomePage = () => {
                     </Col>
 
                     <Col span={18}>
-                        <Space direction="vertical" style={{width:'100%'}} size='small'>
-                            
+                        <Space direction="vertical" style={{width:'100%'}} size='small'>                           
                             {
                                 renderPostsList()
                             }
                         </Space>
                     </Col>
-
-                
+    
                 </Row>
             </Space>
         </div>

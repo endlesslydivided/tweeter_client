@@ -12,7 +12,7 @@ export const useFilterFetch = ({
   successCB?: any;
   params?: any;
 }) => {
-  const { filters: paramsFilters, ...parameters } = params;
+  const { filters: paramsFilters = {}, ...parameters } =  params;
 
   const initialFilters = {
     search: "",
@@ -20,7 +20,7 @@ export const useFilterFetch = ({
     limit: 10,
     orderBy: "createdAt",
     orderDirection: "desc",
-    ...paramsFilters,
+    ...params?.filters
   };
 
   const [filters, setFilters] = useState(initialFilters);

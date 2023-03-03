@@ -1,10 +1,9 @@
-import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
+import { Col, Row, Space } from "antd";
 import { useState } from "react";
-import PostList from "../../components/PostList/PostList";
-import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
 import { useAppSelector } from "../../hooks/redux";
-import UserSavedTweets from "../../sections/contentSections/UserSavedTweets";
-import './BookmarksPage.scss'
+import ContentSection from "../../sections/contentSections/ContentSection";
+import { useGetSavedTweetsQuery } from "../../services/UserTweetsSlice";
+import './BookmarksPage.scss';
 // const items: MenuProps['items'] = [
 //     {
 //         label: (<Typography.Text strong type='secondary'>
@@ -55,8 +54,10 @@ const BookmarksPage = () => {
                 </Col> */}
                 <Col span={24} className='bookmarks-postlist-col'>
                     <Space direction="vertical" size='large'>
-                        <UserSavedTweets userId={userState.user.id}/>
-                    </Space>
+                    <ContentSection  
+                    params={{id:userState.user.id,filters:{orderBy: 'createdAt',orderDirection: 'asc'}}}
+                    fetchCB={useGetSavedTweetsQuery} 
+                    errorMessage={'Server error occured during getting user liked tweets'}/>                    </Space>
                 </Col>
             </Row>
         </div>

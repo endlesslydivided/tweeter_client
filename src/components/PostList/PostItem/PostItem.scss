@@ -2,12 +2,27 @@
 {
     width: 100%;
 
-    .post-item-display-none
+    .post-media-display-none
     {
         .ant-space-item:nth-child(3)
         {
             display: none;
         }
+    }
+
+    .post-form-display-none
+    {
+        .ant-space-item:nth-child(10),
+        .ant-space-item:nth-child(9)
+        {
+            display: none;
+        }
+    }
+
+    .ant-space-item:nth-child(8)
+    {
+        margin-top: -20px;
+        margin-bottom: 5px;
     }
 
     .post-item-images-container .ant-image
@@ -65,7 +80,6 @@
             }
         }
     }
-    
 
     .ant-card-meta-title
     {
@@ -77,8 +91,6 @@
     {
         margin-top: -2px !important;
     }
-
-
 
     .post-item-stats 
     {
@@ -128,7 +140,7 @@
 
     & > .ant-space-item:nth-last-child(1)
     {
-        margin:-20px 0 0 0;
+        margin:-30px 0 -10px 0;
     }
 }
 

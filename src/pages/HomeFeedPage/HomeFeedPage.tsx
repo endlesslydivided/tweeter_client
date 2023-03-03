@@ -1,11 +1,11 @@
 import { Col, Row, Space } from "antd";
-import PostList from "../../components/PostList/PostList";
 import { useAppSelector } from "../../hooks/redux";
+import ContentSection from "../../sections/contentSections/ContentSection";
 import PostForm from "../../sections/feedPostsSections/PostForm";
 import ToFollowSection from "../../sections/feedPostsSections/ToFollow";
 import TrendsSection from "../../sections/feedPostsSections/TrendsSection";
-import UserFeed from "../../sections/contentSections/UserFeed";
-import './HomeFeedPage.scss'
+import { useGetFeedQuery } from "../../services/UserTweetsSlice";
+import './HomeFeedPage.scss';
 
 const HomeFeedPage = () => {
 
@@ -19,7 +19,10 @@ const HomeFeedPage = () => {
                 <Col span={18}>
                     <Space direction="vertical" size='large'>
                         <PostForm/>
-                        <UserFeed userId={userState.user.id}/>
+                        <ContentSection  
+                        fetchCB={useGetFeedQuery} 
+                        params={{id:userState.user.id}}
+                        errorMessage={'Server error occured during getting user feed'}/>
                     </Space>
                 </Col>
 

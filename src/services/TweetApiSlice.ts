@@ -40,6 +40,15 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
             })
         }),
 
+        getComments: builder.query({
+            query: ({filters,id}) => ({
+                url: `/tweets/${id}/comments`,
+                method: 'GET',
+                credentials: 'include',
+                params: filters
+            })
+        }),
+
     })
 })
 
@@ -48,5 +57,6 @@ export const {
     useCreateTweetMutation,
     useDeleteTweetMutation,
     useLazyGetOneTweetQuery,
-    useGetAllTweetsQuery
+    useGetAllTweetsQuery,
+    useGetCommentsQuery
 } = tweetsApiSlice;

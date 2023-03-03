@@ -2,9 +2,9 @@
 import { GlobalOutlined, PictureOutlined, SendOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Col, Divider,Image, Input, List, notification, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
 import React, { useState } from "react";
-import { useAppSelector } from "../../../hooks/redux";
-import { useCreateTweetMutation } from "../../../services/TweetApiSlice";
-import PostFormImages from "../../ImageList/PostFormImages";
+import { useAppSelector } from "../../hooks/redux";
+import { useCreateTweetMutation } from "../../services/TweetApiSlice";
+import PostFormImages from "../ImageList/PostFormImages";
 import './ReplyForm.scss'
 
 interface ReplyFormProps {
@@ -87,13 +87,13 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost})  =>
 					direction='horizontal' 
 					className="reply-form-space">
 						<Input.TextArea 
-						autoSize={true} 
-						value={postValues.text}
-						onChange={(e) => onTextAreaChange(e)}
-						maxLength={1000}  
-						className='reply-form-textarea'
-						placeholder="Tweet your reply"
-						/>
+							autoSize={true} 
+							value={postValues.text}
+							onChange={(e) => onTextAreaChange(e)}
+							maxLength={1000}  
+							className='reply-form-textarea'
+							placeholder="Tweet your reply"
+							/>
 
 						<div className='reply-form-textarea-content'>
 
