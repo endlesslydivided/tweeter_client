@@ -14,9 +14,10 @@ interface CommentItemProps
 {
     comment: any;
     currentUser: any;
+    popComment:Function
 }
 
-const CommentItem:React.FC<CommentItemProps> = ({comment,currentUser}) =>
+const CommentItem:React.FC<CommentItemProps> = ({comment,currentUser,popComment}) =>
 {
 
     /*#region CommentItem state control*/
@@ -30,10 +31,10 @@ const CommentItem:React.FC<CommentItemProps> = ({comment,currentUser}) =>
 
     const hasMedia = comment.parentRecord?.tweetMedia?.length !== 0  || comment.tweetMedia?.length !== 0;
 
-    useNotify(likeResult,undefined,() => {setIsLiked(true)},'Some error occured on server');
-    useNotify(unlikeResult,undefined,() => {setIsLiked(false)},'Some error occured on server');
-    useNotify(retweetResult,undefined,() => {setIsRetweeted(true)},'Some error occured on server');
-    useNotify(deleteTweetResult,undefined,undefined,'Some error occured on server');
+    useNotify(likeResult,undefined,() => setIsLiked(true),'Some error occured on server');
+    useNotify(unlikeResult,undefined,() => setIsLiked(false),'Some error occured on server');
+    useNotify(retweetResult,undefined,() => setIsRetweeted(true),'Some error occured on server');
+    useNotify(deleteTweetResult,undefined,()=>popComment(comment.id),'Some error occured on server');
 
     const onLikeClickHandler =() => isLiked ? unlike({tweetId:comment.id,userId:currentUser.user?.id}):
                                             like({tweetId:comment.id,userId:currentUser.user?.id});

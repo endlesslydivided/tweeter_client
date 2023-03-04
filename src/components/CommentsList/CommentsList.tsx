@@ -1,43 +1,69 @@
 
 import { RetweetOutlined } from "@ant-design/icons";
 import { List, Skeleton, Space, Typography } from "antd";
+import { useState } from "react";
 import { useFilterFetch } from "../../hooks/useFilterFetch";
-import { useGetCommentsQuery } from "../../services/TweetApiSlice";
+import { useNotify } from "../../hooks/useNotify";
+import { useGetCommentsQuery, useLazyGetCommentsQuery } from "../../services/TweetApiSlice";
 import CommentItem from "./CommentsItem/CommentItem";
 import "./CommentsList.scss"
 
 
 interface CommentsListProps
 {
-    post: any;
     currentUser: any;
+    post:any;
+    comments:any;
+    setComments:Function;
+    filters:any;
+    setFilters:Function
 }
 
-const CommentsList:React.FC<CommentsListProps> = ({post,currentUser}) =>
-{
 
-    const [result,totalPages,setFilters] = useFilterFetch(
+
+
+
+const CommentsList:React.FC<CommentsListProps> = ({post,currentUser,comments,setComments,filters,setFilters}) =>
+{
+      
+      const [isMore,setIsMore] = useState(false);
+      const getCommentsResult = useGetCommentsQuery({id:post.id,filters});
+      const loadMoreHandler = async () =>
       {
-        fetchCB: useGetCommentsQuery,
-        params:{id:post.id},
-        errorMessage:'Some error occured during fetching tweet comments'
+          setFilters((p:any) => {return {...p,page: p.page + 1}});
       }
-    );
+
+      useNotify(getCommentsResult,undefined,() => 
+      {
+          setIsMore(filters.page < Math.ceil(getCommentsResult.data.count / filters.limit));
+          setComments((p:any) => [...p,...getCommentsResult.data.rows]);
+      },'Some error occured on server');
+
+      const popComment = (id:any) =>
+      {
+        setComments((p:any) => [...p.filter((i:any) => i.id != id)]);
+      }
 
     return (
+      <>
         <List 
         className="comments-list"
         split={false}
-        dataSource={result.data?.rows}
+        itemLayout="vertical"
+        dataSource={comments || []}
         renderItem={(item:any) => (
             <List.Item key={item.id}>
-            <Skeleton loading={result.loading}  active avatar>
+            <Skeleton loading={getCommentsResult.isLoading}  active avatar>
               <Space direction="vertical">
-                <CommentItem comment={item} currentUser={currentUser}/>
+                <CommentItem comment={item} popComment={popComment} currentUser={currentUser} setFilters={setFilters}/>
               </Space>          
             </Skeleton>
           </List.Item>)
         }/>
+        {
+          isMore && <Typography.Title onClick={() => loadMoreHandler()}>Show more</Typography.Title>
+        }
+      </>
     )
 }
 

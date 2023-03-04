@@ -2,7 +2,7 @@
 {
     width: 100%;
 
-    .post-media-display-none
+    .post-item-card-space.post-media-display-none
     {
         .ant-space-item:nth-child(3)
         {
@@ -10,12 +10,21 @@
         }
     }
 
-    .post-form-display-none
+    .post-item-card-space.post-сomments-display-none
     {
-        .ant-space-item:nth-child(10),
-        .ant-space-item:nth-child(9)
+        .ant-space-item:nth-last-child(2),
+        .ant-space-item:nth-last-child(1)
         {
             display: none;
+        }
+
+        .reply-form-row
+        {
+            .ant-space-item
+            {
+                display: block;
+            }
+
         }
     }
 

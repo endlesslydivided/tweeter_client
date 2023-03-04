@@ -3,8 +3,9 @@ import { Avatar, Button, Card, Col, Divider, Dropdown, Input, MenuProps, notific
 import { Image } from 'antd';
 import { useState } from "react";
 import { useNotify } from "../../../hooks/useNotify";
+import { useObserver } from "../../../hooks/useObserver";
 import { useLikeTweetMutation, useSaveTweetMutation, useUnlikeTweetMutation, useUnsaveTweetMutation } from "../../../services/TweetActionsApiSlice";
-import { useCreateTweetMutation, useDeleteTweetMutation } from "../../../services/TweetApiSlice";
+import { useCreateTweetMutation, useDeleteTweetMutation, useGetCommentsQuery, useLazyGetCommentsQuery, useLazyGetOneTweetQuery } from "../../../services/TweetApiSlice";
 import { fDateTime } from "../../../utils/formatTime";
 import CommentsList from "../../CommentsList/CommentsList";
 import ReplyForm from "../../ReplyForm/ReplyForm";
@@ -19,17 +20,41 @@ interface PostItemProps
     currentUser: any;
 }
 
+
+const initialFilters = {
+    search: "",
+    page: 1,
+    limit: 5,
+    orderBy: "createdAt",
+    orderDirection: "desc",
+  };
+
 const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
 {
-
 	const [deleteTweet, deleteTweetResult] = useDeleteTweetMutation();
+    const [getComment] = useLazyGetOneTweetQuery();
+
+    const [comments,setComments] = useState<any>([]);
+    const [filters,setFilters] = useState(initialFilters)
     const [isCommentOpen,setIsCommentOpen] = useState(false);
 
-    const hasMedia = post.parentRecord?.tweetMedia?.length !== 0  || post.tweetMedia?.length !== 0;
+    const appendToComments = async (id:any) =>
+    {
+        const {data,error}:any = await getComment({id});
+        if(data)
+        {
+            appendToComments((p:any) => [data,...p]);
+        }
+        else if(error)
+        {
+            notification.error({message:error.message,placement:'topRight',duration:2})
+        }
+    }
 
-    useNotify(deleteTweetResult,undefined,undefined,'Some error occured on server');
+    const hasMedia = post.parentRecord?.tweetMedia?.length !== 0  || post.tweetMedia?.length !== 0;   
 
     const onDeleteClickHandler = () => deleteTweet({id:post.id});
+    useNotify(deleteTweetResult,undefined,()=> setComments((p:any) => [...p.filter((i:any) => i.id != post.id)]),'Some error occured on server');
     
     const items: MenuProps['items'] = [
         {
@@ -52,10 +77,10 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
         }>
             <Space 
                 direction="vertical" 
-                className={
-                "post-item-card-space " +
-                (!hasMedia ? 'post-media-display-none' : '')+
-                (!isCommentOpen ? 'post-form-display-none' : '')} 
+                className=
+                {
+                    "post-item-card-space " +(!hasMedia ? 'post-media-display-none' : '')+(!isCommentOpen ? 'post-сomments-display-none' : '')
+                } 
                 size='middle'>
                 <Card.Meta className="post-item-card-meta"
                     avatar={<Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + post?.author?.mainPhoto?.path} size={36} shape="square" />}
@@ -94,22 +119,32 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                 <Row className={'action-row'}>
                    <PostActions 
                         post={post} 
-                        currentUser={currentUser} 
+                        currentUser={currentUser}
                         setIsCommentsOpen={setIsCommentOpen}
                         isCommentOpen={isCommentOpen}/>
                 </Row>
 
                 <Divider type="horizontal" className={'actions-form-divider'}/>
             
-                <Row >
-                    <ReplyForm parentPost={post}/>        
+                <Row className={"reply-form-row"}>
+                    <ReplyForm appendToComments={setComments} parentPost={post}/>        
                 </Row>
 
                 <Divider type="horizontal"  className={'form-comments-divider'}/>
-
+                
                 <Row >
-                    <CommentsList post={post} currentUser={currentUser}/>     
+                    {isCommentOpen &&
+                    <CommentsList 
+                        filters={filters}
+                        setFilters={setFilters}
+                        comments={comments}
+                        setComments={setComments}
+                        currentUser={currentUser}
+                        post={post}
+                    />  }   
                 </Row>
+                
+            
 
                 
             </Space>

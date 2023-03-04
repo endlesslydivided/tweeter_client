@@ -1,6 +1,6 @@
 import { BookFilled, BookOutlined, CommentOutlined, HeartFilled, HeartOutlined, RetweetOutlined } from "@ant-design/icons";
 import { Button, Col } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNotify } from "../../../hooks/useNotify";
 import { useLikeTweetMutation, useSaveTweetMutation, useUnlikeTweetMutation, useUnsaveTweetMutation } from "../../../services/TweetActionsApiSlice";
 import { useCreateTweetMutation } from "../../../services/TweetApiSlice";
@@ -49,8 +49,7 @@ const PostActions:React.FC<PostActionsProps> = ({post,currentUser,setIsCommentsO
             parentRecordId: post.parentRecord ?  post.parentRecord.id : post.id,
             authorId:currentUser.user.id
         }
-    );;
-
+    );
 
     return (
         <>

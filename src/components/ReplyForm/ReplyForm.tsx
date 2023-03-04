@@ -3,12 +3,13 @@ import { GlobalOutlined, PictureOutlined, SendOutlined, TeamOutlined, UserOutlin
 import { Avatar, Button, Card, Col, Divider,Image, Input, List, notification, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
 import React, { useState } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import { useCreateTweetMutation } from "../../services/TweetApiSlice";
+import { useCreateTweetMutation, useLazyGetOneTweetQuery } from "../../services/TweetApiSlice";
 import PostFormImages from "../ImageList/PostFormImages";
 import './ReplyForm.scss'
 
 interface ReplyFormProps {
 	parentPost: any;
+	appendToComments: Function;
 }
 
 const initialPost = {
@@ -19,18 +20,16 @@ const initialPost = {
 }
 
 
-const ReplyForm: React.FC<ReplyFormProps> = ({parentPost})  =>
+const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,appendToComments})  =>
 {
 	const [postValues,setPostValues] = useState(initialPost);
 	const [files, setFiles] : any = useState([]);
 	const userState: any = useAppSelector(state => state.auth.user);
 
-
 	const [createComment, result] = useCreateTweetMutation();
 
 
 	const onTextAreaChange= (e:any) =>  setPostValues(previous => ({...previous,text:e.target.value}));
-	const onPublicChange= (e:any) =>  setPostValues(previous => ({...previous,isPublic:e.target.value}));
 	const onCreatePostSubmit= async (e:any) =>  
 	{
 		const formData = new FormData();
@@ -45,19 +44,20 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost})  =>
 		formData.append('parentRecordId',  parentPost.id.toString());
         formData.append('authorId', userState.user.id);
 
-        const result:any = await createComment(formData);
+        const {data,error}:any = await createComment(formData);
 
-        if(result.data)
+        if(data)
 		{
 			setPostValues((previous:any) => initialPost);
 			setFiles([]);
+			appendToComments(data.id);
+			
 		}
-		else if(result.error)
+		else if(error)
 		{
-			notification.error({message:result.error.message,placement:'topRight',duration:2})
+			notification.error({message:error.message,placement:'topRight',duration:2})
 		}
 	};
-
 	const props: UploadProps = {
 		name: 'file',
 		maxCount: 2,

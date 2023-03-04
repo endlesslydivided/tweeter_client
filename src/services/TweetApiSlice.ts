@@ -13,9 +13,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, arg) => [
                 'UserTweet',
                 'Reply',
-                'Feed',
-                'Comment',
-                {type:'Comment',id:result.id}]
+                'Feed']
         }),
 
         deleteTweet: builder.mutation({
@@ -31,13 +29,11 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 {type:'Feed',id:arg.id},
                 {type:'LikedTweet',id:arg.id},
                 {type:'SavedTweet',id:arg.id},
-                {type:'Comment',id:arg.id},
                 'UserTweet',
                 'Reply',
                 'Feed',
                 'LikedTweet',
-                'SavedTweet',
-                'Comment']
+                'SavedTweet']
 
         }),
 
@@ -79,5 +75,6 @@ export const {
     useDeleteTweetMutation,
     useLazyGetOneTweetQuery,
     useGetAllTweetsQuery,
-    useGetCommentsQuery
+    useGetCommentsQuery,
+    useLazyGetCommentsQuery
 } = tweetsApiSlice;
