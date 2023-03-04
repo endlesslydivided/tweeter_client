@@ -10,7 +10,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'UserTweet' as const, id })),{type:'UserTweet'}]
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'UserTweet' as const, id })),'UserTweet']
         }),
         getReplies: builder.query({
             query: ({id, filters}) => ({

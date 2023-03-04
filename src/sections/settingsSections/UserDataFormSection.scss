@@ -25,13 +25,13 @@
         .row
         {
             display:flex;
-            align-items: end;
+            align-items: flex-end;
         }
     }
 
     .submit-form
     {
-        justify-content:end;
+        justify-content:flex-end;
         display:flex;
     }
 }

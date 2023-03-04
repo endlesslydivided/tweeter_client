@@ -21,9 +21,11 @@ const PostActions:React.FC<PostActionsProps> = ({post,currentUser,setIsCommentsO
     const [save,saveResult] = useSaveTweetMutation();
     const [unsave,unsaveResult] = useUnsaveTweetMutation();
 	const [retweet, retweetResult] = useCreateTweetMutation();
+    
+
  
-    const [isLiked,setIsLiked] = useState(post.isLiked === undefined || post.isLiked?.length !== 0)
-    const [isSaved,setIsSaved] = useState(post.isSaved === undefined || post.isSaved?.length !== 0)
+    const [isLiked,setIsLiked] = useState(post.isLiked && post.isLiked?.length !== 0)
+    const [isSaved,setIsSaved] = useState(post.isSaved && post.isSaved?.length !== 0)
     const [isRetweeted,setIsRetweeted] = useState(post.isRetweeted !== null  || post.parentRecord !== null)
 
     useNotify(likeResult,undefined,() => {setIsLiked(true)},'Some error occured on server');
@@ -69,7 +71,7 @@ const PostActions:React.FC<PostActionsProps> = ({post,currentUser,setIsCommentsO
                 <Button 
                 icon={isLiked ? <HeartFilled/> : <HeartOutlined/>}
                 className={`like-button ${isLiked && 'active'}`}  onClick={() => onLikeClickHandler()} type="text"  block>
-                    Like
+                    Like ({post.counts.likesCount})
                 </Button>
             </Col>
             <Col flex={1}>

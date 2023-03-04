@@ -84,9 +84,9 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                 </div>
                 
                 <Row gutter={[10,0]} justify='end'  className='post-item-stats'>
-                    <Col><Typography.Text className='post-item-stats-comments' type="secondary" >499 comments</Typography.Text></Col>
-                    <Col><Typography.Text className='post-item-stats-retweets' type="secondary">59k retweets</Typography.Text></Col>
-                    <Col><Typography.Text className='post-item-stats-saved' type="secondary">234 saved</Typography.Text></Col>
+                    <Col><Typography.Text className='post-item-stats-comments' type="secondary" >{post.counts.commentsCount} comments</Typography.Text></Col>
+                    <Col><Typography.Text className='post-item-stats-retweets' type="secondary">{post.counts.retweetsCount} retweets</Typography.Text></Col>
+                    <Col><Typography.Text className='post-item-stats-saved' type="secondary">{post.counts.savesCount} saved</Typography.Text></Col>
                 </Row> 
 
                 <Divider type="horizontal" className={'stats-actions-divider'}/>

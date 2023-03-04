@@ -10,7 +10,12 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 body: post,
                 credentials: 'include',
             }),
-            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'},{type:'Feed'}]
+            invalidatesTags: (result, error, arg) => [
+                'UserTweet',
+                'Reply',
+                'Feed',
+                'Comment',
+                {type:'Comment',id:result.id}]
         }),
 
         deleteTweet: builder.mutation({
@@ -20,7 +25,19 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                     method: 'DELETE',
                     credentials: 'include',
                 }),
-            invalidatesTags: (result, error, arg) => [{type: 'UserTweet'},{type: 'Reply'},{type:'Feed'},{type:'LikedTweet'},{type:'SavedTweet'}]
+            invalidatesTags: (result, error, arg) => [
+                {type:'UserTweet',id:arg.id},
+                {type:'Reply',id:arg.id},
+                {type:'Feed',id:arg.id},
+                {type:'LikedTweet',id:arg.id},
+                {type:'SavedTweet',id:arg.id},
+                {type:'Comment',id:arg.id},
+                'UserTweet',
+                'Reply',
+                'Feed',
+                'LikedTweet',
+                'SavedTweet',
+                'Comment']
 
         }),
 
@@ -29,7 +46,9 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 url: `/tweets/${id}`,
                 method: 'GET',
                 credentials: 'include',
-            })
+            }),          
+            providesTags: (result, error, arg) =>
+            result && [{ type: 'Tweet' as const, id:arg.id}]
         }),
         getAllTweets: builder.query({
             query: ({filters}) => ({
@@ -46,7 +65,9 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
                 credentials: 'include',
                 params: filters
-            })
+            }),          
+            providesTags: (result, error, arg) =>
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'Comment' as const, id })),'Comment']
         }),
 
     })

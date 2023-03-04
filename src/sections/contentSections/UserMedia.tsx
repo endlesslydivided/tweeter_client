@@ -25,4 +25,3 @@ const UserMedia:React.FC<UserMediaProps> = ({userId}) => {
 }
 
 export default UserMedia
-	

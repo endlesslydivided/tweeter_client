@@ -25,8 +25,8 @@ const CommentItem:React.FC<CommentItemProps> = ({comment,currentUser}) =>
 	const [retweet, retweetResult] = useCreateTweetMutation();
 	const [deleteTweet, deleteTweetResult] = useDeleteTweetMutation();
  
-    const [isLiked,setIsLiked] = useState(comment.isLiked === undefined || comment.isLiked?.length !== 0)
-    const [isRetweeted,setIsRetweeted] = useState(comment.isRetweeted !== null)
+    const [isLiked,setIsLiked] = useState(comment.isLiked && comment.isLiked?.length !== 0)
+    const [isRetweeted,setIsRetweeted] = useState(!!comment.isRetweeted)
 
     const hasMedia = comment.parentRecord?.tweetMedia?.length !== 0  || comment.tweetMedia?.length !== 0;
 
@@ -74,7 +74,7 @@ const CommentItem:React.FC<CommentItemProps> = ({comment,currentUser}) =>
                         <Space direction='vertical' size={[0,0]} className="comment-content-space">
                             <Space direction='horizontal' className="comment-meta-space">
                                 <Typography.Text  strong>{comment.author?.firstname + ' ' + comment.author?.surname}</Typography.Text> 
-                                <Typography.Text  type="secondary">{fDateTime(comment.createdAt)}</Typography.Text>   
+                                <Typography.Text style={{fontSize:'13px'}}  type="secondary">{fDateTime(comment.createdAt)}</Typography.Text>   
 
                                 <Dropdown menu={{ items }} arrow={false} placement={'bottom'}>
                                     <Button type="text" size="middle" shape="circle" >
@@ -118,14 +118,14 @@ const CommentItem:React.FC<CommentItemProps> = ({comment,currentUser}) =>
                                 <Typography.Text type="secondary">•</Typography.Text>
                             </Col>
 
-                            <Col><Typography.Text className='comment-item-stats-likes' type="secondary">234 likes</Typography.Text></Col>
+                            <Col><Typography.Text className='comment-item-stats-likes' type="secondary">{comment.counts.likesCount} likes</Typography.Text></Col>
 
 
                             <Col> 
                                 <Typography.Text type="secondary">•</Typography.Text>
                             </Col>
 
-                            <Col><Typography.Text className='comment-item-stats-retweets' type="secondary">59k retweets</Typography.Text></Col>
+                            <Col><Typography.Text className='comment-item-stats-retweets' type="secondary">{comment.counts.retweetsCount} retweets</Typography.Text></Col>
                                                     
                         </Row> 
                     </Col>

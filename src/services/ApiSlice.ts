@@ -46,6 +46,7 @@ export const apiSlice = createApi({
     tagTypes: [
         'UserTweet',
         'Feed',
+        'Comment',
         'Media',
         'Reply',
         'Subscribtion',

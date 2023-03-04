@@ -7,7 +7,7 @@ export function fDate(date: any, newFormat: any) {
     return date ? format(new Date(date), fm) : '';
 }
 
-export function fDateTime(date: any, newFormat: any = 'dd MMM yyyy p') {
+export function fDateTime(date: any, newFormat: any = 'dd MMMM yyyy HH:mm') {
     return date ? format(new Date(date), newFormat) : '';
 }
 

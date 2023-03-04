@@ -7,6 +7,7 @@ import UserCard from "../../sections/homeUserDataSections/UserCard";
 import './HomePage.scss';
 import ContentSection from "../../sections/contentSections/ContentSection";
 import { useGetLikedTweetsQuery, useGetMediaQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
+import UserMedia from "../../sections/userTweetsSections/UserMedia";
 
 const BgProfile = require('../../assets/abstractBG/colorfulWaves.jpg');
 
@@ -63,10 +64,7 @@ const HomePage = () => {
                     errorMessage={'Server error occured during getting user tweets and replies'}/>
                 )};
             case 'media':{ return (
-                    <ContentSection  
-                    params={{id:userState.user.id}}
-                    fetchCB={useGetMediaQuery} 
-                    errorMessage={'Server error occured during getting user media'}/>
+                    <UserMedia userId={userState.user.id}/>
                 )};
             case 'likes':{ return (
                     <ContentSection  
