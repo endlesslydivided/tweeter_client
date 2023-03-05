@@ -19,10 +19,6 @@ interface CommentsListProps
     setFilters:Function
 }
 
-
-
-
-
 const CommentsList:React.FC<CommentsListProps> = ({post,currentUser,comments,setComments,filters,setFilters}) =>
 {
       
@@ -30,12 +26,15 @@ const CommentsList:React.FC<CommentsListProps> = ({post,currentUser,comments,set
       const getCommentsResult = useGetCommentsQuery({id:post.id,filters});
       const loadMoreHandler = async () =>
       {
-          setFilters((p:any) => {return {...p,page: p.page + 1}});
+          if(comments.length === 0)
+            getCommentsResult.refetch();
+          else
+            setFilters((p:any) => {return {...p,createdAt: comments[comments.length-1].createdAt }});
       }
 
       useNotify(getCommentsResult,undefined,() => 
       {
-          setIsMore(filters.page < Math.ceil(getCommentsResult.data.count / filters.limit));
+          setIsMore(getCommentsResult.data.count > filters.limit);
           setComments((p:any) => [...p,...getCommentsResult.data.rows]);
       },'Some error occured on server');
 
@@ -55,7 +54,7 @@ const CommentsList:React.FC<CommentsListProps> = ({post,currentUser,comments,set
             <List.Item key={item.id}>
             <Skeleton loading={getCommentsResult.isLoading}  active avatar>
               <Space direction="vertical">
-                <CommentItem comment={item} popComment={popComment} currentUser={currentUser} setFilters={setFilters}/>
+                <CommentItem comment={item} popComment={popComment} currentUser={currentUser} />
               </Space>          
             </Skeleton>
           </List.Item>)

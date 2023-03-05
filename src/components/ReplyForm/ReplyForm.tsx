@@ -50,8 +50,7 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,appendToComments})  =>
 		{
 			setPostValues((previous:any) => initialPost);
 			setFiles([]);
-			appendToComments(data.id);
-			
+			appendToComments(data.id);			
 		}
 		else if(error)
 		{

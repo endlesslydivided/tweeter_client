@@ -23,7 +23,7 @@ interface PostItemProps
 
 const initialFilters = {
     search: "",
-    page: 1,
+    createdAt: "",
     limit: 5,
     orderBy: "createdAt",
     orderDirection: "desc",
@@ -43,7 +43,7 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
         const {data,error}:any = await getComment({id});
         if(data)
         {
-            appendToComments((p:any) => [data,...p]);
+            setComments((p:any) => [data,...p]);
         }
         else if(error)
         {
@@ -127,7 +127,7 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
                 <Divider type="horizontal" className={'actions-form-divider'}/>
             
                 <Row className={"reply-form-row"}>
-                    <ReplyForm appendToComments={setComments} parentPost={post}/>        
+                    <ReplyForm appendToComments={appendToComments} parentPost={post}/>        
                 </Row>
 
                 <Divider type="horizontal"  className={'form-comments-divider'}/>
