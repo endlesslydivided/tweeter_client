@@ -10,7 +10,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'UserTweet' as const, id })),'UserTweet']
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'UserTweet', id })),'UserTweet']
         }),
         getReplies: builder.query({
             query: ({id, filters}) => ({
@@ -19,7 +19,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'Reply' as const, id }))]
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'Reply', id }))]
         }),
 
         getLikedTweets: builder.query({
@@ -29,7 +29,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'LikedTweet' as const, id }))]
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'LikedTweet', id }))]
         }),
         getSavedTweets: builder.query({
             query: ({id, filters}) => ({
@@ -38,7 +38,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'SavedTweet' as const, id }))]
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'SavedTweet', id }))]
         }),
 
         getMedia: builder.query({
@@ -48,7 +48,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'Media' as const, id }))]
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'Media', id }))]
         }),
         getFeed: builder.query({
             query: ({id, filters}) => ({
@@ -57,7 +57,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-                result &&[...result.rows.map(({id}: any) => ({type: 'Feed' as const, id})), 'Feed']
+                result &&[...result.rows.map(({id}: any) => ({type: 'Feed', id})), 'Feed']
         }),
     })
 })

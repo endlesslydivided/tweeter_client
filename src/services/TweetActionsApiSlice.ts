@@ -14,7 +14,7 @@ export const tweetActionsApiSlice = apiSlice.injectEndpoints({
                 {type: 'LikedTweet', id: arg.tweetId},
                 {type: 'UserTweet', id: arg.tweetId},
                 {type: 'Reply', id: arg.tweetId},
-                {type: 'Comment', id: arg.tweetId},
+                {type:'Comment', id: arg.tweetId},
                 {type: 'SavedTweet', id: arg.tweetId},]
         }),
         saveTweet: builder.mutation({
@@ -38,10 +38,10 @@ export const tweetActionsApiSlice = apiSlice.injectEndpoints({
                     credentials: 'include',
                 }),
             invalidatesTags: (result, error, arg) => [
-                {type: 'LikedTweet', id: arg.id},
-                {type: 'UserTweet', id: arg.id},
-                {type: 'Reply', id: arg.id},
-                {type: 'Comment', id: arg.id},
+                {type: 'LikedTweet', id: arg.tweetId},
+                {type: 'UserTweet', id: arg.tweetId},
+                {type: 'Reply', id: arg.tweetId},
+                {type:'Comment', id: arg.tweetId},
                 {type: 'SavedTweet', id: arg.tweetId},]
         }),
         unsaveTweet: builder.mutation({
@@ -52,10 +52,10 @@ export const tweetActionsApiSlice = apiSlice.injectEndpoints({
                     credentials: 'include',
                 }),
             invalidatesTags: (result, error, arg) => [
-                {type: 'SavedTweet', id: arg.id},
-                {type: 'UserTweet', id: arg.id},
-                {type: 'LikedTweet', id: arg.id},
-                {type: 'Reply', id: arg.id},]
+                {type: 'SavedTweet', id: arg.tweetId},
+                {type: 'UserTweet', id: arg.tweetId},
+                {type: 'LikedTweet', id: arg.tweetId},
+                {type: 'Reply', id: arg.tweetId},]
         })
     })
 })

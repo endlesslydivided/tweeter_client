@@ -13,7 +13,8 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, arg) => [
                 'UserTweet',
                 'Reply',
-                'Feed']
+                'Feed',
+                {type:'Comment', id: arg.parentRecordId }]
         }),
 
         deleteTweet: builder.mutation({
@@ -29,6 +30,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 {type:'Feed',id:arg.id},
                 {type:'LikedTweet',id:arg.id},
                 {type:'SavedTweet',id:arg.id},
+                {type:'Comment', id: result.parentRecordId},
                 'UserTweet',
                 'Reply',
                 'Feed',
@@ -44,7 +46,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 credentials: 'include',
             }),          
             providesTags: (result, error, arg) =>
-            result && [{ type: 'Tweet' as const, id:arg.id}]
+            result && [{ type: 'Tweet', id:arg.id},{type:'Comment', id: arg.id}]
         }),
         getAllTweets: builder.query({
             query: ({filters}) => ({
@@ -63,7 +65,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 params: filters
             }),          
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'Comment' as const, id })),'Comment']
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'Comment' , id: id })),'Comment']
         }),
 
     })

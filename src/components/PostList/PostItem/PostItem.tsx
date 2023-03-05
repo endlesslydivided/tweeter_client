@@ -54,7 +54,7 @@ const PostItem:React.FC<PostItemProps> = ({post,currentUser}) =>
     const hasMedia = post.parentRecord?.tweetMedia?.length !== 0  || post.tweetMedia?.length !== 0;   
 
     const onDeleteClickHandler = () => deleteTweet({id:post.id});
-    useNotify(deleteTweetResult,undefined,()=> setComments((p:any) => [...p.filter((i:any) => i.id != post.id)]),'Some error occured on server');
+    useNotify(deleteTweetResult,undefined,()=> setComments((p:any) => [...p.filter((i:any) => i.id !== post.id)]),'Some error occured on server');
     
     const items: MenuProps['items'] = [
         {
