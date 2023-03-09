@@ -9,12 +9,16 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
                 body: post,
                 credentials: 'include',
-            }),
-            invalidatesTags: (result, error, arg) => [
-                'UserTweet',
-                'Reply',
-                'Feed',
-                {type:'Comment', id: arg.parentRecordId }]
+            })
+        }),
+
+        createRetweet: builder.mutation({
+            query: (post) => ({
+                url: '/tweets',
+                method: 'POST',
+                body: post,
+                credentials: 'include',
+            })
         }),
 
         deleteTweet: builder.mutation({
@@ -23,19 +27,16 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                     url: `/tweets/${id}`,
                     method: 'DELETE',
                     credentials: 'include',
-                }),
-            invalidatesTags: (result, error, arg) => [
-                {type:'UserTweet',id:arg.id},
-                {type:'Reply',id:arg.id},
-                {type:'Feed',id:arg.id},
-                {type:'LikedTweet',id:arg.id},
-                {type:'SavedTweet',id:arg.id},
-                {type:'Comment', id: result.parentRecordId},
-                'UserTweet',
-                'Reply',
-                'Feed',
-                'LikedTweet',
-                'SavedTweet']
+                })
+        }),
+
+        restoreTweet: builder.mutation({
+            query: ({id}) =>
+                ({
+                    url: `/tweets/${id}/restored`,
+                    method: 'POST',
+                    credentials: 'include',
+                })
 
         }),
 
@@ -44,9 +45,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 url: `/tweets/${id}`,
                 method: 'GET',
                 credentials: 'include',
-            }),          
-            providesTags: (result, error, arg) =>
-            result && [{ type: 'Tweet', id:arg.id},{type:'Comment', id: arg.id}]
+            })
         }),
         getAllTweets: builder.query({
             query: ({filters}) => ({
@@ -63,9 +62,7 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
                 credentials: 'include',
                 params: filters
-            }),          
-            providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'Comment' , id: id })),'Comment']
+            })
         }),
 
     })
@@ -74,7 +71,9 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useCreateTweetMutation,
+    useCreateRetweetMutation,
     useDeleteTweetMutation,
+    useRestoreTweetMutation,
     useLazyGetOneTweetQuery,
     useGetAllTweetsQuery,
     useGetCommentsQuery,

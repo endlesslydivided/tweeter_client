@@ -12,14 +12,14 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
             providesTags: (result, error, arg) =>
             result && [...result.rows.map(({ id }:any ) => ({ type: 'UserTweet', id })),'UserTweet']
         }),
-        getReplies: builder.query({
+        getTweetsAndReplies: builder.query({
             query: ({id, filters}) => ({
-                url: `/users/${id}/tweets`,
+                url: `/users/${id}/tweets-replies`,
                 method: `GET`,
                 params: filters
             }),
             providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'Reply', id }))]
+            result && [...result.rows.map(({ id }:any ) => ({ type: 'TweetAndReply', id }))]
         }),
 
         getLikedTweets: builder.query({
@@ -65,7 +65,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetUserTweetsQuery,
-    useGetRepliesQuery,
+    useGetTweetsAndRepliesQuery,
     useGetLikedTweetsQuery,
     useGetSavedTweetsQuery,
     useGetMediaQuery,

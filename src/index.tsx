@@ -24,7 +24,7 @@ root.render(
             Layout:
             {
               colorBgHeader:'white',            
-            },
+            }
           }
          
         }}

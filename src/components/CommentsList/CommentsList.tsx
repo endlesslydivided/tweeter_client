@@ -2,74 +2,53 @@
 import { RetweetOutlined } from "@ant-design/icons";
 import { Button, List, notification, Skeleton, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useCollection } from "../../hooks/useCollection";
+import { useCommentsList } from "../../hooks/useCommentsList";
 import { useFilterFetch } from "../../hooks/useFilterFetch";
 import { useNotify } from "../../hooks/useNotify";
 import { useGetCommentsQuery, useLazyGetCommentsQuery } from "../../services/TweetApiSlice";
+import { appendCommentPage, resetComments } from "../../store/slices/CommentsSlice";
 import CommentItem from "./CommentsItem/CommentItem";
 import "./CommentsList.scss"
 
 
 interface CommentsListProps
 {
-    currentUser: any;
-    post:any;
-    comments:any;
-    setComments:Function;
-    filters:any;
-    setFilters:Function
+    parentPost:any;
 }
 
-const CommentsList:React.FC<CommentsListProps> = ({post,currentUser,comments,setComments,filters,setFilters}) =>
+const CommentsList:React.FC<CommentsListProps> = ({parentPost}) =>
 {
-      
-    const [isMore,setIsMore] = useState(false);
-    const getCommentsResult = useGetCommentsQuery({id:post.id,filters});
-    const loadMoreHandler = async () =>
+    const comments = useAppSelector((state:any) => state.comments[parentPost.id]);
+    const dispatch = useAppDispatch();
+
+    const {isMore,loadMoreHandler,getContentResult} = useCollection({
+      entities:comments,
+      appendPage: appendCommentPage,
+      getContentCB: useGetCommentsQuery,
+      getContentParams:{id:parentPost.id},
+      parentEntity:parentPost
+    })
+
+    useEffect(() =>
     {
-        if(comments.length === 0)
-        {
-          getCommentsResult.refetch();
-        }
-        else
-          setFilters((p:any) => {return {...p,createdAt: comments[comments.length-1].createdAt }});
-    }
-
-    useNotify(getCommentsResult,undefined,() => 
-    {
-        const {rows,count} = getCommentsResult.data;
-        setIsMore(count > filters.limit);
-
-        const retrievedComments = rows.filter((c:any) => !comments.includes(c));
-
-        const editedComments = retrievedComments.filter((r:any) => comments.some((c:any) => c.id === r.id));
-
-        const newComments = retrievedComments.filter((c:any) => !comments.some((r:any) => c.id === r.id));
-
-        const appliedComments = [...comments.map((c:any) => editedComments.map((e:any) => c.id === e.id ? e : c)[0] || c),...newComments];
-
-        setComments(appliedComments);
-
-    },'Some error occured on server');
-
-    const popComment = (id:any) =>
-    {
-      setComments((p:any) => [...p.filter((i:any) => i.id != id)]);
-    }
-
+      dispatch(resetComments(parentPost.id));
+    },[])
+   
 
     return (
       <>
         <List 
         className="comments-list"
         split={false}
-        loading={getCommentsResult.isFetching}
+        loading={getContentResult.isFetching}
         itemLayout="vertical"
         dataSource={comments || []}
         renderItem={(item:any) => (
-            <List.Item key={item.id}>
-            
+            <List.Item key={item.id}>           
               <Space direction="vertical">
-                <CommentItem comment={item} popComment={popComment} currentUser={currentUser} />
+                <CommentItem comment={item} parentPost={parentPost}/>
               </Space>          
           </List.Item>)
         }/>

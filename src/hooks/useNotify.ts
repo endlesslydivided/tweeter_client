@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import {useCallback, useEffect, useRef} from "react";
+import { useEffect } from "react";
 
 export const useNotify = (result: any,successMessage?:string,successCB?:Function,errorMessage?:string,errorCB?:Function) => {
 
@@ -16,5 +16,5 @@ export const useNotify = (result: any,successMessage?:string,successCB?:Function
             notification.error({message,placement:"topRight",duration:2.5});
             errorCB && errorCB();
         }
-    },[result]);   
+    },[result.isFetching,result.isLoading]);   
 }

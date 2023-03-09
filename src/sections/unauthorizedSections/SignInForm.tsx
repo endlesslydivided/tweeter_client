@@ -1,14 +1,12 @@
 
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {useSignInMutation} from '../../services/AuthApiSlice';
-import {useDispatch} from 'react-redux';
-import React, { Component } from "react";
-import {Layout,Menu,Button,Row,Col,Typography,Form,Input,Switch, Space,} from "antd";
-import {DribbbleOutlined,TwitterOutlined,InstagramOutlined} from "@ant-design/icons";
-import { REGISTRATION_ROUTE } from '../../utils/consts';
+import { Button, Form, Input, Space, Switch, Typography } from "antd";
+import Fingerprint2 from 'fingerprintjs2';
+import React from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/redux';
 import { useNotify } from '../../hooks/useNotify';
-import Fingerprint2 from 'fingerprintjs2'
-import { setCredentials } from '../../store/reducers/AuthSlice';
+import { useSignInMutation } from '../../services/AuthApiSlice';
+import { setCredentials } from '../../store/slices/AuthSlice';
 
 
 interface SignInFormProps {
@@ -22,7 +20,7 @@ const SignInForm: React.FC<SignInFormProps> = ({})  =>
     const [signIn, result] = useSignInMutation();
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useNotify(result,undefined,() => {navigate('/')});
 

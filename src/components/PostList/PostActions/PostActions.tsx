@@ -1,56 +1,52 @@
 import { BookFilled, BookOutlined, CommentOutlined, HeartFilled, HeartOutlined, RetweetOutlined } from "@ant-design/icons";
 import { Button, Col } from "antd";
-import { useEffect, useState } from "react";
-import { useNotify } from "../../../hooks/useNotify";
-import { useLikeTweetMutation, useSaveTweetMutation, useUnlikeTweetMutation, useUnsaveTweetMutation } from "../../../services/TweetActionsApiSlice";
-import { useCreateTweetMutation } from "../../../services/TweetApiSlice";
+import { useContext } from "react";
+import { useAppSelector } from "../../../hooks/redux";
+import { useLike } from "../../../hooks/useLike";
+import { useRetweet } from "../../../hooks/useRetweet";
+import { useSave } from "../../../hooks/useSave";
+import { decrementPostLikes, decrementPostSaves, deletePost, incrementPostLikes, incrementPostRetweets, incrementPostSaves } from "../../../store/slices/PostsSlice";
+import { PAGES } from "../../../utils/consts";
+import { PostListContext } from "../../AppRouter/AppRouter";
 
 interface PostActionsProps
 {
     post: any;
-    currentUser: any;
     setIsCommentsOpen: Function;
     isCommentOpen: boolean;
+    isOriginalDeleted: boolean;
 }
 
-const PostActions:React.FC<PostActionsProps> = ({post,currentUser,setIsCommentsOpen,isCommentOpen}) =>
+const PostActions:React.FC<PostActionsProps> = ({post,setIsCommentsOpen,isCommentOpen,isOriginalDeleted}) =>
 {
 
-    const [like,likeResult] = useLikeTweetMutation();
-    const [unlike,unlikeResult] = useUnlikeTweetMutation();
-    const [save,saveResult] = useSaveTweetMutation();
-    const [unsave,unsaveResult] = useUnsaveTweetMutation();
-	const [retweet, retweetResult] = useCreateTweetMutation();
-    
+    const {page}:any = useContext(PostListContext);
 
- 
-    const [isLiked,setIsLiked] = useState(post.isLiked && post.isLiked?.length !== 0)
-    const [isSaved,setIsSaved] = useState(post.isSaved && post.isSaved?.length !== 0)
-    const [isRetweeted,setIsRetweeted] = useState(post.isRetweeted !== null  || post.parentRecord !== null)
+    const unlikeAction:any = page === PAGES.USER_LIKES && deletePost(post.id);
+    const unsaveAction:any = page === PAGES.USER_SAVES && deletePost(post.id);
 
-    useNotify(likeResult,undefined,() => {setIsLiked(true)},'Some error occured on server');
-    useNotify(unlikeResult,undefined,() => {setIsLiked(false)},'Some error occured on server');
-    useNotify(saveResult,undefined,() => {setIsSaved(true)},'Some error occured on server');
-    useNotify(unsaveResult,undefined,() => {setIsSaved(false)},'Some error occured on server');
-    useNotify(retweetResult,undefined,() => {setIsRetweeted(true)},'Some error occured on server');
 
-    const onLikeClickHandler =() => isLiked ? unlike({tweetId:post.id,userId:currentUser.user?.id}):
-                                            like({tweetId:post.id,userId:currentUser.user?.id});
-        
-    const onSaveClickHandler =() => isSaved ? unsave({tweetId:post.id,userId:currentUser.user?.id}):
-                                                save({tweetId:post.id,userId:currentUser.user?.id});
+    const {isLiked,onLikeClickHandler} = useLike({
+        entity:post,
+        incrementLikes:incrementPostLikes(post.id),
+        decrementLikes:decrementPostLikes(post.id),
+        unlikeAction
+    })
 
-    const onRetweetClickHandler =() => 
-    retweet(
-        {
-            isComment:false,
-            isPublic:true,
-            parentRecordAuthorId: post.parentRecord ? post.parentRecord.author?.id : post.author?.id,
-            parentRecordId: post.parentRecord ?  post.parentRecord.id : post.id,
-            authorId:currentUser.user.id
-        }
-    );
+    const {isSaved,onSaveClickHandler} = useSave({
+        entity:post,
+        incrementSaves:incrementPostSaves(post.id),
+        decrementSaves:decrementPostSaves(post.id),
+        unsaveAction
+    })
 
+    const {isRetweeted,onRetweetClickHandler} = useRetweet({
+        entity:post,
+        incrementRetweets:incrementPostRetweets(post.parentRecord?.id || post.id),
+        isCurrentUserPage: page === PAGES.USER_TWEETS
+    })
+
+   
     return (
         <>
             <Col flex={1}>
@@ -59,13 +55,14 @@ const PostActions:React.FC<PostActionsProps> = ({post,currentUser,setIsCommentsO
                     Comments
                 </Button>
             </Col>
+            {!isOriginalDeleted &&
             <Col flex={1}>
                 <Button 
                 icon={<RetweetOutlined/>}
                 className={`retweet-button ${isRetweeted && 'active'}`} onClick={() => onRetweetClickHandler()}  type="text" block>
                     Retweet
                 </Button>
-            </Col>
+            </Col>}
             <Col flex={1}>
                 <Button 
                 icon={isLiked ? <HeartFilled/> : <HeartOutlined/>}
@@ -73,13 +70,14 @@ const PostActions:React.FC<PostActionsProps> = ({post,currentUser,setIsCommentsO
                     Like ({post.counts.likesCount})
                 </Button>
             </Col>
+            {!isOriginalDeleted &&
             <Col flex={1}>
                 <Button 
                 icon={isSaved ? <BookFilled/> :<BookOutlined/>} 
                 className={`save-button ${isSaved && 'active'}`} onClick={() => onSaveClickHandler()}  type="text"  block>
                     Save
                 </Button>
-            </Col>
+            </Col>}
         </>
     )
 }

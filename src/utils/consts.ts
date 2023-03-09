@@ -12,3 +12,13 @@ export const PROFILE_ROUTE = '/profile'
 export const SETTINGS_ROUTE = '/settings'
 
 export const CHAT_ROUTE = '/chat'
+
+
+export const PAGES =
+{
+	USER_TWEETS: 'USER_TWEETS',
+	USER_LIKES: 'USER_LIKES',
+	USER_SAVES: 'USER_SAVES',
+	USER_REPLIES: 'USER_REPLIES',
+	USER_FEED: 'USER_FEED'
+}

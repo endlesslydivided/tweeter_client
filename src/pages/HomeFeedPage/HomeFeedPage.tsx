@@ -5,11 +5,12 @@ import PostForm from "../../sections/feedPostsSections/PostForm";
 import ToFollowSection from "../../sections/feedPostsSections/ToFollow";
 import TrendsSection from "../../sections/feedPostsSections/TrendsSection";
 import { useGetFeedQuery } from "../../services/UserTweetsSlice";
+import { PAGES } from "../../utils/consts";
 import './HomeFeedPage.scss';
 
 const HomeFeedPage = () => {
 
-    const userState:any = useAppSelector(state => state.auth.user);
+    const userState:any = useAppSelector((state:any) => state.auth.user);
 
    
     return (
@@ -19,9 +20,10 @@ const HomeFeedPage = () => {
                 <Col span={18}>
                     <Space direction="vertical" size='large'>
                         <PostForm/>
-                        <ContentSection  
+                        <ContentSection
+                        page={PAGES.USER_FEED}  
                         fetchCB={useGetFeedQuery} 
-                        params={{id:userState.user.id}}
+                        params={{id:userState?.user?.id}}
                         errorMessage={'Server error occured during getting user feed'}/>
                     </Space>
                 </Col>

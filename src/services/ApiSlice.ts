@@ -1,6 +1,6 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/dist/query/react"
 import Fingerprint2 from "fingerprintjs2";
-import {logOut} from "../store/reducers/AuthSlice";
+import {logOut} from "../store/slices/AuthSlice";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BACK_SERVER_API,
@@ -48,7 +48,7 @@ export const apiSlice = createApi({
         'Feed',
         'Comment',
         'Media',
-        'Reply',
+        'TweetAndReply',
         'Subscribtion',
         'Follower',
         'AvoidedRequest',

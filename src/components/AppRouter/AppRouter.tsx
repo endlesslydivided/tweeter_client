@@ -1,34 +1,34 @@
-import React, { useEffect } from 'react'
-import {Navigate, Route, Routes, useLocation} from 'react-router-dom'
-import {useDispatch} from 'react-redux';
-import UserSmMdLayout from '../../layouts/SmMdLayout/SmMdLayout';
-import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, FEED_PAGE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
-import HomePage from '../../pages/HomePage';
-import HomeFeedPage from '../../pages/HomeFeedPage';
-import BookmarksPage from '../../pages/BookmarksPage';
-import SettingsPage from '../../pages/SettingsPage/SettingsPage';
+import React, { createContext, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
-import { useGetMeQuery } from '../../services/AuthApiSlice';
-import Loader from '../Loader/Loader';
-import UnathorizedPage from '../../pages/UnauthorizedPage/UnathorizedPage';
-import ExplorePage from '../../pages/ExporePage/ExplorePage';
+import UserSmMdLayout from '../../layouts/SmMdLayout/SmMdLayout';
+import BookmarksPage from '../../pages/BookmarksPage';
 import ChatPage from '../../pages/ChatPage/ChatPage';
+import ExplorePage from '../../pages/ExporePage/ExplorePage';
+import HomeFeedPage from '../../pages/HomeFeedPage';
+import HomePage from '../../pages/HomePage';
+import SettingsPage from '../../pages/SettingsPage/SettingsPage';
+import UnathorizedPage from '../../pages/UnauthorizedPage/UnathorizedPage';
+import { useGetMeQuery } from '../../services/AuthApiSlice';
+import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, FEED_PAGE, LOGIN_ROUTE, REGISTRATION_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
+import Loader from '../Loader/Loader';
+
 
 interface AppRouterProps {
 
 }
 
+export const PostListContext:any = createContext(null);
+
 const AppRouter: React.FC<AppRouterProps>= () => {
 
-    const {data: userData, isLoading, isError} = useGetMeQuery();
-    const dispatch = useDispatch();
-    const user: any = useAppSelector(state => state?.auth?.user);
+    const {data: userData, isFetching, isError} = useGetMeQuery();
+    const user: any = useAppSelector((state:any) => state?.auth?.user);
 
-    useEffect(() => {},[user]);
+    useEffect(() => {},[isFetching]);
     
-    const location = useLocation();
 
-    if (isLoading || (!user && !isError)) {
+    if (isFetching || (!user && !isError)) {
         return <Loader/>
     }
 
@@ -47,7 +47,7 @@ const AppRouter: React.FC<AppRouterProps>= () => {
                 <Route path={`${CHAT_ROUTE}/:id`} element={<ChatPage/>}/>
 
             </Route>
-            <Route path="*" element={<Navigate to={"/"} replace/>}/>
+            <Route path="*" element={<Navigate to={"/"} relative={'route'} replace={true}/>}/>
         </Routes>
          :
          <Routes>

@@ -1,9 +1,7 @@
 
-import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
-import { Button, Form, Input, notification, Select, Space, Typography } from "antd";
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Button, Form, Input, Select, Space, Typography } from "antd";
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useNotify } from "../../hooks/useNotify";
 import { useSignUpMutation } from '../../services/AuthApiSlice';
 import { LOGIN_ROUTE } from "../../utils/consts";

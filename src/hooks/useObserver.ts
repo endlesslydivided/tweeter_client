@@ -1,6 +1,14 @@
 import {useEffect, useRef} from "react";
 
-export const useObserver = (ref:any, canLoad:any, isLoading:any, callback:any) => {
+interface UseObserverParams
+{
+    ref:any;
+    canLoad:any;
+    isLoading:any;
+    callback:any;
+}
+
+export const useObserver = ({ref, canLoad, isLoading, callback}:UseObserverParams) => {
     const observer:React.MutableRefObject<any> = useRef();
 
     useEffect(() => {
@@ -16,5 +24,5 @@ export const useObserver = (ref:any, canLoad:any, isLoading:any, callback:any) =
         };
         observer.current = new IntersectionObserver(cb);
         observer.current.observe(ref.current)
-    }, [isLoading])
+    }, [isLoading,canLoad])
 }

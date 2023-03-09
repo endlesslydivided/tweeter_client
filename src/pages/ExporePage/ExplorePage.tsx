@@ -4,6 +4,7 @@ import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu
 import ContentSection from "../../sections/contentSections/ContentSection";
 import SearchBar from "../../sections/exploreSections/SearchBar";
 import { useGetFeedQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
+import { PAGES } from "../../utils/consts";
 import './ExplorePage.scss'
 
 const items: MenuProps['items'] = [
@@ -45,23 +46,27 @@ const ExplorePage = () => {
         switch(content)
         {
             case 'top':{ return (
-                    <ContentSection  
+                    <ContentSection
+                    page={PAGES.USER_FEED}  
                     fetchCB={useGetFeedQuery} 
                     errorMessage={'Server error occured during getting top tweets'}/>
                 )};
             case 'latest':{
                 return (
-                    <ContentSection  
+                    <ContentSection
+                    page={PAGES.USER_FEED}  
                     fetchCB={useGetUserTweetsQuery} 
                     errorMessage={'Server error occured during getting top tweets'}/>
                 )};
             case 'people':{ return (
-                    <ContentSection  
+                    <ContentSection
+                    page={PAGES.USER_FEED}  
                     fetchCB={useGetFeedQuery} 
                     errorMessage={'Server error occured during getting users data'}/>
                 )};
             case 'media':{ return (
-                    <ContentSection  
+                    <ContentSection
+                    page={PAGES.USER_FEED}  
                     fetchCB={useGetFeedQuery} 
                     errorMessage={'Server error occured during getting media'}/>
                 )};

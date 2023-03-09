@@ -1,15 +1,17 @@
 
-import { GlobalOutlined, PictureOutlined, SendOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Divider,Image, Input, List, notification, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
+import { PictureOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Col, Input, notification, Row, Space, Tooltip, Upload, UploadProps } from "antd";
 import React, { useState } from "react";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useCreateTweetMutation, useLazyGetOneTweetQuery } from "../../services/TweetApiSlice";
+import { appendComment, setComments } from "../../store/slices/CommentsSlice";
+import { incrementPostComments } from "../../store/slices/PostsSlice";
 import PostFormImages from "../ImageList/PostFormImages";
-import './ReplyForm.scss'
+import './ReplyForm.scss';
 
 interface ReplyFormProps {
 	parentPost: any;
-	appendToComments: Function;
+	isCommentsOpen:any;
 }
 
 const initialPost = {
@@ -20,14 +22,32 @@ const initialPost = {
 }
 
 
-const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,appendToComments})  =>
+const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,isCommentsOpen})  =>
 {
 	const [postValues,setPostValues] = useState(initialPost);
 	const [files, setFiles] : any = useState([]);
-	const userState: any = useAppSelector(state => state.auth.user);
 
+
+	const [getComment] = useLazyGetOneTweetQuery();
 	const [createComment, result] = useCreateTweetMutation();
 
+	const userState: any = useAppSelector((state:any) => state.auth.user);
+
+	const dispatch = useAppDispatch();
+
+	const appendToComments = async (id:any) =>
+    {
+        const {data,error}:any = await getComment({id});
+        if(data)
+        {
+            dispatch(appendComment({parentId:parentPost.id,data}));
+			dispatch(incrementPostComments(parentPost.id));
+        }
+        else if(error)
+        {
+            notification.error({message:error.message,placement:'topRight',duration:2})
+        }
+    }
 
 	const onTextAreaChange= (e:any) =>  setPostValues(previous => ({...previous,text:e.target.value}));
 	const onCreatePostSubmit= async (e:any) =>  
@@ -42,7 +62,7 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,appendToComments})  =>
 		formData.append('isPublic', postValues.isPublic.toString());
 		formData.append('parentRecordAuthorId', parentPost.author.id.toString());
 		formData.append('parentRecordId',  parentPost.id.toString());
-        formData.append('authorId', userState.user.id);
+        formData.append('authorId', userState?.user?.id);
 
         const {data,error}:any = await createComment(formData);
 

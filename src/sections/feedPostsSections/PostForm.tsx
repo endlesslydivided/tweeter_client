@@ -3,8 +3,9 @@ import { GlobalOutlined, PictureOutlined, TeamOutlined, UserOutlined } from "@an
 import { Avatar, Button, Card, Col, Divider,Image, Input, List, notification, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
 import React, { useState } from "react";
 import PostFormImages from "../../components/ImageList/PostFormImages";
-import { useAppSelector } from "../../hooks/redux";
-import { useCreateTweetMutation } from "../../services/TweetApiSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { useCreateTweetMutation, useLazyGetOneTweetQuery } from "../../services/TweetApiSlice";
+import { appendPost, setPosts } from "../../store/slices/PostsSlice";
 import './PostForm.scss'
 
 interface PostFormProps {
@@ -23,10 +24,24 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 {
 	const [postValues,setPostValues] = useState(initialPost);
 	const [files, setFiles] : any = useState([]);
-	const userState: any = useAppSelector(state => state.auth.user);
+	const userState: any = useAppSelector((state:any) => state.auth.user);
 
-
+	const [getPost] = useLazyGetOneTweetQuery();
+	const dispatch = useAppDispatch();
 	const [createTweet, result] = useCreateTweetMutation();
+
+	const appendToPosts= async (id:any) =>
+    {
+        const {data,error}:any = await getPost({id});
+        if(data)
+        {
+            dispatch(appendPost(data));
+        }
+        else if(error)
+        {
+            notification.error({message:error.message,placement:'topRight',duration:2})
+        }
+    }
 
 
 	const onTextAreaChange= (e:any) =>  setPostValues(previous => ({...previous,text:e.target.value}));
@@ -43,7 +58,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 		formData.append('isPublic', postValues.isPublic.toString());
 		formData.append('isComment', 'false');
 
-        formData.append('authorId', userState.user.id);
+        formData.append('authorId', userState?.user?.id);
 
         const result:any = await createTweet(formData);
 
@@ -51,6 +66,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 		{
 			setPostValues((previous:any) => initialPost);
 			setFiles([]);
+			appendToPosts(result.data.id)
 		}
 		else if(result.error)
 		{

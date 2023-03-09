@@ -1,15 +1,18 @@
 import { Card, Col, Image, MenuProps, Row, Space, Typography } from "antd";
-import { useState } from "react";
+import { createContext, useState } from "react";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
 import { useAppSelector } from "../../hooks/redux";
 import PostForm from "../../sections/feedPostsSections/PostForm";
 import UserCard from "../../sections/homeUserDataSections/UserCard";
 import './HomePage.scss';
 import ContentSection from "../../sections/contentSections/ContentSection";
-import { useGetLikedTweetsQuery, useGetMediaQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
+import { PAGES } from "../../utils/consts";
+import { useGetLikedTweetsQuery, useGetMediaQuery, useGetTweetsAndRepliesQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
 import UserMedia from "../../sections/userTweetsSections/UserMedia";
+import AppContext from "antd/es/app/context";
 
 const BgProfile = require('../../assets/abstractBG/colorfulWaves.jpg');
+
 
 
 const items: MenuProps['items'] = [
@@ -42,33 +45,38 @@ const items: MenuProps['items'] = [
         key: 'likes',
       },
 ];
+
 const HomePage = () => {
    
     const [content, setContent] = useState('tweets');
 
-    const userState:any = useAppSelector(state => state.auth.user);
+    const userState:any = useAppSelector((state:any) => state.auth.user);
 
     const renderPostsList = () => {
         switch(content)
         {
-            case 'tweets':{return (<><PostForm/> 
+            case 'tweets':{return (<>
+                    <PostForm/> 
                     <ContentSection  
-                    params={{id:userState.user.id}}
+                    page={PAGES.USER_TWEETS}
+                    params={{id:userState?.user?.id}}
                     fetchCB={useGetUserTweetsQuery} 
                     errorMessage={'Server error occured during getting user tweets'}/>
                 </>)};
             case 'tweetsReplies':{return (
                     <ContentSection
-                    params={{id:userState.user.id}}
-                    fetchCB={useGetUserTweetsQuery} 
+                    page={PAGES.USER_REPLIES}
+                    params={{id:userState?.user?.id}}
+                    fetchCB={useGetTweetsAndRepliesQuery} 
                     errorMessage={'Server error occured during getting user tweets and replies'}/>
                 )};
             case 'media':{ return (
-                    <UserMedia userId={userState.user.id}/>
+                    <UserMedia userId={userState?.user?.id}/>
                 )};
             case 'likes':{ return (
                     <ContentSection  
-                    params={{id:userState.user.id}}
+                    page={PAGES.USER_LIKES}
+                    params={{id:userState?.user?.id}}
                     fetchCB={useGetLikedTweetsQuery} 
                     errorMessage={'Server error occured during getting user liked tweets'}/>
                 )};
@@ -88,9 +96,9 @@ const HomePage = () => {
 
                 </Row>
 
-                <Row gutter={[20,0]} className="home-page-feed-row">
+                <Row gutter={[20,20]} className="home-page-feed-row">
 
-                    <Col span={6}>        
+                    <Col xs={{span:24}} md={{span:24}} xl={{span:6}} >        
                         <Card 
                         bordered={false} 
                         bodyStyle={{ display: "none" }} 
@@ -101,7 +109,7 @@ const HomePage = () => {
                         }/>
                     </Col>
 
-                    <Col span={18}>
+                    <Col xs={{span:24}} md={{span:24}} xl={{span:18}} >
                         <Space direction="vertical" style={{width:'100%'}} size='small'>                           
                             {
                                 renderPostsList()

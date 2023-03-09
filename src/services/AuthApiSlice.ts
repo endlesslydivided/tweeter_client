@@ -1,4 +1,4 @@
-import {logOut, setCredentials} from "../store/reducers/AuthSlice";
+import {logOut, setCredentials} from "../store/slices/AuthSlice";
 import {apiSlice} from "./ApiSlice";
 
 
