@@ -12,8 +12,9 @@ interface UseCollectionParams
     entities:any;
     appendPage:Function;
     getContentCB:Function;
-    getContentParams:any;
+    getContentParams?:any;
     parentEntity?:any;
+    filtersProps?:any;
 }
 
 const initialFilters = {
@@ -24,12 +25,12 @@ const initialFilters = {
     orderDirection: "desc",
 };
 
-export const useCollection= ({entities,appendPage,getContentCB,getContentParams,parentEntity}:UseCollectionParams) =>
+export const useCollection= ({entities,appendPage,getContentCB,getContentParams,parentEntity,filtersProps}:UseCollectionParams) =>
 {
     const dispatch = useAppDispatch();
 
     
-    const [filters, setFilters] = useState(initialFilters);
+    const [filters, setFilters] = useState({...initialFilters,...filtersProps});
     const [isMore,setIsMore] = useState(false);
 
     const getContentResult = getContentCB({...getContentParams,filters},{refetchOnMountOrArgChange:false});

@@ -1,8 +1,10 @@
 import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
+import PeopleList from "../../components/PeopleList";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
 import ContentSection from "../../sections/contentSections/ContentSection";
 import SearchBar from "../../sections/exploreSections/SearchBar";
+import {useGetAllTweetsQuery, useGetTopTweetsQuery } from "../../services/TweetApiSlice";
 import { useGetFeedQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
 import { PAGES } from "../../utils/consts";
 import './ExplorePage.scss'
@@ -40,32 +42,30 @@ const items: MenuProps['items'] = [
 
 const ExplorePage = () => {
 
-    const [content, setContent] = useState('tweets');
+    const [content, setContent] = useState('top');
 
     const renderPostsList = () => {
         switch(content)
         {
             case 'top':{ return (
                     <ContentSection
-                    page={PAGES.USER_FEED}  
-                    fetchCB={useGetFeedQuery} 
+                    filtersProps={{limit:15}}
+                    page={PAGES.TOP_TWEETS}  
+                    fetchCB={useGetTopTweetsQuery} 
                     errorMessage={'Server error occured during getting top tweets'}/>
                 )};
             case 'latest':{
                 return (
                     <ContentSection
-                    page={PAGES.USER_FEED}  
-                    fetchCB={useGetUserTweetsQuery} 
-                    errorMessage={'Server error occured during getting top tweets'}/>
+                    filtersProps={{limit:15}}
+                    page={PAGES.LAST_TWEETS}  
+                    fetchCB={useGetAllTweetsQuery} 
+                    errorMessage={'Server error occured during getting latest tweets'}/>
                 )};
-            case 'people':{ return (
-                    <ContentSection
-                    page={PAGES.USER_FEED}  
-                    fetchCB={useGetFeedQuery} 
-                    errorMessage={'Server error occured during getting users data'}/>
-                )};
+            case 'people':{ return <PeopleList/>};
             case 'media':{ return (
                     <ContentSection
+                    filtersProps={{limit:20}}
                     page={PAGES.USER_FEED}  
                     fetchCB={useGetFeedQuery} 
                     errorMessage={'Server error occured during getting media'}/>

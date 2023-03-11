@@ -31,7 +31,6 @@ export const useDeletePost= ({entity,decrementRetweets,incrementRetweets,decreme
         {
             dispatch(decrementComments);
         }
-        dispatch(decrementRetweets);   
         setIsDeleted(true);
     },'Some error occured on server');
 
@@ -41,7 +40,6 @@ export const useDeletePost= ({entity,decrementRetweets,incrementRetweets,decreme
         {
             dispatch(incrementComments);
         }
-        dispatch(incrementRetweets);   
         setIsDeleted(false);
     },'Some error occured on server');
 

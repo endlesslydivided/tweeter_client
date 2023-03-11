@@ -46,7 +46,7 @@ const CommentsList:React.FC<CommentsListProps> = ({parentPost}) =>
         itemLayout="vertical"
         dataSource={comments || []}
         renderItem={(item:any) => (
-            <List.Item key={item.id}>           
+            <List.Item key={item.id} className={"comment-list-item"}>           
               <Space direction="vertical">
                 <CommentItem comment={item} parentPost={parentPost}/>
               </Space>          

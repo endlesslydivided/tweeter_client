@@ -4,7 +4,6 @@ import { useAppSelector } from "../../hooks/redux";
 import PostItem from "./PostItem/PostItem";
 import "./PostList.scss"
 
-const { useToken } = theme;
 
 interface PostListProps
 {
@@ -14,8 +13,6 @@ interface PostListProps
 
 const PostList:React.FC<PostListProps> = ({lastItemRef,isFetching}) =>
 {
-
-    const userState:any = useAppSelector((state:any) => state.auth.user);
     const posts:any = useAppSelector((state:any) => state.posts)
 
     return (
@@ -26,22 +23,20 @@ const PostList:React.FC<PostListProps> = ({lastItemRef,isFetching}) =>
         size={"small"}
         dataSource={posts || []}
         renderItem={(item:any) => (
-            <List.Item key={item.id}>
-              <Space direction="vertical">
+            <List.Item key={item.id} className={'post-list-item'}>
               {item.parentRecord && !item.isComment &&
               <>      
-                <Typography.Text type={"secondary"}>
+                <Typography.Text className={'post-action-note'} type={"secondary"}>
                   <RetweetOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Retweeted'}
                 </Typography.Text>
               </>}
               {item.isComment &&
               <>      
-                <Typography.Text type={"secondary"}>
+                <Typography.Text className={'post-action-note'} type={"secondary"}>
                   <CommentOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Replied'}
                 </Typography.Text>
               </>}
-                <PostItem  post={item} currentUser={userState}/>
-              </Space>          
+                <PostItem post={item}/>
           </List.Item>)
         }/>
           <Skeleton loading={isFetching} active avatar/>

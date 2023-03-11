@@ -22,6 +22,11 @@
         width: 100%;
         margin-right: auto;
 
+        .ant-menu-horizontal
+        {
+            border-bottom: none;
+        }
+        
         .ant-menu-overflow 
         {
             justify-content: center;

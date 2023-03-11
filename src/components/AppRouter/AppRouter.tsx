@@ -10,7 +10,7 @@ import HomePage from '../../pages/HomePage';
 import SettingsPage from '../../pages/SettingsPage/SettingsPage';
 import UnathorizedPage from '../../pages/UnauthorizedPage/UnathorizedPage';
 import { useGetMeQuery } from '../../services/AuthApiSlice';
-import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, FEED_PAGE, LOGIN_ROUTE, REGISTRATION_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
+import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, FEED_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import Loader from '../Loader/Loader';
 
 
@@ -24,8 +24,6 @@ const AppRouter: React.FC<AppRouterProps>= () => {
 
     const {data: userData, isFetching, isError} = useGetMeQuery();
     const user: any = useAppSelector((state:any) => state?.auth?.user);
-
-    useEffect(() => {},[isFetching]);
     
 
     if (isFetching || (!user && !isError)) {
@@ -38,16 +36,23 @@ const AppRouter: React.FC<AppRouterProps>= () => {
             <Route path="/" element={<UserSmMdLayout/>}>
 
                 <Route index element={<HomePage/>}/>
-                <Route path={`/:id`} element={<HomePage/>}/>
-                <Route path={`${FEED_PAGE}`} element={<HomeFeedPage/>}/>
+
+                <Route path={`${HOME_ROUTE}`} element={<HomeFeedPage/>}/>
+
+                <Route path={`${PROFILE_ROUTE}`} element={<HomePage/>}/>
+                <Route path={`${PROFILE_ROUTE}/:id`} element={<HomePage/>}/>
+
                 <Route path={`${BOOKMARKS_ROUTE}`} element={<BookmarksPage/>}/>
+
                 <Route path={`${EXPLORE_ROUTE}`} element={<ExplorePage/>}/>
+
                 <Route path={`${SETTINGS_ROUTE}`} element={<SettingsPage/>}/>
+                
                 <Route path={`${CHAT_ROUTE}`} element={<ChatPage/>}/>
                 <Route path={`${CHAT_ROUTE}/:id`} element={<ChatPage/>}/>
 
             </Route>
-            <Route path="*" element={<Navigate to={"/"} relative={'route'} replace={true}/>}/>
+            <Route path="*" element={<Navigate to={`${PROFILE_ROUTE}`}  replace={true}/>}/>
         </Routes>
          :
          <Routes>

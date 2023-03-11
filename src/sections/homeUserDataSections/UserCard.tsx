@@ -31,10 +31,10 @@ const UserCard: React.FC<UserCardProps> = ({userData}) => {
                             <Typography.Title level={4}>{`${userData?.user?.firstname} ${userData?.user?.surname}`}</Typography.Title>                             
                         </Col>
                         <Col >
-                            <Typography.Text type="secondary"><Typography.Text>12</Typography.Text> Following</Typography.Text>
+                            <Typography.Text type="secondary"><Typography.Text>{userData?.subscriptionsCount}</Typography.Text> Following</Typography.Text>
                         </Col>
                         <Col >
-                            <Typography.Text type="secondary"><Typography.Text>3312</Typography.Text> Followers</Typography.Text>
+                            <Typography.Text type="secondary"><Typography.Text>{userData?.followersCount}</Typography.Text> Followers</Typography.Text>
                         </Col>
                         <Col span={18}>
                             <Typography.Paragraph className="user-card-description" type="secondary" >

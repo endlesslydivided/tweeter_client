@@ -1,7 +1,7 @@
 export const MAIN_ROUTE = '/'
 
-export const HOME_ROUTE = '/'
-export const FEED_PAGE = '/feed'
+export const HOME_ROUTE = '/home'
+export const FEED_ROUTE = '/feed'
 export const EXPLORE_ROUTE = '/explore'
 export const BOOKMARKS_ROUTE = '/bookmarks'
 
@@ -20,5 +20,7 @@ export const PAGES =
 	USER_LIKES: 'USER_LIKES',
 	USER_SAVES: 'USER_SAVES',
 	USER_REPLIES: 'USER_REPLIES',
-	USER_FEED: 'USER_FEED'
+	USER_FEED: 'USER_FEED',
+	TOP_TWEETS: 'TOP_TWEETS',
+	LAST_TWEETS: 'LAST_TWEETS',
 }

@@ -1,0 +1,28 @@
+.people-list-card
+{
+    .ant-card-body
+    {
+        padding:10px 5px;
+    }
+
+    .people-list
+    {
+        width: 100%;
+
+        .ant-list-item.people-list-item
+        {
+            .ant-list-item-meta
+            {
+                align-items:center !important;
+
+            }
+            
+            display: flex;
+        }
+        
+        .ant-space
+        {
+            width: 100%;
+        }
+    }
+}

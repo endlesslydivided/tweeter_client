@@ -14,11 +14,12 @@ interface ContentSectionProps
 	page: string;
     errorMessage:string;
     fetchCB:Function;
-    params?: any;
+    filtersProps?: any;
+	params?:any
 }
 
 
-const ContentSection:React.FC<ContentSectionProps> = ({page,params,errorMessage,fetchCB}) => {
+const ContentSection:React.FC<ContentSectionProps> = ({page,filtersProps,params,errorMessage,fetchCB}) => {
 
     const posts:any = useAppSelector((state:any) => state.posts)
 	const user:any = useAppSelector((state:any) => state.auth.user);
@@ -29,8 +30,9 @@ const ContentSection:React.FC<ContentSectionProps> = ({page,params,errorMessage,
 		entities:posts,
 		appendPage: appendPostPage,
 		getContentCB: fetchCB,
-		getContentParams:{id:user?.user?.id},
-		parentEntity:null
+		getContentParams:params,
+		parentEntity:null,
+		filtersProps
 	})
     useObserver({ref:lastItemRef,canLoad:isMore,isLoading:getContentResult.isFetching,callback:loadMoreHandler});
 

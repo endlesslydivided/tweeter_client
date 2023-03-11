@@ -5,8 +5,8 @@ export const authSlice:any = createSlice({
     initialState: {user: null},
     name: 'authSlice',
     reducers: {
-        setCredentials: (state, action) => {
-            const user = action.payload;
+        setCredentials: (state:any, action:any) => {
+            const user:any = action.payload;
             return {user};
         },
         logOut: () => authSlice.getInitialState()
