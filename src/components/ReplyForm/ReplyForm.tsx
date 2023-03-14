@@ -62,7 +62,7 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,isCommentsOpen})  =>
 		formData.append('isPublic', postValues.isPublic.toString());
 		formData.append('parentRecordAuthorId', parentPost.author.id.toString());
 		formData.append('parentRecordId',  parentPost.id.toString());
-        formData.append('authorId', userState?.user?.id);
+        formData.append('authorId', userState.id);
 
         const {data,error}:any = await createComment(formData);
 

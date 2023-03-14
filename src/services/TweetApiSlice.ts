@@ -8,19 +8,9 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 url: '/tweets',
                 method: 'POST',
                 body: post,
-                credentials: 'include',
+                credentials: 'include'
             })
         }),
-
-        createRetweet: builder.mutation({
-            query: (post) => ({
-                url: '/tweets',
-                method: 'POST',
-                body: post,
-                credentials: 'include',
-            })
-        }),
-
         deleteTweet: builder.mutation({
             query: ({id}) =>
                 ({
@@ -79,7 +69,6 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useCreateTweetMutation,
-    useCreateRetweetMutation,
     useDeleteTweetMutation,
     useRestoreTweetMutation,
     useLazyGetOneTweetQuery,

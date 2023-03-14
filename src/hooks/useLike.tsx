@@ -13,7 +13,7 @@ interface UseLikeParams
 
 export const useLike = ({entity,incrementLikes,decrementLikes,unlikeAction}:UseLikeParams) =>
 {
-    const user = useAppSelector((state:any) => state.auth.user);
+    const user:any = useAppSelector((state:any) => state.auth.user);
     const dispatch = useAppDispatch();
 
     const [like,likeResult] = useLikeTweetMutation();
@@ -34,8 +34,8 @@ export const useLike = ({entity,incrementLikes,decrementLikes,unlikeAction}:UseL
     },'Some error occured on server');
 
     const onLikeClickHandler =() => isLiked ? 
-    unlike({tweetId:entity.id,userId:user.user?.id}):                                          
-    like({tweetId:entity.id,userId:user.user?.id});
+    unlike({tweetId:entity.id,userId:user?.id}):                                          
+    like({tweetId:entity.id,userId:user?.id});
 
 
     return {isLiked,onLikeClickHandler};

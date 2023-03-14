@@ -38,7 +38,7 @@ export default function SmMdLayout()
     const [signOut, result] = useSignOutMutation(); 
 
     const navigate = useNavigate();
-    const userState:any = useAppSelector((state:any) => state.auth?.user);
+    const userState:any = useAppSelector((state:any) => state.auth.user);
 
     const currentPath = window.location.pathname !== EXPLORE_ROUTE && window.location.pathname  !== BOOKMARKS_ROUTE ? HOME_ROUTE : window.location.pathname;
 
@@ -57,7 +57,7 @@ export default function SmMdLayout()
                 </div>
                 <div className='header-popover-container'>
                     <Avatar.Group>
-                        <Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + userState?.user?.mainPhoto?.path} onClick={() => navigate(`${HOME_ROUTE}`)}  shape="square" />
+                        <Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + userState?.mainPhoto?.path} onClick={() => navigate(`${HOME_ROUTE}`)}  shape="square" />
                         <Popover id='headerPopover' placement="bottomRight"
                             content=
                             {<>
@@ -84,7 +84,7 @@ export default function SmMdLayout()
                             } 
                             trigger="click"
                         >
-                            <Typography.Text strong>{`${userState?.user?.firstname} ${userState?.user?.surname}`}<CaretDownOutlined/></Typography.Text>  
+                            <Typography.Text strong>{`${userState?.firstname} ${userState?.surname}`}<CaretDownOutlined/></Typography.Text>  
                         </Popover>
 
                     </Avatar.Group>

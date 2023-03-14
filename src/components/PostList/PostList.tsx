@@ -20,26 +20,29 @@ const PostList:React.FC<PostListProps> = ({lastItemRef,isFetching}) =>
         <List 
         className="post-list"
         split={false}
+        loading={isFetching}
         size={"small"}
         dataSource={posts || []}
         renderItem={(item:any) => (
             <List.Item key={item.id} className={'post-list-item'}>
-              {item.parentRecord && !item.isComment &&
-              <>      
-                <Typography.Text className={'post-action-note'} type={"secondary"}>
-                  <RetweetOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Retweeted'}
-                </Typography.Text>
-              </>}
-              {item.isComment &&
-              <>      
-                <Typography.Text className={'post-action-note'} type={"secondary"}>
-                  <CommentOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Replied'}
-                </Typography.Text>
-              </>}
-                <PostItem post={item}/>
+              <Skeleton loading={isFetching} active avatar>
+
+                  {item.parentRecord && !item.isComment &&
+                  <>      
+                    <Typography.Text className={'post-action-note'} type={"secondary"}>
+                      <RetweetOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Retweeted'}
+                    </Typography.Text>
+                  </>}
+                  {item.isComment &&
+                  <>      
+                    <Typography.Text className={'post-action-note'} type={"secondary"}>
+                      <CommentOutlined/> {item.author?.firstname + ' ' + item.author?.surname + ' Replied'}
+                    </Typography.Text>
+                  </>}
+                  <PostItem post={item}/>
+              </Skeleton>
           </List.Item>)
         }/>
-          <Skeleton loading={isFetching} active avatar/>
           <div ref={lastItemRef}></div>
       </>
     )

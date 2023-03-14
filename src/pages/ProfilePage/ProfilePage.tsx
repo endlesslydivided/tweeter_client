@@ -1,15 +1,17 @@
-import { Card, Col, Image, MenuProps, Row, Space, Typography } from "antd";
-import { createContext, useState } from "react";
+import { Card, Col, Image, MenuProps, Modal, Row, Space, Typography } from "antd";
+import { useState } from "react";
+import FollowersList from "../../components/FollowersList";
+import UserCard from "../../components/UserCard/UserCard";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
 import { useAppSelector } from "../../hooks/redux";
-import PostForm from "../../sections/feedPostsSections/PostForm";
-import UserCard from "../../sections/homeUserDataSections/UserCard";
-import './HomePage.scss';
 import ContentSection from "../../sections/contentSections/ContentSection";
-import { PAGES } from "../../utils/consts";
-import { useGetLikedTweetsQuery, useGetMediaQuery, useGetTweetsAndRepliesQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
+import PostForm from "../../sections/feedPostsSections/PostForm";
 import UserMedia from "../../sections/userTweetsSections/UserMedia";
-import AppContext from "antd/es/app/context";
+import { useGetUserFollowersQuery, useGetUserSubscriptionsQuery } from "../../services/SubsriptionsApiSlice";
+import { useGetLikedTweetsQuery, useGetTweetsAndRepliesQuery, useGetUserTweetsQuery } from "../../services/UserTweetsApiSlice";
+import { decrementCurrentUserFollowers, incrementCurrentUserFollowers } from "../../store/slices/AuthSlice";
+import { PAGES } from "../../utils/consts";
+import './ProfilePage.scss';
 
 const BgProfile = require('../../assets/abstractBG/colorfulWaves.jpg');
 
@@ -46,7 +48,10 @@ const items: MenuProps['items'] = [
       },
 ];
 
-const HomePage = () => {
+const ProfilePage = () => {
+
+    const [isFollowersOpen, setIsFollowersOpen] = useState(false);
+    const [isFollowingsOpen, setIsFollowingsOpen] = useState(false);
    
     const [content, setContent] = useState('tweets');
 
@@ -59,24 +64,24 @@ const HomePage = () => {
                     <PostForm/> 
                     <ContentSection  
                     page={PAGES.USER_TWEETS}
-                    params={{id:userState?.user?.id}}
+                    params={{id:userState?.id}}
                     fetchCB={useGetUserTweetsQuery} 
                     errorMessage={'Server error occured during getting user tweets'}/>
                 </>)};
             case 'tweetsReplies':{return (
                     <ContentSection
                     page={PAGES.USER_REPLIES}
-                    params={{id:userState?.user?.id}}
+                    params={{id:userState?.id}}
                     fetchCB={useGetTweetsAndRepliesQuery} 
                     errorMessage={'Server error occured during getting user tweets and replies'}/>
                 )};
             case 'media':{ return (
-                    <UserMedia userId={userState?.user?.id}/>
+                    <UserMedia userId={userState?.id}/>
                 )};
             case 'likes':{ return (
                     <ContentSection  
                     page={PAGES.USER_LIKES}
-                    params={{id:userState?.user?.id}}
+                    params={{id:userState?.id}}
                     fetchCB={useGetLikedTweetsQuery} 
                     errorMessage={'Server error occured during getting user liked tweets'}/>
                 )};
@@ -84,19 +89,45 @@ const HomePage = () => {
     }
 
     return (
-        <div className='home-page-container'>
+        <>
+        <Modal
+            destroyOnClose={true}
+            className="modal"
+            title={`Your subscribers`}
+            centered
+            onCancel={() => setIsFollowersOpen(false)}
+            open={isFollowersOpen}
+        >
+            <FollowersList userId={userState?.id} fetchCB={useGetUserFollowersQuery}/>
+        </Modal>
+        <Modal
+            destroyOnClose={true}
+            className="modal"
+            title={`You follows`}
+            centered
+            onCancel={() => setIsFollowingsOpen(false)}
+            open={isFollowingsOpen}
+        >
+            <FollowersList userId={userState?.id} fetchCB={useGetUserSubscriptionsQuery}/>
+        </Modal>
+        <div className='profile-page-container'>
             <Image src={BgProfile} className="profile-bg-image"/>
-            <Space direction="vertical" size='middle' className="home-page-space">
+            <Space direction="vertical" size='middle' className="profile-page-space">
                 
-                <Row className="home-page-usercard-row">
+                <Row className="profile-page-usercard-row">
 
                     <Col span={24}>
-                        <UserCard userData={userState}/>
+                        <UserCard 
+                        userData={userState} 
+                        setIsFollowingsOpen={setIsFollowingsOpen} 
+                        setIsFollowersOpen={setIsFollowersOpen}
+                        incrementFollowers={incrementCurrentUserFollowers}
+                        decrementFollowers={decrementCurrentUserFollowers}/>
                     </Col>
 
                 </Row>
 
-                <Row gutter={[20,20]} className="home-page-feed-row">
+                <Row gutter={[20,20]} className="profile-page-feed-row">
 
                     <Col xs={{span:24}} md={{span:24}} xl={{span:6}} >        
                         <Card 
@@ -120,8 +151,9 @@ const HomePage = () => {
                 </Row>
             </Space>
         </div>
+        </>
     );
 };
 
-export default HomePage;
+export default ProfilePage;
 

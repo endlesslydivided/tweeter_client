@@ -49,7 +49,7 @@ export const useRetweet = ({entity,incrementRetweets,isCurrentUserPage}:UseRetwe
             isPublic:true,
             parentRecordAuthorId: entity.parentRecord  && !entity.isComment ? entity.parentRecord.author?.id : entity.author?.id,
             parentRecordId: entity.parentRecord  && !entity.isComment ?  entity.parentRecord.id : entity.id,
-            authorId:user.user?.id
+            authorId:user?.id
         }
     );
 

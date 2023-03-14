@@ -34,8 +34,8 @@ export const useSave = ({entity,incrementSaves,decrementSaves,unsaveAction}:UseS
     },'Some error occured on server');
 
     const onSaveClickHandler =() => isSaved ? 
-    unsave({tweetId:entity.id,userId:user.user?.id}):                                          
-    save({tweetId:entity.id,userId:user.user?.id});
+    unsave({tweetId:entity.id,userId:user?.id}):                                          
+    save({tweetId:entity.id,userId:user?.id});
 
 
     return {isSaved,onSaveClickHandler};

@@ -5,7 +5,7 @@ import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu
 import ContentSection from "../../sections/contentSections/ContentSection";
 import SearchBar from "../../sections/exploreSections/SearchBar";
 import {useGetAllTweetsQuery, useGetTopTweetsQuery } from "../../services/TweetApiSlice";
-import { useGetFeedQuery, useGetUserTweetsQuery } from "../../services/UserTweetsSlice";
+import { useGetFeedQuery, useGetUserTweetsQuery } from "../../services/UserTweetsApiSlice";
 import { PAGES } from "../../utils/consts";
 import './ExplorePage.scss'
 

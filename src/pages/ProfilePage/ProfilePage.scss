@@ -1,0 +1,38 @@
+.modal
+{
+    .ant-modal-footer
+    {
+        display: none;
+    }
+}
+
+.profile-page-container
+{
+    display:grid;
+    margin-bottom: 15px;
+
+    .profile-page-space
+    {
+        width: 75vw;
+        justify-self:center;
+
+        .profile-page-usercard-row
+        {
+            margin-top: -40px;
+        }
+    }
+
+    & > .ant-image
+    {
+        height: 40vh;
+    }
+
+    .ant-image .profile-bg-image
+    {   
+        object-fit: cover;
+        height: 100%;
+        width:100%;
+    }
+}
+
+    

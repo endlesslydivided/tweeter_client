@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
 import { useCollection } from "../../hooks/useCollection";
 import { useObserver } from "../../hooks/useObserver";
-import { useGetUsersQuery } from "../../services/UsersSlice";
+import { useGetUsersQuery } from "../../services/UsersApiSlice";
 import { appendUsersPage, resetUsers } from "../../store/slices/UsersSlice";
-import { HOME_ROUTE } from "../../utils/consts";
+import { HOME_ROUTE, PROFILE_ROUTE } from "../../utils/consts";
 import "./PeopleList.scss"
 
 
@@ -18,7 +18,7 @@ interface PeopleListProps
 
 const listItemMeta = (item:any) => {return {
   avatar:(<Avatar size={80} shape={'circle'} icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + item?.mainPhoto?.path}/>),
-  title:(<Link to={`${HOME_ROUTE}/${item.id}`}>{item.surname + ' ' + item.firstname }</Link>),
+  title:(<Link to={`${PROFILE_ROUTE}/${item.id}`}>{item.surname + ' ' + item.firstname }</Link>),
   description:(`${item.country}, ${item.city}`)
 }}
 

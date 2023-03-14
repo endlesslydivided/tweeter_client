@@ -5,7 +5,7 @@ import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/redux';
 import { useNotify } from '../../hooks/useNotify';
-import { useSignInMutation } from '../../services/AuthApiSlice';
+import { useGetMeQuery, useLazyGetMeQuery, useSignInMutation } from '../../services/AuthApiSlice';
 import { setCredentials } from '../../store/slices/AuthSlice';
 
 
@@ -18,6 +18,7 @@ const SignInForm: React.FC<SignInFormProps> = ({})  =>
 {
 
     const [signIn, result] = useSignInMutation();
+    const [getMe, getMeResult] = useLazyGetMeQuery();
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -27,8 +28,8 @@ const SignInForm: React.FC<SignInFormProps> = ({})  =>
     const submitHandler = (values:object) =>
     {
       Fingerprint2.getV18( async (fingerprint, components) => {
-        const userData = await signIn({...values,fingerprint}).unwrap();
-        dispatch(setCredentials({...userData}));
+        await signIn({...values,fingerprint});
+        await getMe();
       }) 
     }
 

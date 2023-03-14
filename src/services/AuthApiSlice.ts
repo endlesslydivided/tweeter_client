@@ -20,15 +20,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
                 }
             )
         }),
-        verifyEmail: builder.mutation({
-            query: ({verificationCode}) =>
-                ({
-                    url: `/auth/verifyemail/${verificationCode}`,
-                    method: 'GET',
-                }),
-            invalidatesTags: ['CurrentUser']
-        }),
-
         signOut: builder.mutation<void, void>({
             query: () => ({
                 url: '/auth/signOut',
@@ -62,6 +53,6 @@ export const {
     useSignInMutation,
     useSignUpMutation,
     useSignOutMutation,
-    useVerifyEmailMutation,
-    useGetMeQuery
+    useGetMeQuery,
+    useLazyGetMeQuery
 } = authApiSlice;

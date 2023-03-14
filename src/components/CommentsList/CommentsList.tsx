@@ -1,16 +1,12 @@
 
-import { RetweetOutlined } from "@ant-design/icons";
-import { Button, List, notification, Skeleton, Space, Typography } from "antd";
-import { useEffect, useState } from "react";
+import { Button, List, Space } from "antd";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useCollection } from "../../hooks/useCollection";
-import { useCommentsList } from "../../hooks/useCommentsList";
-import { useFilterFetch } from "../../hooks/useFilterFetch";
-import { useNotify } from "../../hooks/useNotify";
-import { useGetCommentsQuery, useLazyGetCommentsQuery } from "../../services/TweetApiSlice";
+import { useGetCommentsQuery } from "../../services/TweetApiSlice";
 import { appendCommentPage, resetComments } from "../../store/slices/CommentsSlice";
 import CommentItem from "./CommentsItem/CommentItem";
-import "./CommentsList.scss"
+import "./CommentsList.scss";
 
 
 interface CommentsListProps

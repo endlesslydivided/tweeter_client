@@ -4,7 +4,7 @@ import ContentSection from "../../sections/contentSections/ContentSection";
 import PostForm from "../../sections/feedPostsSections/PostForm";
 import ToFollowSection from "../../sections/feedPostsSections/ToFollow";
 import TrendsSection from "../../sections/feedPostsSections/TrendsSection";
-import { useGetFeedQuery } from "../../services/UserTweetsSlice";
+import { useGetFeedQuery } from "../../services/UserTweetsApiSlice";
 import { PAGES } from "../../utils/consts";
 import './HomeFeedPage.scss';
 
@@ -23,7 +23,7 @@ const HomeFeedPage = () => {
                         <ContentSection
                         page={PAGES.USER_FEED}  
                         fetchCB={useGetFeedQuery} 
-                        params={{id:userState?.user?.id}}
+                        params={{id:userState?.id}}
                         errorMessage={'Server error occured during getting user feed'}/>
                     </Space>
                 </Col>

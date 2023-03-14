@@ -6,9 +6,10 @@ import BookmarksPage from '../../pages/BookmarksPage';
 import ChatPage from '../../pages/ChatPage/ChatPage';
 import ExplorePage from '../../pages/ExporePage/ExplorePage';
 import HomeFeedPage from '../../pages/HomeFeedPage';
-import HomePage from '../../pages/HomePage';
+import HomePage from '../../pages/ProfilePage';
 import SettingsPage from '../../pages/SettingsPage/SettingsPage';
 import UnathorizedPage from '../../pages/UnauthorizedPage/UnathorizedPage';
+import UserPage from '../../pages/UserPage';
 import { useGetMeQuery } from '../../services/AuthApiSlice';
 import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, FEED_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import Loader from '../Loader/Loader';
@@ -40,7 +41,7 @@ const AppRouter: React.FC<AppRouterProps>= () => {
                 <Route path={`${HOME_ROUTE}`} element={<HomeFeedPage/>}/>
 
                 <Route path={`${PROFILE_ROUTE}`} element={<HomePage/>}/>
-                <Route path={`${PROFILE_ROUTE}/:id`} element={<HomePage/>}/>
+                <Route path={`${PROFILE_ROUTE}/:id`} element={<UserPage/>}/>
 
                 <Route path={`${BOOKMARKS_ROUTE}`} element={<BookmarksPage/>}/>
 

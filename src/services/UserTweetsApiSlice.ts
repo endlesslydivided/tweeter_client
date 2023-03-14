@@ -12,6 +12,8 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
             providesTags: (result, error, arg) =>
             result && [...result.rows.map(({ id }:any ) => ({ type: 'UserTweet', id })),'UserTweet']
         }),
+        
+        
         getTweetsAndReplies: builder.query({
             query: ({id, filters}) => ({
                 url: `/users/${id}/tweets-replies`,
@@ -69,6 +71,7 @@ export const {
     useGetLikedTweetsQuery,
     useGetSavedTweetsQuery,
     useGetMediaQuery,
-    useGetFeedQuery
+    useGetFeedQuery,
+   
 
 } = userTweetsSlice;

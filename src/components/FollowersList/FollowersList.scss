@@ -1,0 +1,28 @@
+.followers-list-card
+{
+    .ant-card-body
+    {
+        padding:10px 5px;
+    }
+
+    .followers-list
+    {
+        width: 100%;
+
+        .ant-list-item.followers-list-item
+        {
+            .ant-list-item-meta
+            {
+                align-items:center !important;
+
+            }
+            
+            display: flex;
+        }
+        
+        .ant-space
+        {
+            width: 100%;
+        }
+    }
+}

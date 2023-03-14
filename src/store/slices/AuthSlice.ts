@@ -9,11 +9,24 @@ export const authSlice:any = createSlice({
             const user:any = action.payload;
             return {user};
         },
+        incrementFollowers:(state:any,action:any) =>
+        {
+            return {...state,userCounts:{...state?.userCounts,followersCount:(Number.parseInt(state?.userCounts?.followersCount) + 1).toString()}};
+        },
+        decrementFollowers:(state:any,action:any) =>
+        {
+            return {...state,userCounts:{...state?.userCounts,followersCount:(Number.parseInt(state?.userCounts?.followersCount) - 1 ).toString()}};
+        },
         logOut: () => authSlice.getInitialState()
     },
 });
 
-export const {logOut, setCredentials} = authSlice.actions;
+export const {
+    logOut, 
+    setCredentials,
+    incrementFollowers:incrementCurrentUserFollowers,
+    decrementFollowers:decrementCurrentUserFollowers
+} = authSlice.actions;
 
 export default authSlice.reducer;
 

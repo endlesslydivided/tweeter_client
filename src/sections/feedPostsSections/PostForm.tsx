@@ -58,7 +58,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 		formData.append('isPublic', postValues.isPublic.toString());
 		formData.append('isComment', 'false');
 
-        formData.append('authorId', userState?.user?.id);
+        formData.append('authorId', userState?.id);
 
         const result:any = await createTweet(formData);
 

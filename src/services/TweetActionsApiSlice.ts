@@ -44,5 +44,4 @@ export const {
     useSaveTweetMutation,
     useUnlikeTweetMutation,
     useUnsaveTweetMutation,
-
 } = tweetActionsApiSlice;

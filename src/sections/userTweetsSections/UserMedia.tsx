@@ -3,7 +3,7 @@ import Loader from '../../components/Loader';
 import MediaGallery from '../../components/MediaGallery';
 import PostList from '../../components/PostList';
 import { useFilterFetch } from '../../hooks/useFilterFetch';
-import { useGetMediaQuery } from '../../services/UserTweetsSlice';
+import { useGetMediaQuery } from '../../services/UserTweetsApiSlice';
 
 interface UserMediaProps
 {

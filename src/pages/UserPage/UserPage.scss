@@ -1,14 +1,22 @@
-.home-page-container
+.modal
+{
+    .ant-modal-footer
+    {
+        display: none;
+    }
+}
+
+.user-page-container
 {
     display:grid;
     margin-bottom: 15px;
 
-    .home-page-space
+    .user-page-space
     {
         width: 75vw;
         justify-self:center;
 
-        .home-page-usercard-row
+        .user-page-usercard-row
         {
             margin-top: -40px;
         }
@@ -19,7 +27,7 @@
         height: 40vh;
     }
 
-    .ant-image .profile-bg-image
+    .ant-image .user-bg-image
     {   
         object-fit: cover;
         height: 100%;

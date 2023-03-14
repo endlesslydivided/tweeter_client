@@ -10,11 +10,19 @@ export const usersSlice = apiSlice.injectEndpoints({
                 method: 'GET'
             }),
         }),
+        getUser: builder.query({
+            query: ({id}) => ({
+                url: `/users/${id}`,
+                method: 'GET'
+            }),
+        }),
         
     })
 })
 
 
 export const {
-    useGetUsersQuery
+    useGetUsersQuery,
+    useLazyGetUserQuery,
+    useGetUserQuery
 } = usersSlice;

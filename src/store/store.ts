@@ -4,6 +4,8 @@ import authReducer from "./slices/AuthSlice";
 import postsReducer from "./slices/PostsSlice";
 import commentsReducer from "./slices/CommentsSlice";
 import usersReducer from "./slices/UsersSlice";
+import userReducer from "./slices/UserSlice";
+import subscriptionsReducer from "./slices/SubscriptionsSlice";
 
 
 export const store = configureStore({
@@ -12,7 +14,9 @@ export const store = configureStore({
         auth: authReducer,
         posts: postsReducer,
         comments: commentsReducer,
-        users:usersReducer
+        users:usersReducer,
+        user:userReducer,
+        subscriptions: subscriptionsReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({serializableCheck: false}).concat(apiSlice.middleware),

@@ -2,14 +2,13 @@ import { Col, Row, Space } from "antd";
 import { useState } from "react";
 import { useAppSelector } from "../../hooks/redux";
 import ContentSection from "../../sections/contentSections/ContentSection";
-import { useGetSavedTweetsQuery } from "../../services/UserTweetsSlice";
+import { useGetSavedTweetsQuery } from "../../services/UserTweetsApiSlice";
 import { PAGES } from "../../utils/consts";
 import './BookmarksPage.scss';
 
 const BookmarksPage = () => {
 
-    const [content, setContent] = useState('tweets');
-    const userState:any = useAppSelector((state:any) => state.auth.user);
+    const userState:any = useAppSelector((state:any) => state.auth);
 
    
     return (
@@ -17,11 +16,12 @@ const BookmarksPage = () => {
             <Row gutter={[25,10]} className='bookmarks-row'>              
                 <Col span={24} className='bookmarks-postlist-col'>
                     <Space direction="vertical" size='large'>
-                    <ContentSection 
-                    page={PAGES.USER_SAVES}
-                    params={{id:userState?.user?.id,filters:{orderBy: 'createdAt',orderDirection: 'asc'}}}
-                    fetchCB={useGetSavedTweetsQuery} 
-                    errorMessage={'Server error occured during getting user liked tweets'}/>                    </Space>
+                        <ContentSection 
+                        page={PAGES.USER_SAVES}
+                        params={{id:userState?.id,filters:{orderBy: 'createdAt',orderDirection: 'asc'}}}
+                        fetchCB={useGetSavedTweetsQuery} 
+                        errorMessage={'Server error occured during getting user liked tweets'}/>
+                    </Space>
                 </Col>
             </Row>
         </div>
