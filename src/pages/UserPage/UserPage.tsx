@@ -1,5 +1,6 @@
 import { Card, Col, Image, MenuProps, Modal, Row, Space, Typography } from "antd";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import FollowersList from "../../components/FollowersList";
 import Loader from "../../components/Loader";
@@ -13,7 +14,7 @@ import UserMedia from "../../sections/userTweetsSections/UserMedia";
 import { useGetUserFollowersQuery, useGetUserSubscriptionsQuery } from "../../services/SubsriptionsApiSlice";
 import { useGetUserQuery } from "../../services/UsersApiSlice";
 import { useGetLikedTweetsQuery, useGetTweetsAndRepliesQuery, useGetUserTweetsQuery } from "../../services/UserTweetsApiSlice";
-import { decrementFollowers, incrementFollowers } from "../../store/slices/UserSlice";
+import { decrementFollowers, incrementFollowers, setUser } from "../../store/slices/UserSlice";
 import { PAGES } from "../../utils/consts";
 import './UserPage.scss';
 
@@ -55,15 +56,16 @@ const UserPage = () => {
 
     const [isFollowersOpen, setIsFollowersOpen] = useState(false);
     const [isFollowingsOpen, setIsFollowingsOpen] = useState(false);
-   
     const [content, setContent] = useState('tweets');
-    const [profile,setProfile]:any = useState(null)
+
+    const profile = useAppSelector((state:any) => state.user);
+    const dispatch = useDispatch();
 
     const {id} = useParams();
     const getUserResult = useGetUserQuery({id});
 
 
-    useNotify(getUserResult,undefined,() => setProfile(getUserResult.data));
+    useNotify(getUserResult,undefined,() => dispatch(setUser(getUserResult.data)));
 
     const renderPostsList = () => {
         switch(content)

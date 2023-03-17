@@ -29,7 +29,9 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
             icon={isSubscribed ? <CheckOutlined/> :<UserAddOutlined/>}>
             Follow
         </Button>
-        <Button icon={<MailFilled/>} disabled={isSubscribed && item.isSubscribed.length === 0}>Send message</Button>
+        <Button icon={<MailFilled/>} disabled={
+            (!isSubscribed || item.isSubscribed.length === 0) && item.isFollower.length === 0
+        }>Send message</Button>
     </Space>
     )
 

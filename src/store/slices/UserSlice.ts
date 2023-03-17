@@ -12,11 +12,11 @@ export const userSlice: any = createSlice({
     },
     incrementFollowers:(state:any,action:any) =>
     {
-        return {...state,userCounts:{...state?.userCounts,followersCount:(Number.parseInt(state?.userCounts?.followersCount) + 1).toString()}};
+        return {...state,counts:{...state?.counts,followersCount:(Number.parseInt(state?.counts?.followersCount) + 1).toString()}};
     },
     decrementFollowers:(state:any,action:any) =>
     {
-        return {...state,userCounts:{...state?.userCounts,followersCount:(Number.parseInt(state?.userCounts?.followersCount) - 1 ).toString()}};
+        return {...state,counts:{...state?.counts,followersCount:(Number.parseInt(state?.counts?.followersCount) - 1 ).toString()}};
     },
     reset: () => null
   },

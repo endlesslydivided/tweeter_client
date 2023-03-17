@@ -20,7 +20,8 @@ const PostItem:React.FC<PostItemProps> = ({post}) =>
 {
     
     const [isCommentOpen,setIsCommentOpen] = useState(false);
-    
+	const [replyPost,setReplyPost]:any = useState({...post});
+
     const {onDeleteClickHandler,isDeleted,onRestoreClickHandler} = useDeletePost({
         entity:post,
         decrementRetweets:decrementPostRetweets(post.parentRecordId),
@@ -91,14 +92,14 @@ const PostItem:React.FC<PostItemProps> = ({post}) =>
                     <Divider type="horizontal" className={'actions-form-divider'}/>
                 
                     <Row className={"reply-form-row"}>
-                        <ReplyForm parentPost={post} isCommentsOpen={isCommentOpen}/>        
+                        <ReplyForm parentPost={post} replyPost={replyPost} setReplyPost={setReplyPost}/>        
                     </Row>
 
                     <Divider type="horizontal"  className={'form-comments-divider'}/>
                     
                     <Row className={"comment-list-row"}>
                     {
-                        isCommentOpen && <CommentsList parentPost={post}/>
+                        isCommentOpen && <CommentsList setReplyPost={setReplyPost} parentPost={post}/>
                     }   
                     </Row>
                                 

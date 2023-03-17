@@ -1,0 +1,25 @@
+.reply-list
+{
+    width: 100%;
+    padding-left: 50px;
+    .reply-list-item
+    {
+        .reply-item-anchor
+        {
+            cursor:pointer;
+        }
+        padding: 0 !important;
+    }
+
+    &::before
+    {
+        height: 100%;
+        width: 3px;
+        margin-left: -32px;
+        margin-top:-50px;
+        content: '';
+        position: absolute;
+        z-index: 123;
+        background: linear-gradient(180deg,rgba(0,0,0,0.1) 50%,rgba(255,255,255,1) 99%);
+    }
+}

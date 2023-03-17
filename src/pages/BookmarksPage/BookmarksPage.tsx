@@ -8,7 +8,7 @@ import './BookmarksPage.scss';
 
 const BookmarksPage = () => {
 
-    const userState:any = useAppSelector((state:any) => state.auth);
+    const userState:any = useAppSelector((state:any) => state.auth.user);
 
    
     return (

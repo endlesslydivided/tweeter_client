@@ -21,10 +21,11 @@ const listItemMeta = (item:any) => {return {
 const FollowersListItem:React.FC<FollowersListItemProps> = ({entity,isFetching}) => {
     
     const userState = useAppSelector((state:any) => state.auth.user);
+    
 
     const {onCreateClickHandler,onDeleteClickHandler,isSubscribed} = useSubscribe({entity});
 
-    const renderActions =  userState.id === entity.id ? [<Typography.Text>It's you</Typography.Text>]:
+    const renderActions =  userState.id === entity?.subscriber?.id ? [<Typography.Text>It's you</Typography.Text>]:
     [
         <Button 
             onClick={() => isSubscribed ? onDeleteClickHandler() : onCreateClickHandler()}

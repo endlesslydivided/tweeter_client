@@ -12,9 +12,10 @@ import "./CommentsList.scss";
 interface CommentsListProps
 {
     parentPost:any;
+    setReplyPost:Function;
 }
 
-const CommentsList:React.FC<CommentsListProps> = ({parentPost}) =>
+const CommentsList:React.FC<CommentsListProps> = ({parentPost,setReplyPost}) =>
 {
     const comments = useAppSelector((state:any) => state.comments[parentPost.id]);
     const dispatch = useAppDispatch();
@@ -44,7 +45,7 @@ const CommentsList:React.FC<CommentsListProps> = ({parentPost}) =>
         renderItem={(item:any) => (
             <List.Item key={item.id} className={"comment-list-item"}>           
               <Space direction="vertical">
-                <CommentItem comment={item} parentPost={parentPost}/>
+                <CommentItem setReplyPost={setReplyPost} comment={item} parentPost={parentPost}/>
               </Space>          
           </List.Item>)
         }/>

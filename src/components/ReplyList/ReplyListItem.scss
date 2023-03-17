@@ -1,14 +1,56 @@
-.comment-item-card
+.reply-item-card
 {
     width: 100%;
     border:none;
-    
-    .ant-card-body
-    {
-        padding:0px 0px !important;
+    display: flex;
+    @keyframes activePosition {
+        0%{
+            margin-left: -30px;
+        }
+        50%{
+            margin-left: -40px;
+        }
+        100%{
+            margin-left: -30px;
+        }
     }
 
-    .comment-content-row
+    @keyframes activeBackground {
+        from{
+            border:solid;
+            border-width: 0 3px 3px 0;
+
+            border-color: black;
+        }
+        to{
+            border:solid;
+            border-width: 0 3px 3px 0;
+
+            border-color: transparent;
+        }
+    }
+
+    &.active::before
+    {
+        height: 15px;
+        width:15px;
+        transform: rotate(-45deg);
+        align-self: center;
+        position: absolute;
+        content:'';
+        animation: activeBackground 3s ease-in-out  0s 1,activePosition 1s ease-in-out  0s 3;
+    }
+
+    padding: 5px 5px;
+
+
+    .ant-card-body
+    {
+        flex-basis: 100%;
+        padding:0px 0px;
+    }
+
+    .reply-content-row
     {
         flex-wrap: nowrap;
     }
@@ -19,14 +61,14 @@
     }
   
 
-    .comment-content-space
+    .reply-content-space
     {
         width: 100%;
         background-color: rgba(162, 162, 162,0.05);
         padding:5px 10px;
         border-radius: 10px;
 
-        .comment-meta-space
+        .reply-meta-space
         {
             .ant-space-item:nth-last-child(1)
             {
@@ -35,7 +77,7 @@
         }
     }
 
-    .comment-item-images-container .ant-image
+    .reply-item-images-container .ant-image
     {
         width: 25%;
     }
@@ -44,8 +86,7 @@
     .retweet-button,
     .like-button,
     .save-button,
-    .reply-button,
-    .reply-show-button
+    .reply-button 
     {
         cursor:pointer;
         border-radius: 10px;
@@ -57,10 +98,6 @@
         }
     }
 
-    .reply-show-col
-    {
-        margin-left:auto;
-    }
  
 
     .active
@@ -95,7 +132,7 @@
         }
     }
   
-    .comment-item-stats 
+    .reply-item-stats 
     {
         padding:5px 0 0 0;
         span

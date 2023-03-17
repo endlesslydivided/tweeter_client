@@ -19,6 +19,17 @@
         }
     }
 
+    .close-reply-button
+    {
+        cursor:pointer !important;
+        border-radius: 15px;
+        padding: 3px 7px;
+
+        &:hover
+        {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+    }
 
     .reply-form-textarea-col
     {

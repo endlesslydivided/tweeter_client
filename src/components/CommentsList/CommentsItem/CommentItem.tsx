@@ -1,14 +1,15 @@
-import { DeleteOutlined, EllipsisOutlined, HeartFilled, HeartOutlined, RetweetOutlined, StopOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Dropdown, Empty, Image, MenuProps, Row, Space, theme, Typography } from "antd";
-import { useContext } from "react";
+import { CommentOutlined, DeleteOutlined, EllipsisOutlined, HeartFilled, HeartOutlined, RetweetOutlined, StopOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Card, Col, Dropdown, Empty, Image, MenuProps, Row, Space, Typography } from "antd";
+import { useContext, useState } from "react";
 import { useDeletePost } from "../../../hooks/useDeletePost";
 import { useLike } from "../../../hooks/useLike";
 import { useRetweet } from "../../../hooks/useRetweet";
-import { decrementCommentLikes, decrementCommentRetweets, deleteComment, incrementCommentLikes, incrementCommentRetweets } from "../../../store/slices/CommentsSlice";
-import { decrementPostComments, deletePost, deleteRetweets, incrementPostComments } from "../../../store/slices/PostsSlice";
+import { decrementCommentLikes, decrementCommentRetweets, incrementCommentLikes, incrementCommentRetweets } from "../../../store/slices/CommentsSlice";
+import { decrementPostComments, incrementPostComments } from "../../../store/slices/PostsSlice";
 import { PAGES } from "../../../utils/consts";
 import { fDateTime } from "../../../utils/formatTime";
 import { PostListContext } from "../../AppRouter/AppRouter";
+import ReplyList from "../../ReplyList/ReplyList";
 import "./CommentItem.scss";
 
 
@@ -16,13 +17,15 @@ interface CommentItemProps
 {
     comment: any;
     parentPost: any;
+    setReplyPost:Function;
 }
 
-const CommentItem:React.FC<CommentItemProps> = ({comment,parentPost}) =>
+const CommentItem:React.FC<CommentItemProps> = ({comment,parentPost,setReplyPost}) =>
 {
 
     const hasMedia = comment.parentRecord?.tweetMedia?.length !== 0  || comment.tweetMedia?.length !== 0;
     const {page}:any = useContext(PostListContext);
+    const [isRepliesOpen,setIsRepliesOpen] = useState(false);
 
     const {isLiked,onLikeClickHandler} = useLike({
         entity:comment,
@@ -59,7 +62,7 @@ const CommentItem:React.FC<CommentItemProps> = ({comment,parentPost}) =>
             <Space 
                 direction="vertical" 
                 className={"comment-item-card-space " + (!hasMedia ? 'comment-item-display-none' : '')} 
-                size='middle'
+                size='small'
             >
                 {
                 isDeleted ?
@@ -72,71 +75,91 @@ const CommentItem:React.FC<CommentItemProps> = ({comment,parentPost}) =>
                     </Typography.Text>}
                 />
                     :
-                    <Row gutter={[10,0]} className={'comment-content-row'}>
-                        <Col>
-                            <Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + comment?.author?.mainPhoto?.path} size={'large'} shape="square" />
-                        </Col>
+                    <>
+                        <Row gutter={[10,0]} className={'comment-content-row'}>
+                            <Col>
+                                <Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + comment?.author?.mainPhoto?.path} size={'large'} shape="square" />
+                            </Col>
 
-                        <Col flex={'auto'}>
-                            <Space direction='vertical' size={[0,0]} className="comment-content-space">
-                                <Space direction='horizontal' className="comment-meta-space">
-                                    <Typography.Text  strong>{comment.author?.firstname + ' ' + comment.author?.surname}</Typography.Text> 
-                                    <Typography.Text style={{fontSize:'13px'}}  type="secondary">{fDateTime(comment.createdAt)}</Typography.Text>   
+                            <Col flex={'auto'}>
+                                <Space direction='vertical' size={[0,0]} className="comment-content-space">
+                                    <Space direction='horizontal' className="comment-meta-space">
+                                        <Typography.Text  strong>{comment.author?.firstname + ' ' + comment.author?.surname}</Typography.Text> 
+                                        <Typography.Text style={{fontSize:'13px'}}  type="secondary">{fDateTime(comment.createdAt)}</Typography.Text>   
 
-                                    <Dropdown menu={{ items }} arrow={false} placement={'bottom'}>
-                                        <Button type="text" size="middle" shape="circle" >
-                                            <EllipsisOutlined/>
-                                        </Button>
-                                    </Dropdown>
+                                        <Dropdown menu={{ items }} arrow={false} placement={'bottom'}>
+                                            <Button type="text" size="middle" shape="circle" >
+                                                <EllipsisOutlined/>
+                                            </Button>
+                                        </Dropdown>
+                                    </Space>
+
+                                    <Typography.Text >
+                                        {comment.text}
+                                    </Typography.Text>   
+
+                                    <div className='comment-item-images-container'>
+                                        <Image.PreviewGroup >
+                                            {
+                                                comment.tweetMedia?.map((item:any) => <Image style={{padding:3}}
+                                                src={process.env.REACT_APP_BACK_SERVER + item?.path} alt={item.id}/>)
+                                            }         
+                                        </Image.PreviewGroup>
+                                    </div>
                                 </Space>
 
-                                <Typography.Text >
-                                    {comment.text}
-                                </Typography.Text>   
+                                <Row gutter={[5,0]} justify='start'  className='comment-item-stats'>
+                                    <Col>
+                                        <Typography.Text className={`like-button  ${isLiked && 'active'}`} onClick={()=> onLikeClickHandler()} type="secondary" >
+                                            {isLiked ? <HeartFilled/> : <HeartOutlined/>} Like 
+                                        </Typography.Text>
+                                    </Col>
 
-                                <div className='comment-item-images-container'>
-                                    <Image.PreviewGroup >
-                                        {
-                                            comment.tweetMedia?.map((item:any) => <Image style={{padding:3}}
-                                            src={process.env.REACT_APP_BACK_SERVER + item?.path} alt={item.id}/>)
-                                        }         
-                                    </Image.PreviewGroup>
-                                </div>
-                            </Space>
+                                    <Col> 
+                                        <Typography.Text type="secondary">•</Typography.Text>
+                                    </Col>
 
-                            <Row gutter={[5,0]} justify='start'  className='comment-item-stats'>
-                                <Col>
-                                    <Typography.Text className={`like-button  ${isLiked && 'active'}`} onClick={()=> onLikeClickHandler()} type="secondary" >
-                                        {isLiked ? <HeartFilled/> : <HeartOutlined/>} Like 
-                                    </Typography.Text>
-                                </Col>
+                                    <Col>
+                                        <Typography.Text className={`retweet-button ${isRetweeted && 'active'}`} onClick={()=> onRetweetClickHandler()}  type="secondary" >
+                                            <RetweetOutlined/> Retweet
+                                        </Typography.Text>
+                                    </Col>
 
-                                <Col> 
-                                    <Typography.Text type="secondary">•</Typography.Text>
-                                </Col>
+                                    <Col> 
+                                        <Typography.Text type="secondary">•</Typography.Text>
+                                    </Col>
 
-                                <Col>
-                                    <Typography.Text className={`retweet-button ${isRetweeted && 'active'}`} onClick={()=> onRetweetClickHandler()}  type="secondary" >
-                                        <RetweetOutlined/> Retweet
-                                    </Typography.Text>
-                                </Col>
+                                    <Col>
+                                        <Typography.Text className={`reply-button`} onClick={() => setReplyPost(comment)}  type="secondary" >
+                                            <CommentOutlined/> Reply
+                                        </Typography.Text>
+                                    </Col>
 
-                                <Col> 
-                                    <Typography.Text type="secondary">•</Typography.Text>
-                                </Col>
+                                    <Col> 
+                                        <Typography.Text type="secondary">•</Typography.Text>
+                                    </Col>
 
-                                <Col><Typography.Text className='comment-item-stats-likes' type="secondary">{comment.counts.likesCount} likes</Typography.Text></Col>
+                                    <Col><Typography.Text className='comment-item-stats-likes' type="secondary">{comment.counts.likesCount} likes</Typography.Text></Col>
 
 
-                                <Col> 
-                                    <Typography.Text type="secondary">•</Typography.Text>
-                                </Col>
+                                    <Col> 
+                                        <Typography.Text type="secondary">•</Typography.Text>
+                                    </Col>
 
-                                <Col><Typography.Text className='comment-item-stats-retweets' type="secondary">{comment.counts.retweetsCount} retweets</Typography.Text></Col>
-                                                        
-                            </Row> 
-                        </Col>
-                    </Row>
+                                    <Col><Typography.Text className='comment-item-stats-retweets' type="secondary">{comment.counts.retweetsCount} retweets</Typography.Text></Col>
+
+                                    <Col className='reply-show-col'>
+                                        <Typography.Text className='reply-show-button' onClick={() => setIsRepliesOpen((p:any) => !p)} type="secondary">Show replies</Typography.Text>
+                                    </Col>
+                     
+                                </Row> 
+                            </Col>
+                        </Row>
+                        {isRepliesOpen &&
+                        <Row  className={'comment-replies-row'}>
+                                <ReplyList setReplyPost={setReplyPost} parentComment={comment}/>
+                        </Row>}
+                    </>
                 }
                 
             </Space>

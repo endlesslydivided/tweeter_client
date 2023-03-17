@@ -1,17 +1,18 @@
 
-import { PictureOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Col, Input, notification, Row, Space, Tooltip, Upload, UploadProps } from "antd";
+import { CloseOutlined, PictureOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
+import { Avatar, Button, Col, Input, notification, Row, Space, Tooltip, Typography, Upload, UploadProps } from "antd";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useCreateTweetMutation, useLazyGetOneTweetQuery } from "../../services/TweetApiSlice";
-import { appendComment, setComments } from "../../store/slices/CommentsSlice";
+import { appendComment } from "../../store/slices/CommentsSlice";
 import { incrementPostComments } from "../../store/slices/PostsSlice";
 import PostFormImages from "../ImageList/PostFormImages";
 import './ReplyForm.scss';
 
 interface ReplyFormProps {
 	parentPost: any;
-	isCommentsOpen:any;
+	setReplyPost:Function;
+	replyPost:any;
 }
 
 const initialPost = {
@@ -22,14 +23,13 @@ const initialPost = {
 }
 
 
-const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,isCommentsOpen})  =>
+const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost})  =>
 {
 	const [postValues,setPostValues] = useState(initialPost);
-	const [files, setFiles] : any = useState([]);
-
+	const [files, setFiles]:any = useState([]);
 
 	const [getComment] = useLazyGetOneTweetQuery();
-	const [createComment, result] = useCreateTweetMutation();
+	const [createComment] = useCreateTweetMutation();
 
 	const userState: any = useAppSelector((state:any) => state.auth.user);
 
@@ -40,8 +40,8 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,isCommentsOpen})  =>
         const {data,error}:any = await getComment({id});
         if(data)
         {
-            dispatch(appendComment({parentId:parentPost.id,data}));
-			dispatch(incrementPostComments(parentPost.id));
+            dispatch(appendComment({parentId:replyPost.id,data}));
+			dispatch(incrementPostComments(replyPost.id));
         }
         else if(error)
         {
@@ -60,8 +60,8 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,isCommentsOpen})  =>
         formData.append('text', postValues.text);
         formData.append('isComment', postValues.isComment.toString());
 		formData.append('isPublic', postValues.isPublic.toString());
-		formData.append('parentRecordAuthorId', parentPost.author.id.toString());
-		formData.append('parentRecordId',  parentPost.id.toString());
+		formData.append('parentRecordAuthorId', replyPost.author.id.toString());
+		formData.append('parentRecordId',  replyPost.id.toString());
         formData.append('authorId', userState.id);
 
         const {data,error}:any = await createComment(formData);
@@ -94,7 +94,18 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,isCommentsOpen})  =>
 
     return (
 		<div className="reply-form-container">
-            <Row className="reply-form-row" gutter={[10,0]}>
+            <Row className="reply-form-row" gutter={[10,5]}>
+
+				{
+					replyPost.isComment 
+					&&
+					<Col md={{span:24}}>				
+						<Typography.Text className={`close-reply-button`} onClick={() => {setReplyPost(parentPost);}} type="secondary" >
+							<CloseOutlined/>
+							Reply to {`${replyPost.author.firstname} ${replyPost.author.surname}`}
+						</Typography.Text>
+					</Col>
+				}
 
 				<Col className="reply-form-avatar" md={{flex:1}}>
 					<Avatar icon={<UserOutlined />} size={'large'} shape="square" />

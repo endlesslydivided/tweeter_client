@@ -22,7 +22,6 @@ interface ContentSectionProps
 const ContentSection:React.FC<ContentSectionProps> = ({page,filtersProps,params,errorMessage,fetchCB}) => {
 
     const posts:any = useAppSelector((state:any) => state.posts)
-	const user:any = useAppSelector((state:any) => state.auth.user);
 	const dispatch:any = useDispatch();
     const lastItemRef = useRef(null);
 
