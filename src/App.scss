@@ -42,7 +42,8 @@ body
 /* Track */
 ::-webkit-scrollbar-track 
 {
-    background: white;
+    background: white; 
+    
 }
 
 /* Handle */
@@ -50,14 +51,14 @@ body
 {
     background: rgba(0,0,0,.15);
     border-radius: 10px;
-    transition: background 4s ease-in-out;
+    transition: background 4s ease-in-out; z-index:100;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     transition: background 4s ease-in-out;
     background: rgba(0,0,0,.45);
-    border-radius: 10px;
+    border-radius: 10px; z-index:100;
 }
 /*#endregion*/
 

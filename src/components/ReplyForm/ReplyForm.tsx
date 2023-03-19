@@ -13,6 +13,7 @@ interface ReplyFormProps {
 	parentPost: any;
 	setReplyPost:Function;
 	replyPost:any;
+	disabled?: boolean;
 }
 
 const initialPost = {
@@ -23,7 +24,7 @@ const initialPost = {
 }
 
 
-const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost})  =>
+const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost,disabled})  =>
 {
 	const [postValues,setPostValues] = useState(initialPost);
 	const [files, setFiles]:any = useState([]);
@@ -117,6 +118,7 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost}
 					direction='horizontal' 
 					className="reply-form-space">
 						<Input.TextArea 
+							disabled = {disabled}
 							autoSize={true} 
 							value={postValues.text}
 							onChange={(e) => onTextAreaChange(e)}
@@ -128,12 +130,13 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost}
 						<div className='reply-form-textarea-content'>
 
 								<Tooltip  title="Add photo">
-									<Upload {...props} fileList={files} accept="image/*">
+									<Upload {...props} fileList={files} accept="image/*" disabled = {disabled}>
 										<Button type="text" shape='circle'  icon={<PictureOutlined />} />
 									</Upload>
 								</Tooltip>									
 
-								<Button  
+								<Button
+								disabled = {disabled}  
 								type="primary" 
 								icon={<SendOutlined/>} 
 								shape="circle" 

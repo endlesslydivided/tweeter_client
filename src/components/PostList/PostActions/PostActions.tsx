@@ -49,12 +49,14 @@ const PostActions:React.FC<PostActionsProps> = ({post,setIsCommentsOpen,isCommen
    
     return (
         <>
+         {!isOriginalDeleted &&
             <Col flex={1}>
                 <Button 
                 icon={<CommentOutlined/>} onClick={() => setIsCommentsOpen(!isCommentOpen)} type="text" block>
                     Comments
                 </Button>
             </Col>
+        }
             {!isOriginalDeleted &&
             <Col flex={1}>
                 <Button 

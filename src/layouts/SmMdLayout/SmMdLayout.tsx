@@ -47,7 +47,7 @@ export default function SmMdLayout()
         signOut();
     }
     return (
-        <Layout className={`smMd-layout ${window.location.pathname === CHAT_ROUTE ? 'chat-layout' : ''}`}>
+        <Layout className={`smMd-layout ${window.location.pathname.match(CHAT_ROUTE)?.length !== 0? 'chat-layout' : ''}`}>
             <Header>
                 <div>
                     <Image preview={false} width={120} src={logo}/>

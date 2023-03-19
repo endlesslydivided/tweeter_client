@@ -8,7 +8,11 @@
     
     .header
     {
-        height: 10%;
+        top: 0;
+        position: sticky;
+        z-index: 1;
+        width: 100%;
+        background-color: #2f80ed;
         display: flex;
         align-items: center;
         box-Shadow:10px 5px 10px 0 rgba(0,0,0,0.1);
@@ -24,7 +28,6 @@
 
     .messages-list
     {
-        height: 75%;
 
         .messages,
         .messages .ant-spin-container,
@@ -41,7 +44,6 @@
             {
                 display: flex;
                 flex-direction: column-reverse;
-                overflow-y: scroll;
             }
 
             .ant-list-item
@@ -56,15 +58,12 @@
 
     .message-form
     {
-        position: fixed;
         bottom: 0;
         right: 0;
-        left: 25%;
-        top: 87%;
         display: flex;
-        height: 13%;
         box-shadow:10px 0px 10px 0 rgba(0,0,0,0.1);
-
+        background-color: #ffffff;
+        position: sticky;
         .message-form-textarea
         {
             resize: none;
@@ -102,7 +101,6 @@
     {
         height: unset;
         font-size: 55px;
-
     }
 
     .ant-empty-description

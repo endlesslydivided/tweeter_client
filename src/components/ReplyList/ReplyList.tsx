@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useCollection } from '../../hooks/useCollection';
 import { useGetCommentsQuery, useGetRepliesQuery } from '../../services/TweetApiSlice';
-import { appendCommentPage, resetComments } from '../../store/slices/CommentsSlice';
+import { appendCommentPage, appendRepliesPage, resetComments } from '../../store/slices/CommentsSlice';
 import CommentItem from '../CommentsList/CommentsItem/CommentItem';
 import "./ReplyList.scss"
 import ReplyListItem from './ReplyListItem';
@@ -25,7 +25,7 @@ const ReplyList:React.FC<ReplyListProps> = ({parentComment,setReplyPost}) => {
     const {getContentResult} = useCollection({
       entities:replies,
       filtersProps:{limit:null,orderDirection: "asc"},
-      appendPage: appendCommentPage,
+      appendPage: appendRepliesPage,
       getContentCB: useGetRepliesQuery,
       getContentParams:{id:parentComment.id},
       parentEntity:parentComment

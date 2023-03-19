@@ -67,6 +67,35 @@ export const commentsSlice: any = createSlice({
 
       return newState;
     },
+    appendRepliesPage:(state:any,action:any) =>
+    {
+      const {parentId,data} = action.payload;
+      
+      const newState = {...state};
+
+      const stateComments = state[parentId];
+
+      if(stateComments)
+      {
+        const retrievedEntries = data.filter((c:any) => !stateComments.includes(c));
+
+        const editedEntries = retrievedEntries.filter((r:any) => stateComments.some((c:any) => c.id === r.id));
+  
+        const newEntries = retrievedEntries.filter((c:any) => !stateComments.some((r:any) => c.id === r.id));
+  
+        const appliedEntries = [...stateComments.map((c:any) => editedEntries.map((e:any) => c.id === e.id ? e : c)[0] || c)];
+  
+        const finalList = appliedEntries ? [...newEntries,...appliedEntries]: [...newEntries];
+  
+        newState[parentId] = finalList;
+      }
+      else
+      {
+        newState[parentId] = data;
+      }
+
+      return newState;
+    },
     reset: (state:any,action:any) => {
       const parentId = action.payload;
       const newState = {...state};
@@ -89,6 +118,7 @@ export const {
   appendComment,
   deleteComment,
   appendPage:appendCommentPage,
+  appendRepliesPage,
   reset: resetComments,
 
   decrementCommentLikes,

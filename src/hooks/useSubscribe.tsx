@@ -21,7 +21,8 @@ export const useSubscribe= ({entity,decrementFollowers,incrementFollowers}:UseSu
 	const [deleteSubscription, deleteSubscriptionResult] = useDeleteSubsriptionMutation();
     const [createSubscription, createSubscriptionResult] = useCreateSubsriptionMutation();
 
-	const [isSubscribed, setIsSubscribed] = useState(entity?.isFollower?.length !== 0 || entity?.isSubscribed?.length !== 0);
+	const [isSubscribed, setIsSubscribed] = useState(entity?.isSubscribed?.length !== 0);
+	const [isFollower, setIsFollower] = useState(entity?.isFollower?.length !== 0);
 
     useNotify(deleteSubscriptionResult,undefined,()=>  
     {
@@ -55,7 +56,7 @@ export const useSubscribe= ({entity,decrementFollowers,incrementFollowers}:UseSu
     });
 
 
-    return {onCreateClickHandler,onDeleteClickHandler,isSubscribed};
+    return {onCreateClickHandler,onDeleteClickHandler,isSubscribed,isFollower};
 }
 
 

@@ -1,15 +1,13 @@
-.chat-page-container
+.dialogs-page-container
 {
     height:100%;
+    overflow-y: hidden;
+    overflow: hidden;
 
-    .chat-page-row
+    .dialogs-page-row
     {
-        .chat-page-col
-        {
-            height: 100%;
-        }
         color:white;
-        height: 100%;
+
         .dialogs-col
         {
             border-radius: 0 25px 0 0;

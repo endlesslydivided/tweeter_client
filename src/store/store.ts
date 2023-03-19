@@ -6,6 +6,8 @@ import commentsReducer from "./slices/CommentsSlice";
 import usersReducer from "./slices/UsersSlice";
 import userReducer from "./slices/UserSlice";
 import subscriptionsReducer from "./slices/SubscriptionsSlice";
+import dialogsReduce from "./slices/DialogsSlice";
+import messagesReducer from "./slices/MessagesSlice";
 
 
 export const store = configureStore({
@@ -16,6 +18,8 @@ export const store = configureStore({
         comments: commentsReducer,
         users:usersReducer,
         user:userReducer,
+        dialogs:dialogsReduce,
+        messages:messagesReducer,
         subscriptions: subscriptionsReducer
     },
     middleware: (getDefaultMiddleware) =>

@@ -1,7 +1,10 @@
 import { CheckOutlined, MailFilled, UserAddOutlined, UserOutlined } from "@ant-design/icons";
-import { Avatar, Button, Card, Col, Row, Space, Typography } from "antd";
-import { useParams } from "react-router-dom";
+import { Avatar, Button, Card, Col, notification, Row, Space, Typography } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAppSelector } from "../../hooks/redux";
 import { useSubscribe } from "../../hooks/useSubscribe";
+import { useCreateDialogMutation } from "../../services/ChatApiSlice";
+import { CHAT_ROUTE } from "../../utils/consts";
 import './UserCard.scss';
 
 interface UserCardProps
@@ -15,11 +18,34 @@ interface UserCardProps
 
 const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFollowersOpen,decrementFollowers,incrementFollowers}) => {
 
+    const currentUser = useAppSelector((state:any) => state.auth.user);
     const {onCreateClickHandler,onDeleteClickHandler,isSubscribed} = useSubscribe({
         entity:userData,
         decrementFollowers:decrementFollowers(),
         incrementFollowers:incrementFollowers()
     })
+
+    const [createDialog, createDialogResult] = useCreateDialogMutation();
+    const navigate = useNavigate();
+    const onSendMessageHandler = async () =>
+    {
+        const {data,error}:any = await createDialog({
+            name:null,
+            creatorId: currentUser.id,
+            companionId: userData.id,
+            isGroup:false
+        });
+
+        if(data)
+        {
+            navigate(`${CHAT_ROUTE}/${data.id}`);
+        }
+        else if(error)
+        {
+            notification.error({message:error.message,placement:'topRight',duration:2})
+        }
+        
+    }
    
     const renderButtons = (item:any) => (
     <Space direction="horizontal">
@@ -29,7 +55,7 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
             icon={isSubscribed ? <CheckOutlined/> :<UserAddOutlined/>}>
             Follow
         </Button>
-        <Button icon={<MailFilled/>} disabled={
+        <Button icon={<MailFilled/>} onClick={() => onSendMessageHandler()} disabled={
             (!isSubscribed || item.isSubscribed.length === 0) && item.isFollower.length === 0
         }>Send message</Button>
     </Space>

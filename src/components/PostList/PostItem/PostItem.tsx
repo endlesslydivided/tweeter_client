@@ -79,6 +79,7 @@ const PostItem:React.FC<PostItemProps> = ({post}) =>
                     
                     <PostItemContent post={post} isOriginalDeleted={isOriginalDeleted}/>
                              
+                    
                     <Row gutter={[10,0]} justify='end'  className='post-item-stats'>
                         <PostItemStats post={post} isOriginalDeleted={isOriginalDeleted}/>
                     </Row> 
@@ -91,8 +92,9 @@ const PostItem:React.FC<PostItemProps> = ({post}) =>
 
                     <Divider type="horizontal" className={'actions-form-divider'}/>
                 
+                    
                     <Row className={"reply-form-row"}>
-                        <ReplyForm parentPost={post} replyPost={replyPost} setReplyPost={setReplyPost}/>        
+                        <ReplyForm parentPost={post} replyPost={replyPost} disabled={isOriginalDeleted} setReplyPost={setReplyPost}/>        
                     </Row>
 
                     <Divider type="horizontal"  className={'form-comments-divider'}/>
