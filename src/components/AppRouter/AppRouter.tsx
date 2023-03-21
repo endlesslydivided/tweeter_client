@@ -1,4 +1,4 @@
-import React, { createContext, useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import UserSmMdLayout from '../../layouts/SmMdLayout/SmMdLayout';
@@ -7,12 +7,12 @@ import ChatPage from '../../pages/ChatPage/ChatPage';
 import DialogsPage from '../../pages/DialogsPage';
 import ExplorePage from '../../pages/ExplorePage/ExplorePage';
 import HomeFeedPage from '../../pages/HomeFeedPage';
-import HomePage from '../../pages/ProfilePage';
+import ProfilePage from '../../pages/ProfilePage';
 import SettingsPage from '../../pages/SettingsPage/SettingsPage';
 import UnathorizedPage from '../../pages/UnauthorizedPage/UnathorizedPage';
 import UserPage from '../../pages/UserPage';
 import { useGetMeQuery } from '../../services/AuthApiSlice';
-import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, FEED_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
+import { BOOKMARKS_ROUTE, CHAT_ROUTE, EXPLORE_ROUTE, HOME_ROUTE, LOGIN_ROUTE, PROFILE_ROUTE, REGISTRATION_ROUTE, SETTINGS_ROUTE } from '../../utils/consts';
 import Loader from '../Loader/Loader';
 import { SocketProvider } from '../SocketProvider/SocketProvider';
 
@@ -29,21 +29,22 @@ const AppRouter: React.FC<AppRouterProps>= () => {
     const user: any = useAppSelector((state:any) => state?.auth?.user);
     
 
-    if (isFetching || (!user && !isError)) {
+    if (isFetching) {
         return <Loader/>
     }
 
+ 
     return (
         user ?
         <SocketProvider auth={user}>
             <Routes>
                 <Route path="/" element={<UserSmMdLayout/>}>
 
-                    <Route index element={<HomePage/>}/>
+                    <Route index element={<ProfilePage/>}/>
 
                     <Route path={`${HOME_ROUTE}`} element={<HomeFeedPage/>}/>
 
-                    <Route path={`${PROFILE_ROUTE}`} element={<HomePage/>}/>
+                    <Route path={`${PROFILE_ROUTE}`} element={<ProfilePage/>}/>
                     <Route path={`${PROFILE_ROUTE}/:id`} element={<UserPage/>}/>
 
                     <Route path={`${BOOKMARKS_ROUTE}`} element={<BookmarksPage/>}/>

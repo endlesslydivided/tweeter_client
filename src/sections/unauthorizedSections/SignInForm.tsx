@@ -38,9 +38,9 @@ const SignInForm: React.FC<SignInFormProps> = ({})  =>
 
                 <Typography.Title style={{textAlign:'center'}} level={1}>Sign In</Typography.Title>
 
-                <Typography.Title type='secondary' style={{textAlign:'center'}} level={5}>
+                <Typography.Text type='secondary' style={{textAlign:'center'}} >
                   Enter your email and password to sign in
-                </Typography.Title>
+                </Typography.Text>
 
                 <Form layout="vertical" className="row-col" onFinish={submitHandler}>
 
@@ -57,15 +57,9 @@ const SignInForm: React.FC<SignInFormProps> = ({})  =>
                         required: true,
                         message: "Please input your password!",
                       },]}>
-                    <Input placeholder="Password" />
+                    <Input.Password placeholder="Password" />
                   </Form.Item>
 
-                  <Form.Item name="remember" className="aligin-center" valuePropName="checked">
-                    <Space><Switch defaultChecked/>
-                    
-                    Remember me</Space>
-                    
-                  </Form.Item>
 
                   <Form.Item>
                     <Button type="primary" htmlType="submit" loading={result.isLoading} style={{ width: "100%" }}>

@@ -111,7 +111,9 @@ const ProfilePage = () => {
             <FollowersList userId={userState?.id} fetchCB={useGetUserSubscriptionsQuery}/>
         </Modal>
         <div className='profile-page-container'>
-            <Image src={BgProfile} className="profile-bg-image"/>
+            <Image 
+                src={userState?.profilePhoto ? process.env.REACT_APP_BACK_SERVER + userState?.profilePhoto?.path : BgProfile}  
+                className="profile-bg-image"/>
             <Space direction="vertical" size='middle' className="profile-page-space">
                 
                 <Row className="profile-page-usercard-row">

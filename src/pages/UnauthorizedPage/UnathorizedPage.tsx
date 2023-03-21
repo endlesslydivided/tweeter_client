@@ -7,6 +7,8 @@ import SignUpForm from "../../sections/unauthorizedSections/SignUpForm";
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
 import './UnauthorizedPage.scss'
 
+const animatedBackground = require('../../assets/unauthorized_animation.gif')
+
 const UnathorizedPage = () => {
    
     const location = useLocation();
@@ -26,15 +28,11 @@ const UnathorizedPage = () => {
                         location.pathname ===`${REGISTRATION_ROUTE}` ?
                             <div className='register'>
                                 <Row align='middle' justify='space-between'>
-                                    <Col span={12} className='content-col'>
-                                        <h1 >
-                                            Tweeter
-                                        </h1>
-                                        <p >
-                                            Some text
-                                        </p>
+                                    <Col md={{span:12}} xs={{span:0}} className='content-col'>
+                                        <img className={'bg-image'} src={animatedBackground} />
+
                                     </Col>
-                                    <Col span={12} className='form-col'>
+                                    <Col md={{span:12}} xs={{span:24}} className='form-col'>
                                         <SignUpForm/>
                                     </Col>
                                 </Row>
@@ -43,16 +41,12 @@ const UnathorizedPage = () => {
                             :
                             <div className='login'> 
                                 <Row align='middle' justify='space-around'>
-                                    <Col span={12} className='form-col'>
+                                    <Col md={{span:12}} xs={{span:24}} className='form-col'>
                                         <SignInForm/>
                                     </Col>
-                                    <Col span={12} className='content-col'>
-                                        <h1 >
-                                            Tweeter
-                                        </h1>
-                                        <p >
-                                            Some text
-                                        </p>
+                                    <Col md={{span:12}} xs={{span:0}} className='content-col'>
+                                    <img  className={'bg-image'}src={animatedBackground} />
+
                                     </Col>
                                 </Row>
                             </div>

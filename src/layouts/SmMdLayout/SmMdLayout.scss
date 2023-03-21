@@ -3,7 +3,7 @@
 .smMd-layout
 {
     background: #F2F2F2;
-
+    width: 100%;
     .ant-layout-header {
         display: flex;
         position: relative;
@@ -21,6 +21,8 @@
         margin-left: auto;
         width: 100%;
         margin-right: auto;
+
+
 
         .ant-menu-horizontal
         {
@@ -47,13 +49,15 @@
         display: flex;
     }
 
-    
-
-
 
     .header-popover-container
     {
         white-space: nowrap;
+
+        .ant-avatar-group
+        {
+            display: block;
+        }
 
         .ant-typography
         {
@@ -100,7 +104,7 @@
     }
     .user-header-popover-content
     {
-        width: 100%;;
+        width: 100%;
     }
 
     .ant-divider

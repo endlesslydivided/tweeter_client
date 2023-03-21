@@ -113,7 +113,7 @@ const UserPage = () => {
                 onCancel={() => setIsFollowersOpen(false)}
                 open={isFollowersOpen}
             >
-                    <FollowersList userId={profile?.id} fetchCB={useGetUserFollowersQuery}/>
+                <FollowersList userId={profile?.id} fetchCB={useGetUserFollowersQuery}/>
             </Modal>
             <Modal 
                 destroyOnClose={true}

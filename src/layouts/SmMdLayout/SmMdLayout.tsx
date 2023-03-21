@@ -49,7 +49,7 @@ export default function SmMdLayout()
     return (
         <Layout className={`smMd-layout ${window.location.pathname.match(CHAT_ROUTE)?.length !== 0? 'chat-layout' : ''}`}>
             <Header>
-                <div>
+                <div onClick={() => navigate(PROFILE_ROUTE)} style={{cursor:'pointer'}}>
                     <Image preview={false} width={120} src={logo}/>
                 </div>
                 <div className='header-nav-container'>
@@ -57,7 +57,12 @@ export default function SmMdLayout()
                 </div>
                 <div className='header-popover-container'>
                     <Avatar.Group>
-                        <Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + userState?.mainPhoto?.path} onClick={() => navigate(`${HOME_ROUTE}`)}  shape="square" />
+                        <Avatar 
+                        style={{cursor:'pointer'}}
+                        icon={<UserOutlined />}
+                        size={'large'} 
+                        src={ userState?.mainPhoto ?  process.env.REACT_APP_BACK_SERVER + userState?.mainPhoto?.path : null} 
+                        onClick={() => navigate(`${PROFILE_ROUTE}`)}  shape="square" />
                         <Popover id='headerPopover' placement="bottomRight"
                             content=
                             {<>

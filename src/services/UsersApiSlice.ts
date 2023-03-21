@@ -17,6 +17,38 @@ export const usersSlice = apiSlice.injectEndpoints({
             }),
         }),
         
+        updateUser: builder.mutation({
+            query: ({id,body}) => ({
+                url: `/users/${id}`,
+                method: 'PUT',
+                body
+            }),
+        }),
+
+        updateMe: builder.mutation({
+            query: ({body}) => ({
+                url: `/users/me`,
+                method: 'PUT',
+                body
+            }),
+        }),
+
+        updateMainPhoto: builder.mutation({
+            query: ({id,body}) => ({
+                url: `/users/me/main-photo`,
+                method: 'PUT',
+                body
+            }),
+        }),
+
+        updateProfilePhoto: builder.mutation({
+            query: ({id,body}) => ({
+                url: `/users/me/profile-photo`,
+                method: 'PUT',
+                body
+            }),
+        }),
+        
     })
 })
 
@@ -24,5 +56,9 @@ export const usersSlice = apiSlice.injectEndpoints({
 export const {
     useGetUsersQuery,
     useLazyGetUserQuery,
-    useGetUserQuery
+    useGetUserQuery,
+    useUpdateUserMutation,
+    useUpdateMeMutation,
+    useUpdateMainPhotoMutation,
+    useUpdateProfilePhotoMutation,
 } = usersSlice;

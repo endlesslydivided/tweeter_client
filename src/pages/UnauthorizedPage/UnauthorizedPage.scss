@@ -15,11 +15,22 @@
             flex-direction: column;
             justify-content: center;
             padding:0 10% 0 10%;
+            box-shadow: rgba(0,0,0,0.2) 0px 0px 20px 0px;
+            z-index: 1;
         }
+        
 
         .content-col
         {
             text-align: center;
+            height: 100%;
+            overflow-y: hidden;
+            .bg-image
+            {
+                width: 100%;
+                object-fit: cover;
+                height: 100%;
+            }
         }
     }
 

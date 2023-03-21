@@ -3,7 +3,8 @@
 {
     display:grid;
     margin: 15px 0px;
-
+    padding-bottom: 15px;
+    width: 100%;
     .user-data-settings .ant-upload 
     {
         width: 120px !important;
@@ -12,7 +13,7 @@
 
     .settings-page-row
     {
-        width: 75vw;
+        width: 90%;
         justify-self:center;
     }
 

@@ -1,0 +1,74 @@
+
+.user-data-form-card
+{
+    .profile-bg-col
+    {
+        width: 100%;
+        .ant-image 
+        {   
+            width:100%;
+            .profile-bg-image
+            {
+                object-fit: cover;
+                height: 200px;
+                width:100%;
+        
+                border-radius: 25px;
+                margin: 15px 0px;
+            }
+           .ant-image-mask
+           {
+            margin: 15px 0px;
+            border-radius: 25px;
+           }
+        }
+
+        .profile-bg-col-upload
+        {
+            width: 100%;
+            .ant-col
+            {
+                width:100%;
+                .ant-upload
+                {
+                    width:100% !important;
+                }
+            }
+            
+        }
+    }
+   
+
+    .ant-space
+    {
+        width: 100%;
+        justify-self:center;
+    }
+
+    .update-avatar-form
+    {
+        .ant-upload 
+        {
+            width: 120px !important;
+            height: 120px !important;
+            margin:0 !important;
+            
+            .text
+            {
+                margin-top:8px;
+            }
+        }
+
+        .row
+        {
+            display:flex;
+            align-items: flex-end;
+        }
+    }
+
+    .submit-form
+    {
+        justify-content:flex-end;
+        display:flex;
+    }
+}

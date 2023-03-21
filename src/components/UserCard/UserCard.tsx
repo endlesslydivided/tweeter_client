@@ -76,7 +76,7 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
                     size={120} 
                     shape="square" 
                     className="user-avatar"
-                    src={userData?.mainPhoto?.path || process.env.REACT_APP_BACK_SERVER + userData?.mainPhoto?.path} 
+                    src={userData?.mainPhoto?.path ? process.env.REACT_APP_BACK_SERVER + userData?.mainPhoto?.path : null} 
                     icon={<UserOutlined/>}/>
                 </Col>
                 <Col span={24} className='user-card-info-col'>

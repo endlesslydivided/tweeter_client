@@ -1,10 +1,10 @@
 import { LockOutlined, SettingOutlined } from "@ant-design/icons";
 import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
+import SessionSection from "../../components/SettingsSections/SessionSection/SessionsSection";
+import UserDataFormSection from "../../components/SettingsSections/UpdateDataFormSection/UserDataFormSection";
+import UpdatePasswordSection from "../../components/SettingsSections/UpdatePasswordSection/UpdatePasswordSection";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
-import SessionSection from "../../sections/settingsSections/SessionsSection";
-import UpdatePasswordSection from "../../sections/settingsSections/UpdatePasswordSection";
-import UserDataFormSection from "../../sections/settingsSections/UserDataFormSection";
 import './SettingsPage.scss';
 
 const items: MenuProps['items'] = [
@@ -50,7 +50,7 @@ const SettingsPage = () => {
     return (
         <div  className='setting-page-container'>
             <Row gutter={[15,10]} className='settings-page-row'>              
-                <Col span={6} className='settings-page-verticalmenu-col'>
+                <Col md={{span:6}} xs={{span:24}} className='settings-page-verticalmenu-col'>
                     <Card 
                     bordered={false} 
                     bodyStyle={{ display: "none" }} 
@@ -59,8 +59,8 @@ const SettingsPage = () => {
                         <VerticalSideMenu selectedKey={content} setSelecteKey={setContent} items={items}/>
                     }/>
                 </Col>
-                <Col span={18} className='settings-page-general-col'>
-                    <Space direction="vertical">
+                <Col md={{span:18}} xs={{span:24}} className='settings-page-general-col'>
+                    <Space direction="vertical" size={'middle'}>
                         {renderContent()}
                     </Space>
                 

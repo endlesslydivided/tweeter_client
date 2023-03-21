@@ -46,7 +46,7 @@ export const SocketProvider:React.FC<SocketProviderProps> = ({auth,children}) =>
         api.open({
           message,
           description,
-          className: 'custom-class',
+          className: 'socket-notify',
           placement:'bottomLeft',
           duration:300,
           key

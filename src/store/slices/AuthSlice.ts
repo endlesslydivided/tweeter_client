@@ -17,7 +17,12 @@ export const authSlice:any = createSlice({
         {
             return {...state,userCounts:{...state?.userCounts,followersCount:(Number.parseInt(state?.userCounts?.followersCount) - 1 ).toString()}};
         },
-        logOut: () => authSlice.getInitialState()
+        updateCurrentUser:(state:any,action:any) =>
+        {
+            const data = action.payload;
+            return {user:data};
+        },
+        logOut: () => {return {user: null}}
     },
 });
 
@@ -25,7 +30,8 @@ export const {
     logOut, 
     setCredentials,
     incrementFollowers:incrementCurrentUserFollowers,
-    decrementFollowers:decrementCurrentUserFollowers
+    decrementFollowers:decrementCurrentUserFollowers,
+    updateCurrentUser
 } = authSlice.actions;
 
 export default authSlice.reducer;
