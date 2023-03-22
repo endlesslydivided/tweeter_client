@@ -14,7 +14,9 @@ const ChatPage = () => {
     return (
         <div  className='chat-page-container'>
             <Row className='chat-page-row' >
-                <Col span={24} className='chat-page-col'>
+                <Col md={{span:12,offset:6}}
+                    sm={{span:24}}
+                    xs={{span:24}}  className='chat-page-col'>
                     <ChatWindow />                 
                 </Col>
             </Row>

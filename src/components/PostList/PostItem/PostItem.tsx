@@ -1,8 +1,10 @@
 import { DeleteOutlined, EllipsisOutlined, StopOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Col, Divider, Dropdown, Empty, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDeletePost } from "../../../hooks/useDeletePost";
 import { decrementPostRetweets, incrementPostRetweets } from "../../../store/slices/PostsSlice";
+import { PROFILE_ROUTE } from "../../../utils/consts";
 import { fDateTime } from "../../../utils/formatTime";
 import CommentsList from "../../CommentsList/CommentsList";
 import ReplyForm from "../../ReplyForm/ReplyForm";
@@ -21,7 +23,8 @@ const PostItem:React.FC<PostItemProps> = ({post}) =>
     
     const [isCommentOpen,setIsCommentOpen] = useState(false);
 	const [replyPost,setReplyPost]:any = useState({...post});
-
+    const navigate = useNavigate();
+    
     const {onDeleteClickHandler,isDeleted,onRestoreClickHandler} = useDeletePost({
         entity:post,
         decrementRetweets:decrementPostRetweets(post.parentRecordId),
@@ -63,7 +66,7 @@ const PostItem:React.FC<PostItemProps> = ({post}) =>
 
     const metaCardProps = {
         avatar: (<Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + post?.author?.mainPhoto?.path} size={36} shape="square" />),
-        title:(<Typography.Text className="post-item-card-title" strong>{post.author?.firstname + ' ' + post.author?.surname}</Typography.Text>),
+        title:(<Typography.Text className="post-item-card-title" onClick={() => navigate(`${PROFILE_ROUTE}/${post.author.id}`)} strong>{post.author?.firstname + ' ' + post.author?.surname}</Typography.Text>),
         description:(<Typography.Text  className="post-item-card-description" type="secondary">{fDateTime(post.createdAt)}</Typography.Text>)
     }
 
@@ -75,8 +78,9 @@ const PostItem:React.FC<PostItemProps> = ({post}) =>
                 isDeleted ? deletedRender :         
                 <Space direction="vertical" className={spaceClassNames} size='middle'>
                     
-                    <Card.Meta className="post-item-card-meta" {...metaCardProps}/>  
-                    
+                    <Link to={`${PROFILE_ROUTE}/${post.author.id}`}>
+                        <Card.Meta className="post-item-card-meta" {...metaCardProps}/>  
+                    </Link>
                     <PostItemContent post={post} isOriginalDeleted={isOriginalDeleted}/>
                              
                     

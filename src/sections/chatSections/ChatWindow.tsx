@@ -9,7 +9,7 @@ import { ChatServerEvent, SocketContext } from '../../components/SocketProvider/
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useObserver } from '../../hooks/useObserver';
 import { setMessagesLoading } from '../../store/slices/MessagesSlice';
-import { CHAT_ROUTE } from '../../utils/consts';
+import { CHAT_ROUTE, PROFILE_ROUTE } from '../../utils/consts';
 import { fDateTime } from '../../utils/formatTime';
 import './ChatWindow.scss'
 
@@ -126,9 +126,8 @@ const ChatWindow :React.FC<ChatWindowProps> = ({}) =>
 
         <section className="header">
             <Button icon={<ArrowLeftOutlined/>} onClick={() => navigate(CHAT_ROUTE)} shape={'circle'} size={'large'} ghost ></Button>
-            <Typography.Title type="secondary" level={3}>{`${dialog?.users[0]?.firstname} ${dialog?.users[0]?.surname}`}</Typography.Title>
-            <Avatar size={45} src={process.env.REACT_APP_BACK_SERVER + dialog?.users[0]?.mainPhoto?.path} icon={<UserOutlined/>} />
-
+            <Typography.Title type="secondary" level={3} onClick={() => navigate(`${PROFILE_ROUTE}/${dialog?.users[0]?.id}`)}>{`${dialog?.users[0]?.firstname} ${dialog?.users[0]?.surname}`}</Typography.Title>
+            <Avatar onClick={() => navigate(`${PROFILE_ROUTE}/${dialog?.users[0]?.id}`)} size={45} src={process.env.REACT_APP_BACK_SERVER + dialog?.users[0]?.mainPhoto?.path} icon={<UserOutlined/>} />
         </section>
 
         <section className="messages-list">

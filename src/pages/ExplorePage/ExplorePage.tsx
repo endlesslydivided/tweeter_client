@@ -90,7 +90,6 @@ const ExplorePage = () => {
 
                 <Col span={18} className='explore-page-feed-col'>
                     <Space direction="vertical" size='middle'>
-                        <SearchBar/>
                         {
                             renderPostsList()
                         }
