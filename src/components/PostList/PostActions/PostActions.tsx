@@ -3,6 +3,7 @@ import { Button, Col } from "antd";
 import { useContext } from "react";
 import { useAppSelector } from "../../../hooks/redux";
 import { useLike } from "../../../hooks/useLike";
+import useMediaQuery from "../../../hooks/useMediaQuery";
 import { useRetweet } from "../../../hooks/useRetweet";
 import { useSave } from "../../../hooks/useSave";
 import { decrementPostLikes, decrementPostSaves, deletePost, incrementPostLikes, incrementPostRetweets, incrementPostSaves } from "../../../store/slices/PostsSlice";
@@ -21,6 +22,7 @@ const PostActions:React.FC<PostActionsProps> = ({post,setIsCommentsOpen,isCommen
 {
 
     const {page}:any = useContext(PostListContext);
+    const xs = useMediaQuery("(max-width:576px)");
 
     const unlikeAction:any = page === PAGES.USER_LIKES && deletePost(post.id);
     const unsaveAction:any = page === PAGES.USER_SAVES && deletePost(post.id);
@@ -53,7 +55,7 @@ const PostActions:React.FC<PostActionsProps> = ({post,setIsCommentsOpen,isCommen
             <Col flex={1}>
                 <Button 
                 icon={<CommentOutlined/>} onClick={() => setIsCommentsOpen(!isCommentOpen)} type="text" block>
-                    Comments
+                     {!xs && 'Comments'}
                 </Button>
             </Col>
         }
@@ -62,14 +64,14 @@ const PostActions:React.FC<PostActionsProps> = ({post,setIsCommentsOpen,isCommen
                 <Button 
                 icon={<RetweetOutlined/>}
                 className={`retweet-button ${isRetweeted && 'active'}`} onClick={() => onRetweetClickHandler()}  type="text" block>
-                    Retweet
+                    {!xs && 'Retweet'}
                 </Button>
             </Col>}
             <Col flex={1}>
                 <Button 
                 icon={isLiked ? <HeartFilled/> : <HeartOutlined/>}
                 className={`like-button ${isLiked && 'active'}`}  onClick={() => onLikeClickHandler()} type="text"  block>
-                    Like ({post.counts.likesCount})
+                    {!xs && `Like ${post.counts.likesCount}`}
                 </Button>
             </Col>
             {!isOriginalDeleted &&
@@ -77,7 +79,7 @@ const PostActions:React.FC<PostActionsProps> = ({post,setIsCommentsOpen,isCommen
                 <Button 
                 icon={isSaved ? <BookFilled/> :<BookOutlined/>} 
                 className={`save-button ${isSaved && 'active'}`} onClick={() => onSaveClickHandler()}  type="text"  block>
-                    Save
+                     {!xs && 'Save'}
                 </Button>
             </Col>}
         </>

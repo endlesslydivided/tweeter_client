@@ -1,13 +1,13 @@
 import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
 import { useState } from "react";
+import ContentSection from "../../components/ContentSection/ContentSection";
 import PeopleList from "../../components/PeopleList";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
-import ContentSection from "../../sections/contentSections/ContentSection";
-import SearchBar from "../../sections/exploreSections/SearchBar";
-import {useGetAllTweetsQuery, useGetTopTweetsQuery } from "../../services/TweetApiSlice";
-import { useGetFeedQuery, useGetUserTweetsQuery } from "../../services/UserTweetsApiSlice";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import { useGetAllTweetsQuery, useGetTopTweetsQuery } from "../../services/TweetApiSlice";
+import { useGetFeedQuery } from "../../services/UserTweetsApiSlice";
 import { PAGES } from "../../utils/consts";
-import './ExplorePage.scss'
+import './ExplorePage.scss';
 
 const items: MenuProps['items'] = [
     {
@@ -73,11 +73,17 @@ const ExplorePage = () => {
         }
     }
 
+    const xs = useMediaQuery('(max-width:576px)');
+
     return (
         <div className='explore-page-container'>
             <Row gutter={[25,10]} className='explore-page-row'>     
 
-                <Col span={6} className='explore-page-verticalmenu-col'>
+                <Col 
+                    lg={{span:6}}
+                    md={{span:24}}
+                    sm={{span:24}}
+                    xs={{span:24}}  className='explore-page-verticalmenu-col'>
                     <Card 
                     bordered={false} 
                     bodyStyle={{ display: "none" }} 
@@ -88,8 +94,12 @@ const ExplorePage = () => {
                     }/>
                 </Col>
 
-                <Col span={18} className='explore-page-feed-col'>
-                    <Space direction="vertical" size='middle'>
+                <Col 
+                    lg={{span:18}}                    
+                    md={{span:24}}
+                    sm={{span:24}}
+                    xs={{span:24}} className='explore-page-feed-col'>
+                    <Space direction="vertical" className={`${xs ? 'xs-space-margin' : ''}`} size='middle'>
                         {
                             renderPostsList()
                         }

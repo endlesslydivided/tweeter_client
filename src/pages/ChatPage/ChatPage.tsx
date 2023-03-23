@@ -1,7 +1,7 @@
 
 import { Col, Row, theme } from "antd";
 import { useState } from "react";
-import ChatWindow from "../../sections/chatSections/ChatWindow";
+import ChatWindow from "../../components/ChatWindow/ChatWindow";
 import './ChatPage.scss';
 
 const { useToken } = theme;

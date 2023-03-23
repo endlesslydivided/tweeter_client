@@ -2,6 +2,7 @@ import { CheckOutlined, MailFilled, UserAddOutlined, UserOutlined } from "@ant-d
 import { Avatar, Button, Card, Col, notification, Row, Space, Typography } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../../hooks/redux";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import { useSubscribe } from "../../hooks/useSubscribe";
 import { useCreateDialogMutation } from "../../services/ChatApiSlice";
 import { CHAT_ROUTE } from "../../utils/consts";
@@ -62,6 +63,7 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
     )
 
     const {id} = useParams();
+    const xs = useMediaQuery('(max-width:576px)');
 
     return(
         <Card 
@@ -71,7 +73,7 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
         title=
         {
             <Row  className='user-card-row'>
-                <Col span={6} className='user-card-avatar-container'>
+                <Col md={{span:6}} xs={{span:24}} className={`${!xs ? 'user-card-avatar-container': 'user-card-avatar-container-xs'}`}>
                     <Avatar 
                     size={120} 
                     shape="square" 
@@ -79,21 +81,23 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
                     src={userData?.mainPhoto?.path ? process.env.REACT_APP_BACK_SERVER + userData?.mainPhoto?.path : null} 
                     icon={<UserOutlined/>}/>
                 </Col>
-                <Col span={24} className='user-card-info-col'>
-                    <Row gutter={[20,0]} className='user-card-info-row'>
+                {
+                    xs && <Col style={{height: '65px'}} xs={{span:24}}></Col>
+                }
+                <Col md={{span:18}} xs={{span:24}} className={`${!xs ? 'user-card-info-col': 'user-card-info-col-xs'}`}>
+                    <Row gutter={[20,5]} className={`${!xs ? 'user-card-info-row': 'user-card-info-row-xs'}`}>
                         <Col>
                             <Typography.Title level={4}>{`${userData?.firstname} ${userData?.surname}`}</Typography.Title>                             
                         </Col>
                         <Col >
                             <Typography.Text type="secondary" onClick={() => setIsFollowingsOpen(true)}><Typography.Text>{userData?.counts?.subscriptionsCount}</Typography.Text> Following</Typography.Text>
-                        </Col>
-                        <Col >
+                            {'   '}
                             <Typography.Text type="secondary" onClick={() => setIsFollowersOpen(true)}><Typography.Text>{userData?.counts?.followersCount}</Typography.Text> Followers</Typography.Text>
                         </Col>
-                        <Col style={{marginLeft:'auto',marginRight:'0'}}>
-                            {id &&  renderButtons(userData)}
-                        </Col>
-                        <Col span={18}>
+                        {id && <Col className={`${!xs ? 'user-card-buttons-col': 'user-card-buttons-col-xs'}`} >
+                            {renderButtons(userData)}
+                        </Col>}
+                        <Col span={18} xs={{span:24}}>
                             <Typography.Paragraph className="user-card-description" type="secondary" >
                                 {userData.description}
                             </Typography.Paragraph>

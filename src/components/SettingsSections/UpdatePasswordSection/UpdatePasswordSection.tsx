@@ -1,5 +1,5 @@
 
-import { Button, Card, Form, Input, notification, Space, Typography } from "antd";
+import { Button, Card, Form, FormProps, Input, notification, Space, Typography } from "antd";
 import { UploadChangeParam, UploadProps } from "antd/es/upload";
 import { useUpdatePasswordMutation } from "../../../services/AuthApiSlice";
 
@@ -15,7 +15,7 @@ const UpdatePasswordSection: React.FC<UpdatePasswordSectionProps> = ({})  =>
 
     const [updatePassword] = useUpdatePasswordMutation();
 
-    const handleUpdatePassowrd: UploadProps['onChange'] = async (body: any) => {
+    const handleUpdatePassowrd: FormProps['onFinish'] = async (body: any) => {
 
         if(body.newPassword !== body.newPasswordCheck)
         {

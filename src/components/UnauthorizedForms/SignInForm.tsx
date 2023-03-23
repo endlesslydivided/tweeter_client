@@ -1,5 +1,5 @@
 
-import { Button, Form, Input, Space, Switch, Typography } from "antd";
+import { Button, Form, FormProps, Input, Space, Switch, Typography } from "antd";
 import Fingerprint2 from 'fingerprintjs2';
 import React from "react";
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,13 +25,14 @@ const SignInForm: React.FC<SignInFormProps> = ({})  =>
 
     useNotify(result,undefined,() => {navigate('/')});
 
-    const submitHandler = (values:object) =>
-    {
+
+    const submitHandler: FormProps['onFinish'] = async (body: any) => {
+
       Fingerprint2.getV18( async (fingerprint, components) => {
-        await signIn({...values,fingerprint});
+        await signIn({...body,fingerprint});
         await getMe();
       }) 
-    }
+    };
 
     return (
         <React.Fragment>

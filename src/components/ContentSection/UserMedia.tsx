@@ -1,7 +1,7 @@
 import React from 'react';
-import Loader from '../../components/Loader';
-import MediaGallery from '../../components/MediaGallery';
-import PostList from '../../components/PostList';
+import Loader from '../Loader';
+import MediaGallery from '../MediaGallery';
+import PostList from '../PostList';
 import { useFilterFetch } from '../../hooks/useFilterFetch';
 import { useGetMediaQuery } from '../../services/UserTweetsApiSlice';
 
@@ -25,4 +25,3 @@ const UserMedia:React.FC<UserMediaProps> = ({userId}) => {
 }
 
 export default UserMedia
-	

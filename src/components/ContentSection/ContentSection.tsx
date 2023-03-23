@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
-import { PostListContext } from '../../components/AppRouter/AppRouter';
-import PostList from '../../components/PostList';
+import { PostListContext } from '../AppRouter/AppRouter';
+import PostList from '../PostList';
 import { useAppSelector } from '../../hooks/redux';
 import { useCollection } from '../../hooks/useCollection';
 import { useObserver } from '../../hooks/useObserver';

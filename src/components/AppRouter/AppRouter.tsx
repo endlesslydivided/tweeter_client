@@ -1,7 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
+import useMediaQuery from '../../hooks/useMediaQuery';
 import UserSmMdLayout from '../../layouts/SmMdLayout/SmMdLayout';
+import XsLayout from '../../layouts/XsLayout';
 import BookmarksPage from '../../pages/BookmarksPage';
 import ChatPage from '../../pages/ChatPage/ChatPage';
 import DialogsPage from '../../pages/DialogsPage';
@@ -28,6 +30,7 @@ const AppRouter: React.FC<AppRouterProps>= () => {
     const {data: userData, isFetching, isError} = useGetMeQuery();
     const user: any = useAppSelector((state:any) => state?.auth?.user);
     
+    const xs = useMediaQuery('(max-width:576px)')
 
     if (isFetching) {
         return <Loader/>
@@ -38,7 +41,7 @@ const AppRouter: React.FC<AppRouterProps>= () => {
         user ?
         <SocketProvider auth={user}>
             <Routes>
-                <Route path="/" element={<UserSmMdLayout/>}>
+                <Route path="/" element={xs ? <XsLayout/>:  <UserSmMdLayout/>}>
 
                     <Route index element={<ProfilePage/>}/>
 

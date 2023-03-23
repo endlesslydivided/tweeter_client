@@ -1,14 +1,14 @@
 import { Card, Col, Image, MenuProps, Modal, Row, Space, Typography } from "antd";
 import { useState } from "react";
+import ContentSection from "../../components/ContentSection/ContentSection";
 import FollowersList from "../../components/FollowersList";
+import PostForm from "../../components/PostForm/PostForm";
 import UserCard from "../../components/UserCard/UserCard";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
 import { useAppSelector } from "../../hooks/redux";
-import ContentSection from "../../sections/contentSections/ContentSection";
-import PostForm from "../../sections/feedPostsSections/PostForm";
-import UserMedia from "../../sections/userTweetsSections/UserMedia";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import { useGetUserFollowersQuery, useGetUserSubscriptionsQuery } from "../../services/SubsriptionsApiSlice";
-import { useGetLikedTweetsQuery, useGetTweetsAndRepliesQuery, useGetUserTweetsQuery } from "../../services/UserTweetsApiSlice";
+import { useGetLikedTweetsQuery, useGetMediaQuery, useGetTweetsAndRepliesQuery, useGetUserTweetsQuery } from "../../services/UserTweetsApiSlice";
 import { decrementCurrentUserFollowers, incrementCurrentUserFollowers } from "../../store/slices/AuthSlice";
 import { PAGES } from "../../utils/consts";
 import './ProfilePage.scss';
@@ -56,7 +56,7 @@ const ProfilePage = () => {
     const [content, setContent] = useState('tweets');
 
     const userState:any = useAppSelector((state:any) => state.auth.user);
-
+    const xs = useMediaQuery('(max-width:576px)');
     const renderPostsList = () => {
         switch(content)
         {
@@ -76,7 +76,11 @@ const ProfilePage = () => {
                     errorMessage={'Server error occured during getting user tweets and replies'}/>
                 )};
             case 'media':{ return (
-                    <UserMedia userId={userState?.id}/>
+                    <ContentSection 
+                    page={PAGES.USER_REPLIES}
+                    params={{id:userState?.id}}
+                    fetchCB={useGetMediaQuery} 
+                    errorMessage={'Server error occured during getting user tweets and replies'}/>
                 )};
             case 'likes':{ return (
                     <ContentSection  
@@ -114,7 +118,7 @@ const ProfilePage = () => {
             <Image 
                 src={userState?.profilePhoto ? process.env.REACT_APP_BACK_SERVER + userState?.profilePhoto?.path : BgProfile}  
                 className="profile-bg-image"/>
-            <Space direction="vertical" size='middle' className="profile-page-space">
+            <Space direction="vertical" size='middle' className={`profile-page-space ${xs ? 'xs-space-margin' : ''}`}>
                 
                 <Row className="profile-page-usercard-row">
 

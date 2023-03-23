@@ -1,7 +1,7 @@
 import { Col, Row, Space } from "antd";
 import { useState } from "react";
 import { useAppSelector } from "../../hooks/redux";
-import ContentSection from "../../sections/contentSections/ContentSection";
+import ContentSection from "../../components/ContentSection/ContentSection";
 import { useGetSavedTweetsQuery } from "../../services/UserTweetsApiSlice";
 import { PAGES } from "../../utils/consts";
 import './BookmarksPage.scss';

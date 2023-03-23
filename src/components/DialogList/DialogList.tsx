@@ -2,7 +2,7 @@ import { MailOutlined, SoundOutlined, StarOutlined, UserOutlined } from '@ant-de
 import { Avatar, List, Radio, Space, Typography } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import { ChatServerEvent, SocketContext } from '../../components/SocketProvider/SocketProvider';
+import { ChatServerEvent, SocketContext } from '../SocketProvider/SocketProvider';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useObserver } from '../../hooks/useObserver';
 import { CHAT_ROUTE } from '../../utils/consts';

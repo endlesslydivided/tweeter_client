@@ -4,8 +4,8 @@ import { ArrowLeftOutlined, MailOutlined, PictureOutlined, SendOutlined, UserOut
 import { Avatar, Button, Empty, Input, List, Skeleton, theme, Tooltip, Typography } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
-import Loader from '../../components/Loader';
-import { ChatServerEvent, SocketContext } from '../../components/SocketProvider/SocketProvider';
+import Loader from '../Loader';
+import { ChatServerEvent, SocketContext } from '../SocketProvider/SocketProvider';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useObserver } from '../../hooks/useObserver';
 import { setMessagesLoading } from '../../store/slices/MessagesSlice';

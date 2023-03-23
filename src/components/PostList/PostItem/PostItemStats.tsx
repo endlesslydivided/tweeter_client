@@ -1,5 +1,6 @@
 import { Col, Typography } from 'antd';
 import React from 'react'
+import useMediaQuery from '../../../hooks/useMediaQuery';
 
 interface PostItemCotnentProps
 {
@@ -9,23 +10,31 @@ interface PostItemCotnentProps
 
 const PostItemStats:React.FC<PostItemCotnentProps> = ({post,isOriginalDeleted}) =>
 {
-  return !isOriginalDeleted ?
-    <>        
-        <Col>
-            <Typography.Text className='post-item-stats-comments' type="secondary" >{post.counts.commentsCount} comments</Typography.Text>
-        </Col>
-        
+    const xs = useMediaQuery('(max-width:576px)')
+    return !isOriginalDeleted ?
+        <>        
             <Col>
-                <Typography.Text className='post-item-stats-retweets' type="secondary">
-                    {post.parentRecord?.counts?.retweetsCount || post.counts.retweetsCount} retweets
-                </Typography.Text>
+                <Typography.Text className='post-item-stats-comments' type="secondary" >{post.counts.commentsCount} comments</Typography.Text>
             </Col>
-        
-        <Col>
-            <Typography.Text className='post-item-stats-saved' type="secondary">{post.counts.savesCount} saved</Typography.Text>
-        </Col>
-        
-    </> : null
+            
+                <Col>
+                    <Typography.Text className='post-item-stats-retweets' type="secondary">
+                        {post.parentRecord?.counts?.retweetsCount || post.counts.retweetsCount} retweets
+                    </Typography.Text>
+                </Col>
+            
+            <Col>
+                <Typography.Text className='post-item-stats-saved' type="secondary">{post.counts.savesCount} saved</Typography.Text>
+            </Col>
+
+            {
+                xs &&
+                <Col>
+                    <Typography.Text className='post-item-stats-saved' type="secondary">{post.counts.likesCount} likes</Typography.Text>
+                </Col>
+            }
+            
+        </> : null
   
 }
 

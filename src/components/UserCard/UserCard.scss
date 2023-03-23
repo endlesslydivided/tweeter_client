@@ -20,6 +20,10 @@
     .user-card-info-row
     {
         align-items: baseline;
+        h4
+        {
+            margin:0;
+        }
 
         .ant-typography
         {
@@ -32,14 +36,62 @@
         }
     }
 
+    .user-card-info-row-xs
+    {
+        align-items: baseline;
+        justify-content: center;
+
+        h4
+        {
+            margin:0;
+        }
+        
+        .ant-typography
+        {
+            cursor: pointer;
+        }
+        
+        .user-card-description
+        {
+            white-space: pre-line;
+        }
+    }
+
+    .user-card-buttons-col
+    {
+        margin-left:auto;
+        margin-right:0;
+    }
+
+    .user-card-buttons-col-xs
+    {
+        margin-left:auto;
+        margin-right:auto;
+    }
+
     .user-card-avatar-container
     {
         position: absolute 
+    }
+
+    .user-card-avatar-container-xs
+    {
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 65px; 
+        text-align: center;
     }
 
     .user-card-info-col
     {
         padding-top: 20px;
         padding-left: 130px;
+    } 
+
+    .user-card-info-col-xs
+    {
+        padding-top: 20px;
+
     } 
 }

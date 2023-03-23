@@ -1,11 +1,12 @@
 import { Col, Row } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
-import SignInForm from "../../sections/unauthorizedSections/SignInForm";
-import SignUpForm from "../../sections/unauthorizedSections/SignUpForm";
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "../../utils/consts";
-import './UnauthorizedPage.scss'
+import SignInForm from "../../components/UnauthorizedForms/SignInForm";
+import SignUpForm from "../../components/UnauthorizedForms/SignUpForm";
+
+import { REGISTRATION_ROUTE } from "../../utils/consts";
+import './UnauthorizedPage.scss';
 
 const animatedBackground = require('../../assets/unauthorized_animation.gif')
 

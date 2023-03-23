@@ -2,7 +2,7 @@
 import { GlobalOutlined, PictureOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Card, Col, Divider,Image, Input, List, notification, Popover, Radio, Row, Space, Tooltip, Typography, Upload, UploadFile, UploadProps } from "antd";
 import React, { useState } from "react";
-import PostFormImages from "../../components/ImageList/PostFormImages";
+import PostFormImages from "../ImageList/PostFormImages";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useCreateTweetMutation, useLazyGetOneTweetQuery } from "../../services/TweetApiSlice";
 import { appendPost, setPosts } from "../../store/slices/PostsSlice";
@@ -156,7 +156,7 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 													</Radio.Button>
 													<Radio.Button className='post-form-button-follow' value={false}>
 														<Space>
-															<TeamOutlined/> People you follow
+															<TeamOutlined/> Followers
 														</Space>
 													</Radio.Button>
 												</Radio.Group>
@@ -166,8 +166,9 @@ const PostForm: React.FC<PostFormProps> = ({})  =>
 										trigger="click"
 									>
 										{
-											postValues.isPublic ?<Button type="link" shape='circle'icon={<GlobalOutlined />}>Everyone</Button>:
-											 <Button type="link" shape='circle'icon={<TeamOutlined/>}>People you follow</Button>
+											postValues.isPublic ?
+											<Button type="link" shape='circle'icon={<GlobalOutlined />}>Everyone</Button>:
+											 <Button type="link" shape='circle'icon={<TeamOutlined/>}>Followers</Button>
 											
 										}
 									

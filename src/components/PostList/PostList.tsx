@@ -20,13 +20,10 @@ const PostList:React.FC<PostListProps> = ({lastItemRef,isFetching}) =>
         <List 
         className="post-list"
         split={false}
-        loading={isFetching}
         size={"small"}
         dataSource={posts || []}
         renderItem={(item:any) => (
             <List.Item key={item.id} className={'post-list-item'}>
-              <Skeleton loading={isFetching} active avatar>
-
                   {item.parentRecord && !item.isComment &&
                   <>      
                     <Typography.Text className={'post-action-note'} type={"secondary"}>
@@ -40,10 +37,11 @@ const PostList:React.FC<PostListProps> = ({lastItemRef,isFetching}) =>
                     </Typography.Text>
                   </>}
                   <PostItem post={item}/>
-              </Skeleton>
           </List.Item>)
         }/>
           <div ref={lastItemRef}></div>
+          <Skeleton loading={isFetching} paragraph={{rows:5}} title={true} active avatar>
+          </Skeleton>
       </>
     )
 

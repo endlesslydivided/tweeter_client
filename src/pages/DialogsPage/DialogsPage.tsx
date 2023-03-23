@@ -1,9 +1,8 @@
 
-import { MoreOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Card, Col, Input, Row, Space, theme } from "antd";
-import { useState } from "react";
-import DialogList from "../../sections/chatSections/DialogList";
-import SearchBar from "../../sections/exploreSections/SearchBar";
+import { MoreOutlined } from "@ant-design/icons";
+import { Button, Col, Input, Row, Space, theme } from "antd";
+import DialogList from "../../components/DialogList/DialogList";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import './DialogsPage.scss';
 
 const { useToken } = theme;
@@ -11,7 +10,7 @@ const { useToken } = theme;
 const DialogsPage = () => {
     
     const token = useToken();
-
+    const xs = useMediaQuery('(max-width:576px)');
     return (
         <div  className='dialogs-page-container'>
             <Row className='dialogs-page-row' >
@@ -21,7 +20,7 @@ const DialogsPage = () => {
                     xs={{span:24}} 
                     className='dialogs-col'>
                     
-                    <Space.Compact block className="dialogs-space">
+                    <Space.Compact block className={`dialogs-space ${xs ? 'xs-space-margin' : ''}`}>
                         <Input.Search 
                         enterButton={null}  
                         className='dialogs-search-bar-input' placeholder="Search" /> 
