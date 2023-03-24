@@ -1,3 +1,5 @@
+@import "../../variables";
+
 
 .setting-page-container
 {
@@ -22,6 +24,22 @@
         .ant-space
         {
             width: 100%;
+        }
+
+        
+        @media(min-width: $md) 
+        {
+            .settings-page-space
+            {
+                margin-bottom:0px;
+
+            }
+        }
+
+        .settings-page-space
+        {
+            margin-bottom:74px;
+
         }
     }
 

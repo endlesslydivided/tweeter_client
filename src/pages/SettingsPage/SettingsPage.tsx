@@ -60,7 +60,7 @@ const SettingsPage = () => {
                     }/>
                 </Col>
                 <Col md={{span:18}} xs={{span:24}} className='settings-page-general-col'>
-                    <Space direction="vertical" size={'middle'}>
+                    <Space direction="vertical" className="settings-page-space" size={'middle'}>
                         {renderContent()}
                     </Space>
                 

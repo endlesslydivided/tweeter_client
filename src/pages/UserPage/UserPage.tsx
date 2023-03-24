@@ -71,7 +71,6 @@ const UserPage = () => {
         switch(content)
         {
             case 'tweets':{return (<>
-                    <PostForm/> 
                     <ContentSection  
                     page={PAGES.USER_TWEETS}
                     params={{id:profile?.id}}

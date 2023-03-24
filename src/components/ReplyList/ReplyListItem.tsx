@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useDeletePost } from "../../hooks/useDeletePost";
 import { useLike } from "../../hooks/useLike";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import { useRetweet } from "../../hooks/useRetweet";
 import { decrementCommentLikes, decrementCommentRetweets, incrementCommentLikes, incrementCommentRetweets } from "../../store/slices/CommentsSlice";
 import { decrementPostComments, incrementPostComments } from "../../store/slices/PostsSlice";
@@ -27,6 +28,8 @@ const ReplyListItem:React.FC<ReplyListItemProps> = ({reply,parentComment,setRepl
 
     const hasMedia = reply.parentRecord?.tweetMedia?.length !== 0  || reply.tweetMedia?.length !== 0;
     const {page}:any = useContext(PostListContext);
+
+    const xs = useMediaQuery("(max-width:576px)");
 
     const {isLiked,onLikeClickHandler} = useLike({
         entity:reply,
@@ -94,7 +97,7 @@ const ReplyListItem:React.FC<ReplyListItemProps> = ({reply,parentComment,setRepl
                                 <Space direction='vertical' size={[0,0]} className="reply-content-space">
                                     <Space direction='horizontal' className="reply-meta-space">
                                         <Typography.Text  strong>{reply.author?.firstname + ' ' + reply.author?.surname}</Typography.Text> 
-                                        <Typography.Text style={{fontSize:'13px'}}  type="secondary">{fDateTime(reply.createdAt)}</Typography.Text>   
+                                        <Typography.Text style={{fontSize:'13px'}}  type="secondary">{xs ? fDateTime(reply.createdAt,'dd.MM.yy HH:mm') : fDateTime(reply.createdAt)}</Typography.Text>   
 
                                         <Dropdown menu={{ items }} arrow={false} placement={'bottom'}>
                                             <Button type="text" size="middle" shape="circle" >
@@ -120,7 +123,7 @@ const ReplyListItem:React.FC<ReplyListItemProps> = ({reply,parentComment,setRepl
                                 <Row gutter={[5,0]} justify='start'  className='reply-item-stats'>
                                     <Col>
                                         <Typography.Text className={`like-button  ${isLiked && 'active'}`} onClick={()=> onLikeClickHandler()} type="secondary" >
-                                            {isLiked ? <HeartFilled/> : <HeartOutlined/>} Like 
+                                            {isLiked ? <HeartFilled/> : <HeartOutlined/>} {xs ?  reply.counts.likesCount:'Like' }
                                         </Typography.Text>
                                     </Col>
 
@@ -130,7 +133,7 @@ const ReplyListItem:React.FC<ReplyListItemProps> = ({reply,parentComment,setRepl
 
                                     <Col>
                                         <Typography.Text className={`retweet-button ${isRetweeted && 'active'}`} onClick={()=> onRetweetClickHandler()}  type="secondary" >
-                                            <RetweetOutlined/> Retweet
+                                            <RetweetOutlined/> {xs ? reply.counts.retweetsCount:'Retweet' }
                                         </Typography.Text>
                                     </Col>
 
@@ -144,18 +147,25 @@ const ReplyListItem:React.FC<ReplyListItemProps> = ({reply,parentComment,setRepl
                                         </Typography.Text>
                                     </Col>
 
-                                    <Col> 
-                                        <Typography.Text type="secondary">•</Typography.Text>
-                                    </Col>
+                                    {!xs &&
 
-                                    <Col><Typography.Text className='reply-item-stats-likes' type="secondary">{reply.counts.likesCount} likes</Typography.Text></Col>
+                                    <>
+                                        <Col> 
+                                            <Typography.Text type="secondary">•</Typography.Text>
+                                        </Col>
+
+                                        <Col><Typography.Text className='reply-item-stats-likes' type="secondary">{reply.counts.likesCount} likes</Typography.Text></Col>
 
 
-                                    <Col> 
-                                        <Typography.Text type="secondary">•</Typography.Text>
-                                    </Col>
+                                        <Col> 
+                                            <Typography.Text type="secondary">•</Typography.Text>
+                                        </Col>
 
-                                    <Col><Typography.Text className='reply-item-stats-retweets' type="secondary">{reply.counts.retweetsCount} retweets</Typography.Text></Col>
+                                        <Col><Typography.Text className='reply-item-stats-retweets' type="secondary">{reply.counts.retweetsCount} retweets</Typography.Text></Col>
+                                    </>
+                                    }
+
+                                   
                                                             
                                 </Row> 
                             </Col>

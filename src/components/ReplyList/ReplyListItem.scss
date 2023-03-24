@@ -1,8 +1,25 @@
+@import '../../_variables.scss';
+
+
 .reply-item-card
 {
     width: 100%;
     border:none;
     display: flex;
+    background-color: transparent;
+    
+    @media(min-width: $md) 
+    {
+        &
+        {
+            padding: 5px 5px;
+
+        }
+    }
+
+    padding: 5px 0px;
+
+
     @keyframes activePosition {
         0%{
             margin-left: -30px;
@@ -41,7 +58,6 @@
         animation: activeBackground 3s ease-in-out  0s 1,activePosition 1s ease-in-out  0s 3;
     }
 
-    padding: 5px 5px;
 
 
     .ant-card-body

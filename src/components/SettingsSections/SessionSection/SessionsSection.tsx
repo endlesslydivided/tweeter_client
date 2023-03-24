@@ -3,6 +3,7 @@ import { UserOutlined, WindowsFilled } from "@ant-design/icons";
 import { Avatar, Button, Card, Form, List, notification, Space, Typography } from "antd";
 import Fingerprint2 from "fingerprintjs2";
 import { useState } from "react";
+import useMediaQuery from "../../../hooks/useMediaQuery";
 import { useNotify } from "../../../hooks/useNotify";
 import { useDeleteAllSessionsMutation, useDeleteSessionMutation, useGetSessionsQuery } from "../../../services/AuthApiSlice";
 import { fDateTime } from "../../../utils/formatTime";
@@ -17,13 +18,13 @@ interface SessionSectionProps
 const SessionSection: React.FC<SessionSectionProps> = ({})  =>
 {
     const [sessions,setSessions]:any = useState([]);
-    const [currentFingerpring,setCurrentFingerpring]:any = useState(null);
+    const [currentFingerprint,setCurrentFingerpring]:any = useState(null);
     const [modalOpen,setModalOpen]:any = useState(false);
 
     const sessionsResult = useGetSessionsQuery({});
     const [deleteAllSessions] = useDeleteAllSessionsMutation();
     const [deleteSession] = useDeleteSessionMutation();
-
+    const xs = useMediaQuery('(max-width:576px)')
     Fingerprint2.getV18( async (fingerprint, components) => {
         setCurrentFingerpring(fingerprint);
     }) 
@@ -68,13 +69,9 @@ const SessionSection: React.FC<SessionSectionProps> = ({})  =>
                         View and delete sessions
                     </Typography.Text>
                     
-                    <List className="session-list" dataSource={sessions} renderItem={(item:any) => 
+                    <List itemLayout={xs ? "vertical" :"horizontal"} className="session-list" dataSource={sessions} renderItem={(item:any) => 
                     (
-                        <List.Item key={item.id} actions={
-                            currentFingerpring !== item.fingerprint ?
-                            [<Button danger type={'primary'}  onClick={() => deleteSessionHandler(item.id)}>Delete session</Button>] : 
-                            [<Typography.Text>Current session</Typography.Text>]
-                        }>
+                        <List.Item key={item.id}>
                             <List.Item.Meta
                             avatar={<Avatar size={65} icon={item.userAgent.os.icon} />}
                             title={<div className='title'>
@@ -88,6 +85,10 @@ const SessionSection: React.FC<SessionSectionProps> = ({})  =>
                                 }
                             description={<Typography.Text>{fDateTime(item.createdAt)}</Typography.Text>}
                             />
+
+                            {currentFingerprint !== item.fingerprint ?
+                            <Button danger type={'primary'} block={xs}  onClick={() => deleteSessionHandler(item.id)}>Delete session</Button>: 
+                            <Typography.Text>Current session</Typography.Text>}
                         </List.Item>
                     )}/>
                     {

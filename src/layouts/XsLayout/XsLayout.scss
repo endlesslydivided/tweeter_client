@@ -87,6 +87,7 @@
         width:100vw;
         margin-top: 70px;
     }  
+    
 }
 
 .chat-layout
@@ -104,6 +105,8 @@
     .ant-layout-content
     {
         top: 64px;
+        margin-top: 0px;
+
         position: absolute;
     }
 }
