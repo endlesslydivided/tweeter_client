@@ -24,14 +24,15 @@ const PeopleListItem:React.FC<PeopleListItemProps> = ({entity,isFetching}) => {
 
 
     const listItemMeta = (item:any) => {return {
-    avatar:(<Avatar size={xs ? 40 : 80} shape={'circle'} icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + item?.mainPhoto?.path}/>),
+    avatar:(<Avatar size={xs ? 40 : 80} shape={'circle'} icon={<UserOutlined />} 
+                    src={ item?.mainPhoto? process.env.REACT_APP_BACK_SERVER + item?.mainPhoto?.path:null}/>),
     title:(<Link to={`${PROFILE_ROUTE}/${item.id}`}>{ item.firstname + ' ' + item.surname }</Link>),
     description:(`${item.country}, ${item.city}`)
     }}
 
     return (
         <List.Item   className={'people-list-item'}>
-            <Skeleton avatar title={false} loading={isFetching} active>
+            
                 <List.Item.Meta  {...listItemMeta(entity)}/>
                 <div style={{display:'flex', gap:'5px',flexDirection:'column'}}>
                     <Button 
@@ -48,7 +49,7 @@ const PeopleListItem:React.FC<PeopleListItemProps> = ({entity,isFetching}) => {
                     Send message
                     </Button>
                 </div>
-            </Skeleton>
+
         </List.Item>
     )
 }

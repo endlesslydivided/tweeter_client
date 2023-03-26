@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useCreateTweetMutation, useLazyGetOneTweetQuery } from "../../services/TweetApiSlice";
 import { appendComment } from "../../store/slices/CommentsSlice";
 import { incrementPostComments } from "../../store/slices/PostsSlice";
-import PostFormImages from "../ImageList/PostFormImages";
+import PostFormImages from "../MediaFormLists/MediaFormList";
 import './ReplyForm.scss';
 
 interface ReplyFormProps {

@@ -2,13 +2,13 @@ import { Col, Typography } from 'antd';
 import React from 'react'
 import useMediaQuery from '../../../hooks/useMediaQuery';
 
-interface PostItemCotnentProps
+interface PostStatsProps
 {
     post: any;
     isOriginalDeleted: boolean;
 }
 
-const PostItemStats:React.FC<PostItemCotnentProps> = ({post,isOriginalDeleted}) =>
+const PostStats:React.FC<PostStatsProps> = ({post,isOriginalDeleted}) =>
 {
     const xs = useMediaQuery('(max-width:576px)')
     return !isOriginalDeleted ?
@@ -38,4 +38,4 @@ const PostItemStats:React.FC<PostItemCotnentProps> = ({post,isOriginalDeleted}) 
   
 }
 
-export default PostItemStats
+export default PostStats

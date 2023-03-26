@@ -53,6 +53,14 @@ export const tweetsApiSlice = apiSlice.injectEndpoints({
                 params: filters
             })
         }),
+        getMediaTweets: builder.query({
+            query: ({filters}) => ({
+                url: `/tweets/media-tweets`,
+                method: 'GET',
+                credentials: 'include',
+                params: filters
+            })
+        }),
 
         getComments: builder.query({
             query: ({filters,id}) => ({
@@ -85,5 +93,6 @@ export const {
     useGetCommentsQuery,
     useLazyGetCommentsQuery,
     useGetTopTweetsQuery,
-    useGetRepliesQuery
+    useGetRepliesQuery,
+    useGetMediaTweetsQuery
 } = tweetsApiSlice;

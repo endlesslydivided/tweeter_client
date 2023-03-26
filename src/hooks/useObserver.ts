@@ -23,6 +23,7 @@ export const useObserver = ({ref, canLoad, isLoading, callback}:UseObserverParam
             }
         };
         observer.current = new IntersectionObserver(cb);
-        observer.current.observe(ref.current)
-    }, [isLoading,canLoad])
+        if(ref.current)
+            observer.current.observe(ref.current)
+    }, [isLoading,canLoad,ref])
 }

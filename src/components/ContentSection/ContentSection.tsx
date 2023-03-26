@@ -25,7 +25,8 @@ const ContentSection:React.FC<ContentSectionProps> = ({page,filtersProps,params,
 	const dispatch:any = useDispatch();
     const lastItemRef = useRef(null);
 
-	const {getContentResult,isMore,loadMoreHandler} = useCollection({
+
+	const {getContentResult,isMore,loadMoreHandler,setIninitialFilters} = useCollection({
 		entities:posts,
 		appendPage: appendPostPage,
 		getContentCB: fetchCB,
@@ -35,10 +36,15 @@ const ContentSection:React.FC<ContentSectionProps> = ({page,filtersProps,params,
 	})
     useObserver({ref:lastItemRef,canLoad:isMore,isLoading:getContentResult.isFetching,callback:loadMoreHandler});
 
+	
 	useEffect(() =>
 	{
-		dispatch(resetPosts());
-	},[])
+		return(() =>
+		{
+			dispatch(resetPosts());
+			setIninitialFilters();
+		})
+	},[page])
 
 	
     return (    

@@ -15,6 +15,7 @@ const io:any = require('socket.io-client');
 export enum ChatClientEvent 
 {
     SERVER_SENDS_MESSAGE = 'SERVER_SENDS_MESSAGE',
+    SERVER_SENDS_TWEET = 'SERVER_SENDS_TWEET',
     SERVER_SENDS_DIALOGS= 'SERVER_SENDS_DIALOGS',
     SERVER_SENDS_DIALOG_MESSAGES = 'SERVER_SENDS_DIALOG_MESSAGES',
     SERVER_RETURNS_MESSAGE = 'SERVER_RETURNS_MESSAGE',
@@ -24,11 +25,11 @@ export enum ChatClientEvent
 export enum ChatServerEvent 
 {
     CLIENT_SEND_MESSAGE = 'CLIENT_SEND_MESSAGE',
+    CLIENT_SEND_TWEET = 'CLIENT_SEND_TWEET',
     CLIENT_GET_DIALOG_MESSAGES = 'CLIENT_GET_DIALOG_MESSAGES',
     CLIENT_GET_DIALOGS = 'CLIENT_GET_DIALOGS',
     CLIENT_GET_DIALOG = 'CLIENT_GET_DIALOG',
 }
-
 interface SocketProviderProps
 {
     auth: any;
@@ -74,7 +75,46 @@ export const SocketProvider:React.FC<SocketProviderProps> = ({auth,children}) =>
             socket.on(ChatClientEvent.SERVER_SENDS_DIALOGS, (dialogs: any) => {
                 dispatch(appendDialogsPage(dialogs));
             });
-    
+
+            socket.on(ChatClientEvent.SERVER_SENDS_TWEET,async (data: any) => {
+                const {message, dialogId,user} = data;
+                if(!dialogs?.includes((d:any) => d.id === dialogId))
+                {
+                    const {data,error} = await getDialog({id:dialogId});
+                    if(data)
+                    {
+                        dispatch(pushDialog({dialog:data}));  
+                    }
+                    else
+                    {
+                        notification.error({message:'Some error occured',placement:'bottomLeft',duration:30})
+                    }
+                }
+                dispatch(pushMessage({dialogId,message,user}));
+                dispatch(swapDialog({dialogId}));
+                if(!window.location.pathname.match(CHAT_ROUTE))   
+                {
+                    api.destroy(dialogId);
+                    openNotification(
+                    {
+                        key:dialogId,
+                        message:(
+                            <Row gutter={[10,10]} style={{flexWrap:'nowrap',cursor:'pointer'}} onClick={() => {
+                                navigate(`${CHAT_ROUTE}/${dialogId}`)
+                                api.destroy(dialogId);
+                            }}>
+                                <Col style={{marginBottom:'auto',marginTop:'auto'}}>
+                                    <Avatar icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + user?.mainPhoto?.path} size={50} shape="circle" />
+                                </Col>
+                                <Col>
+                                    <Typography.Title level={5}>New message</Typography.Title>
+                                    <Typography.Text>{`${user.firstname} ${user.surname} sent you a tweet`}</Typography.Text>
+                                </Col>
+                            </Row>
+                        )
+                    })
+                }
+            });
     
             socket.on(ChatClientEvent.SERVER_SENDS_MESSAGE,async (data: any) => {
                 const {message, dialogId,user} = data;

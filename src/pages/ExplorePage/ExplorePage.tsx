@@ -1,11 +1,13 @@
 import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import ContentSection from "../../components/ContentSection/ContentSection";
 import PeopleList from "../../components/PeopleList";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { useGetAllTweetsQuery, useGetTopTweetsQuery } from "../../services/TweetApiSlice";
-import { useGetFeedQuery } from "../../services/UserTweetsApiSlice";
+import { useGetAllTweetsQuery, useGetMediaTweetsQuery, useGetTopTweetsQuery } from "../../services/TweetApiSlice";
+import { useGetFeedQuery, useGetMediaQuery } from "../../services/UserTweetsApiSlice";
+import { resetPosts } from "../../store/slices/PostsSlice";
 import { PAGES } from "../../utils/consts";
 import './ExplorePage.scss';
 
@@ -43,11 +45,12 @@ const items: MenuProps['items'] = [
 const ExplorePage = () => {
 
     const [content, setContent] = useState('top');
-
+    
     const renderPostsList = () => {
         switch(content)
         {
-            case 'top':{ return (
+            case 'top':{ 
+                return (
                     <ContentSection
                     filtersProps={{limit:15}}
                     page={PAGES.TOP_TWEETS}  
@@ -66,14 +69,16 @@ const ExplorePage = () => {
             case 'media':{ return (
                     <ContentSection
                     filtersProps={{limit:20}}
-                    page={PAGES.USER_FEED}  
-                    fetchCB={useGetFeedQuery} 
+                    page={PAGES.MEDIA_TWEETS}  
+                    fetchCB={useGetMediaTweetsQuery} 
                     errorMessage={'Server error occured during getting media'}/>
                 )};
         }
     }
 
     const xs = useMediaQuery('(max-width:576px)');
+
+
 
     return (
         <div className='explore-page-container'>

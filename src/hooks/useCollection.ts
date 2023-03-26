@@ -35,18 +35,22 @@ export const useCollection= ({entities,appendPage,getContentCB,getContentParams,
 
     const getContentResult = getContentCB({...getContentParams,filters},{refetchOnMountOrArgChange:false});
 
+    const setIninitialFilters = () =>
+    {
+        setIsMore(false);
+        setFilters((p:any) => {return {...initialFilters,...filtersProps}});
+    }
+
     const loadMoreHandler =  () =>
 	{
         setFilters((p:any) => {return {...p,createdAt: entities[entities?.length-1]?.createdAt }});
-		getContentResult.refetch();
 	}
 
     useEffect(()=>
     {
 		getContentResult.refetch();
-    },[])
-    
-
+    },[filters])
+  
 	useNotify(getContentResult,undefined,() => 
 	{
 		const {rows,count} = getContentResult.data;
@@ -65,7 +69,7 @@ export const useCollection= ({entities,appendPage,getContentCB,getContentParams,
 	},'Some error occured on server');
 
 
-    return {filters,isMore, setFilters,getContentResult,loadMoreHandler};
+    return {filters,isMore, setFilters,getContentResult,loadMoreHandler,initialFilters,setIninitialFilters};
 }
 
 

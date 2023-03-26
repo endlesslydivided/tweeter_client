@@ -17,6 +17,7 @@ import {
 } from "antd";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../../hooks/redux";
 import { useDeletePost } from "../../../hooks/useDeletePost";
 import {
     decrementPostRetweets,
@@ -28,8 +29,8 @@ import CommentsList from "../../CommentsList/CommentsList";
 import ReplyForm from "../../ReplyForm/ReplyForm";
 import PostActions from "../PostActions/PostActions";
 import "./PostItem.scss";
-import PostItemContent from "./PostItemContent";
-import PostItemStats from "./PostItemStats";
+import PostContent from "./PostContent";
+import PostStats from "./PostStats";
 
 interface PostItemProps {
   post: any;
@@ -39,6 +40,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
   const [isCommentOpen, setIsCommentOpen] = useState(false);
   const [replyPost, setReplyPost]: any = useState({ ...post });
   const navigate = useNavigate();
+  const currentUser = useAppSelector((state:any) => state.auth.user);
 
   const { onDeleteClickHandler, isDeleted, onRestoreClickHandler } =
     useDeletePost({
@@ -67,11 +69,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
   const deletedRender = (
     <Empty
       image={<StopOutlined size={200} />}
-      style={{
-        backgroundColor: "rgba(0,0,0,0.05)",
-        borderRadius: "5px",
-        padding: "15px",
-      }}
+      style={{ backgroundColor: "rgba(0,0,0,0.05)", borderRadius: "5px", padding: "15px",}}
       imageStyle={{ height: "100%" }}
       description={
         <Typography.Text>
@@ -94,23 +92,13 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
 
   const metaCardProps = {
     avatar: (
-      <Avatar
-        icon={<UserOutlined />}
-        src={
-          post?.author?.mainPhoto
-            ? process.env.REACT_APP_BACK_SERVER + post?.author?.mainPhoto?.path
-            : null
-        }
-        size={36}
-        shape="square"
+      <Avatar icon={<UserOutlined />} 
+      src={ post?.author?.mainPhoto ? process.env.REACT_APP_BACK_SERVER + post?.author?.mainPhoto?.path : null} 
+      size={36} shape="square"
       />
     ),
     title: (
-      <Typography.Text
-        className="post-item-card-title"
-        onClick={() => navigate(`${PROFILE_ROUTE}/${post.author.id}`)}
-        strong
-      >
+      <Typography.Text className="post-item-card-title" onClick={() => navigate(`${PROFILE_ROUTE}/${post.author.id}`)} strong >
         {post.author?.firstname + " " + post.author?.surname}
       </Typography.Text>
     ),
@@ -127,7 +115,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
     (!isCommentOpen ? "post-сomments-display-none" : "");
 
   return (
-    <Card className="post-item-card" extra={!isDeleted && extraRender}>
+    <Card className="post-item-card" extra={!isDeleted && post.authorId ===  currentUser.id && extraRender}>
       {isDeleted ? (
         deletedRender
       ) : (
@@ -135,10 +123,10 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
           <Link to={`${PROFILE_ROUTE}/${post.author.id}`}>
             <Card.Meta className="post-item-card-meta" {...metaCardProps} />
           </Link>
-          <PostItemContent post={post} isOriginalDeleted={isOriginalDeleted} />
+          <PostContent post={post} isOriginalDeleted={isOriginalDeleted} />
 
           <Row gutter={[10, 0]} justify="end" className="post-item-stats">
-            <PostItemStats post={post} isOriginalDeleted={isOriginalDeleted} />
+            <PostStats post={post} isOriginalDeleted={isOriginalDeleted} />
           </Row>
 
           <Divider type="horizontal" className={"stats-actions-divider"} />

@@ -29,6 +29,18 @@
     {
         width: 100%;
 
+        &.empty-filelist
+        {
+            & > .ant-space-item:nth-last-child(1)
+            {
+                display: none ;
+    
+               
+            }     
+        }
+        
+      
+
         .post-form-space
         {
             width: 100%;

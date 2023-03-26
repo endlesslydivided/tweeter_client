@@ -17,6 +17,7 @@ export const chatApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+        
                
     })
 })

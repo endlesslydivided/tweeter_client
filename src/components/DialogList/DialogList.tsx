@@ -79,7 +79,10 @@ const DialogList:React.FC<DialogListsProps> = ({}) =>
                                 </Typography.Text>
                             </div>
                         }
-                        description={<Typography.Text>{item.messages[0] ? item.messages[0]?.text:'No messages' }</Typography.Text>}
+                        description={
+                            <Typography.Text>
+                                {item.messages[0] ? item.messages[0].messageTweet ? 'User sent a tweet' : item.messages[0]?.text:'No messages' }
+                            </Typography.Text>}
                         />
                 </List.Item>
                 )}

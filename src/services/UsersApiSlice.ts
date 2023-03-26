@@ -5,9 +5,10 @@ import {apiSlice} from "./ApiSlice";
 export const usersSlice = apiSlice.injectEndpoints({
     endpoints: builder => ({
         getUsers: builder.query({
-            query: () => ({
+            query: ({filters}) => ({
                 url: '/users',
-                method: 'GET'
+                method: 'GET',
+                params:filters
             }),
         }),
         getUser: builder.query({

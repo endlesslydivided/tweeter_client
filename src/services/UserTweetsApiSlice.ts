@@ -52,6 +52,13 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
             providesTags: (result, error, arg) =>
             result && [...result.rows.map(({ id }:any ) => ({ type: 'Media', id }))]
         }),
+        getDialogs:builder.query({
+            query: ({id,filters}) => ({
+                url: `/users/${id}/dialogs`,
+                method: 'GET',
+                params: filters
+            })
+        }),
         getFeed: builder.query({
             query: ({id, filters}) => ({
                 url: `/users/${id}/feed`,
@@ -72,6 +79,6 @@ export const {
     useGetSavedTweetsQuery,
     useGetMediaQuery,
     useGetFeedQuery,
-   
+    useGetDialogsQuery
 
 } = userTweetsSlice;

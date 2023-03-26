@@ -1,0 +1,68 @@
+.message-post-item-card
+{
+    width: 100%;
+
+    .message-post-item-card-meta
+    {
+        .message-post-item-card-description
+        {
+            margin:0 !important;
+        }
+    }
+
+
+
+    .message-post-item-images-container 
+    {
+        margin-top: 10px;
+    }
+
+    .ant-card-head
+    {
+        position: absolute;
+        width:100%;
+        border-bottom: none;
+    }
+
+    .ant-card-body
+    {
+        padding: 24px 24px 12px 24px;
+    }
+
+    .ant-card-meta-title
+    {
+        margin-bottom: 0px !important;
+        margin-top: -5px !important;
+    }
+
+    .ant-card-meta-description
+    {
+        margin-top: -2px !important;
+    }
+
+  
+
+    .message-post-item-stats 
+    {
+        span
+        {
+            font-size: 12px;
+        }
+    }
+
+    .message-post-item-card-description
+    {
+        font-size: 12px;
+    }
+}
+
+.message-post-item-card-space
+{
+    width: 100%;
+
+    & > .ant-space-item:nth-last-child(1)
+    {
+        margin:-30px 0 -10px 0;
+    }
+}
+
