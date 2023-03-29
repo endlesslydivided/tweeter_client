@@ -1,7 +1,7 @@
 import { CloseOutlined, DeleteOutlined, FileOutlined } from '@ant-design/icons';
 import { List,Image, UploadFile, Button, Avatar } from 'antd';
 import {FC} from 'react';
-import './MediaLists.scss'
+import './MediaEntityLists.scss'
 
 interface IDocumentsEntityListProps {
     files: any[]
@@ -16,9 +16,13 @@ const DocumentsEntityList: FC<IDocumentsEntityListProps> = ({files}) => {
             grid={{xs: 24}}
             dataSource={files}
             renderItem={(item) => (
-            <List.Item className='document-list-item'>
-                <a href={process.env.REACT_APP_BACK_SERVER + item.path}>
-                    <List.Item.Meta title={item.originalName} avatar={<Avatar icon={<FileOutlined style={{color:'black',padding:'5px'}}/>} />}/>
+            <List.Item key={item.id} className='document-list-item'>
+                <a href={process.env.REACT_APP_BACK_SERVER + item.path} style={{width:'100%'}}>
+                    
+                    <List.Item.Meta title={
+                    <><Avatar className='document-list-item-avatar' size={"small"} icon={<FileOutlined style={{color:'black'}}/>} />
+                    {item.originalName}</>} 
+                    />
                 </a>
             </List.Item>
             )}

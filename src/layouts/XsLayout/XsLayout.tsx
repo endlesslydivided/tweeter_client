@@ -50,7 +50,7 @@ export default function XsLayout()
     const isChatPage = !!window.location.pathname.match(CHAT_ROUTE);
 
     return (
-        <Layout className={`xs-layout ${isChatPage? 'chat-layout' : ''}`}>  
+        <Layout className={`xs-layout ${isChatPage? '-xs-chat-layout' : ''}`}>  
          <Header>
                 <div onClick={() => navigate(PROFILE_ROUTE)} style={{cursor:'pointer'}}>
                     <Image preview={false} width={120} src={logo}/>

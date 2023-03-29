@@ -1,7 +1,7 @@
 import { Card, Col, Image, MenuProps, Modal, Row, Space, Typography } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import ContentSection from "../../components/ContentSection/ContentSection";
 import FollowersList from "../../components/FollowersList";
 import Loader from "../../components/Loader";
@@ -15,7 +15,7 @@ import { useGetUserFollowersQuery, useGetUserSubscriptionsQuery } from "../../se
 import { useGetUserQuery } from "../../services/UsersApiSlice";
 import { useGetLikedTweetsQuery, useGetMediaQuery, useGetTweetsAndRepliesQuery, useGetUserTweetsQuery } from "../../services/UserTweetsApiSlice";
 import { decrementFollowers, incrementFollowers, setUser } from "../../store/slices/UserSlice";
-import { PAGES } from "../../utils/consts";
+import { PAGES, PROFILE_ROUTE } from "../../utils/consts";
 import './UserPage.scss';
 
 const BgProfile = require('../../assets/abstractBG/colorfulWaves.jpg');
@@ -61,6 +61,7 @@ const UserPage = () => {
     const profile = useAppSelector((state:any) => state.user);
     const dispatch = useDispatch();
 
+    const currentUser:any = useAppSelector((state:any) => state.auth.user);
     const {id} = useParams();
     const getUserResult = useGetUserQuery({id});
 
@@ -101,6 +102,12 @@ const UserPage = () => {
         }
     }
     const xs = useMediaQuery('(max-width:576px)');
+
+    if(currentUser.id === id)
+    {
+        return <Navigate to={`${PROFILE_ROUTE}`}/>
+    }
+
     if(!profile)
     {
         return <Loader/>

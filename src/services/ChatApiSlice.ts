@@ -17,6 +17,23 @@ export const chatApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             }),
         }),
+
+        markFavoriteMessage: builder.mutation({
+            query: ({userId,messageId}) =>
+                ({
+                    url: `/users/${userId}/favorite-messages/${messageId}`,
+                    method: 'POST',
+                    credentials: 'include',
+                })
+        }),
+        unmarkFavoriteMessage: builder.mutation({
+            query: ({userId,messageId}) =>
+                ({
+                    url: `/users/${userId}/favorite-messages/${messageId}`,
+                    method: 'DELETE',
+                    credentials: 'include',
+                })
+        }),
         
                
     })
@@ -25,5 +42,7 @@ export const chatApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useCreateDialogMutation,
-    useLazyGetDialogQuery
+    useLazyGetDialogQuery,
+    useMarkFavoriteMessageMutation,
+    useUnmarkFavoriteMessageMutation
 } = chatApiSlice;

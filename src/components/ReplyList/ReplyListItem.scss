@@ -7,6 +7,11 @@
     border:none;
     display: flex;
     background-color: transparent;
+
+    .ant-list-item:hover
+    {
+        background: none;
+    }
     
     @media(min-width: $md) 
     {

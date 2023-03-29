@@ -19,13 +19,32 @@ export const messagesSlice: any = createSlice({
         newState[dialogId]= {entries:[],count:0};
       }
       newState[dialogId]['entries'] = newState[dialogId] ? [message, ...newState[dialogId]['entries']] :[message];
+      newState[dialogId]['count'] +=1;
       state.messages = newState;
       return state;
     },
     deleteMessage: (state: any, action) => {
       const { dialogId, messageId } = action.payload;
       const newState = {...state.messages};
-      newState[dialogId]['entries'] = [...newState[dialogId].filter((m: any) => m.id !== messageId)];
+      if(!newState[dialogId])
+      {
+        newState[dialogId]= {entries:[],count:0};
+      }
+      newState[dialogId]['entries'] = [...newState[dialogId]['entries'].filter((m: any) => m.id !== messageId)];
+      newState[dialogId]['count'] -=1;
+
+      state.messages = newState;
+      return state;
+    },
+    deleteMessages: (state: any, action) => {
+      const { dialogId, messagesIds } = action.payload;
+      const newState = {...state.messages};
+      if(!newState[dialogId])
+      {
+        newState[dialogId]= {entries:[],count:0};
+      }
+      newState[dialogId]['entries'] = [...newState[dialogId]['entries'].filter((m: any) => !messagesIds.some((id:any) => id === m.id))];
+      newState[dialogId]['count'] -= messagesIds.length;
       state.messages = newState;
       return state;
     },
@@ -78,7 +97,8 @@ export const {
     deleteMessage,
     appendMessagesPage,
     resetMessages,
-    setMessagesLoading
+    setMessagesLoading,
+    deleteMessages
 } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

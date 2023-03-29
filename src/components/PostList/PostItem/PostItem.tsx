@@ -7,7 +7,7 @@ import {
 import {
     Avatar,
     Button,
-    Card, Divider,
+    Card, ConfigProvider, Divider,
     Dropdown,
     Empty,
     MenuProps,
@@ -31,6 +31,7 @@ import PostActions from "../PostActions/PostActions";
 import "./PostItem.scss";
 import PostContent from "./PostContent";
 import PostStats from "./PostStats";
+import { emptyReplyListRender } from "../../EmptyListRender/EmptyListRender";
 
 interface PostItemProps {
   post: any;
@@ -154,9 +155,12 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
           <Divider type="horizontal" className={"form-comments-divider"} />
 
           <Row className={"comment-list-row"}>
-            {isCommentOpen && (
-              <CommentsList setReplyPost={setReplyPost} parentPost={post} />
-            )}
+              {isCommentOpen && (
+                <ConfigProvider renderEmpty={emptyReplyListRender}>
+                  <CommentsList setReplyPost={setReplyPost} parentPost={post} />
+                </ConfigProvider>
+
+              )}
           </Row>
         </Space>
       )}

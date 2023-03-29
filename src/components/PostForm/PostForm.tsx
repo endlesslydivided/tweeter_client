@@ -31,9 +31,9 @@ import {
 } from "../../services/TweetApiSlice";
 import { appendPost } from "../../store/slices/PostsSlice";
 import { fDataFormat } from "../../utils/uploadFormats";
-import AudioList from "../MediaFormLists/AudioFormList";
-import DocumentsList from "../MediaFormLists/DocumentsFormList";
-import MediaList from "../MediaFormLists/MediaFormList";
+import AudioFormList from "../MediaFormLists/AudioFormList";
+import DocumentsFormList from "../MediaFormLists/DocumentsFormList";
+import MediaFormList from "../MediaFormLists/MediaFormList";
 
 import "./PostForm.scss";
 
@@ -103,26 +103,15 @@ const PostForm: React.FC<PostFormProps> = ({}) => {
     },
     multiple: true,
     beforeUpload: (file, fileList) => {
-      if (10 - files.length < fileList.length) {
-        notification.error({
-          message: "Max files count: 10 files",
-          placement: "topRight",
-          duration: 2,
-        });
+      if (10 - files.length < fileList.length) 
+      {
+        notification.error({message: "Max files count: 10 files",placement: "topRight",duration: 2,});
         const filesToSet = fileList.splice(10 - files.length);
-        setFiles([
-          ...files,
-          ...filesToSet.map((file: any) => {
-            return { file, id: file.uid, type: fDataFormat(file.name) };
-          }),
-        ]);
-      } else {
-        setFiles([
-          ...files,
-          ...fileList.map((file: any) => {
-            return { file, id: file.uid, type: fDataFormat(file.name) };
-          }),
-        ]);
+        setFiles([...files,...filesToSet.map((file: any) => {return { file, id: file.uid, type: fDataFormat(file.name)}})]);
+      } 
+      else 
+      {
+        setFiles([...files,...fileList.map((file: any) => {return { file, id: file.uid, type: fDataFormat(file.name) };})]);
       }
 
       return false;
@@ -224,9 +213,9 @@ const PostForm: React.FC<PostFormProps> = ({}) => {
         </Row>
 
         <Row className="post-files-row">
-          <MediaList files={files.filter((i: any) => i.type === "video" || i.type === "image")} setFiles={setFiles}/>
-          <AudioList files={files.filter((i: any) => i.type === "audio")} setFiles={setFiles} />
-          <DocumentsList files={files.filter((i: any) => i.type === "document")} setFiles={setFiles} />
+          <MediaFormList files={files.filter((i: any) => i.type === "video" || i.type === "image")} setFiles={setFiles}/>
+          <AudioFormList files={files.filter((i: any) => i.type === "audio")} setFiles={setFiles} />
+          <DocumentsFormList files={files.filter((i: any) => i.type === "document")} setFiles={setFiles} />
         </Row>
       </Space>
     </Card>

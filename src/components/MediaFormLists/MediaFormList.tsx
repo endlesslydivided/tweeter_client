@@ -1,7 +1,7 @@
 import { CloseOutlined, DeleteOutlined } from '@ant-design/icons';
 import { List,Image, UploadFile, Button } from 'antd';
 import {FC} from 'react';
-import './MediaLists.scss'
+import './MediaFormLists.scss'
 
 interface IMediaFormListProps {
     files: any[]

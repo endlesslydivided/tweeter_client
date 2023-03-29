@@ -18,6 +18,8 @@ const RootElement = () =>
   return(
       <Provider store={store}>
       <ConfigProvider
+
+        
         theme={{
           algorithm: theme.defaultAlgorithm,
           token: {
@@ -32,10 +34,7 @@ const RootElement = () =>
             {
               colorBgHeader:'white',            
             },
-            Typography:
-            {
             
-            }
           }
         
         }}

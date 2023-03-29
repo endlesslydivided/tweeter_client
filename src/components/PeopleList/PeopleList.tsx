@@ -1,4 +1,4 @@
-import { Card, List, Skeleton, Space } from "antd";
+import { Card, ConfigProvider, List, Skeleton, Space } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "../../hooks/redux";
@@ -6,6 +6,7 @@ import { useCollection } from "../../hooks/useCollection";
 import { useObserver } from "../../hooks/useObserver";
 import { useGetUsersQuery } from "../../services/UsersApiSlice";
 import { appendUsersPage, resetUsers } from "../../store/slices/UsersSlice";
+import { emptyPeopleListRender } from "../EmptyListRender/EmptyListRender";
 import SearchBar from "../SearchBar/SearchBar";
 import PeopleFilters from "./PeopleFilters";
 import "./PeopleList.scss";
@@ -53,11 +54,14 @@ const PeopleList:React.FC<PeopleListProps> = ({}) =>
         <SearchBar search={filters.search} setSearch={setFilters}/>
         <PeopleFilters filters={filters} setFilters={setFilters} setInitialFilters={setIninitialFilters}/>     
         <Card className="people-list-card">
-          <List itemLayout="horizontal" className="people-list" split={true} size={"small"} dataSource={users}
+        <ConfigProvider renderEmpty={emptyPeopleListRender}>
+          <List itemLayout="horizontal" className={`people-list ${isFetching ? 'loading-list' : ''}`}  split={true} size={"small"} dataSource={users}
           renderItem={(item:any) => (<PeopleListItem entity={item} isFetching={isFetching}/>)}/>
+        </ConfigProvider>
           <div ref={lastItemRef}></div>
-          <Skeleton avatar title={false} loading={isFetching} active>
-            </Skeleton>
+          {
+            [...Array(3)].map((v:any,i:any) =><Skeleton avatar title={false} loading={isFetching} active/>)
+          }
         </Card>
       </Space>
     )

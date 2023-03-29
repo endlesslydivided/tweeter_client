@@ -9,6 +9,11 @@
     {
         width: 100%;
 
+        .ant-list-item:hover
+        {
+            background: rgba(152, 197, 215, 0.16) !important;
+        }
+
         .ant-list-item.people-list-item
         {
             .ant-list-item-meta

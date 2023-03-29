@@ -81,3 +81,33 @@ body
     format("truetype");
 }
 /*#endregion*/
+
+
+audio
+{
+  height: 30px;
+}
+
+audio::-webkit-media-controls-panel
+{
+    background-color: #fff;
+    color: #fff;
+    border-color: #fff;
+}
+
+
+.loading-list
+{
+    .ant-list-empty-text
+    {
+        display: none;
+    }
+
+    
+    
+    .ant-spin
+    {
+        display:none;
+    }
+    
+}

@@ -1,0 +1,19 @@
+.last-dialogs-list-card
+{
+    border-radius: 10px;
+    position: sticky;
+    .ant-card-body
+    {
+        padding:10px 5px;
+    }
+
+    .ant-list-item
+    {
+        padding:5px 10px 5px 10px;
+    }
+
+    .ant-list-item:hover
+    {
+        background: rgba(152, 197, 215, 0.16) !important;
+    }
+}

@@ -90,7 +90,7 @@
     
 }
 
-.chat-layout
+.xs-chat-layout
 {
     top: 0;
     bottom: 0;
@@ -104,10 +104,8 @@
 
     .ant-layout-content
     {
-        top: 64px;
-        margin-top: 0px;
-
-        position: absolute;
+        margin-top: 64px;
+        height: 100%;
     }
 }
 

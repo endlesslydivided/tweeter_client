@@ -1,17 +1,16 @@
 
 
-import { ArrowLeftOutlined, MailOutlined, PictureOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Button, Empty, Input, List, Skeleton, theme, Tooltip, Typography } from 'antd';
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import { ArrowLeftOutlined, CloseOutlined, DeleteFilled, UserOutlined } from '@ant-design/icons';
+import { Avatar, Button, Card, ConfigProvider, Typography } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Loader from '../Loader';
-import { ChatServerEvent, SocketContext } from '../SocketProvider/SocketProvider';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { useObserver } from '../../hooks/useObserver';
 import { setMessagesLoading } from '../../store/slices/MessagesSlice';
 import { CHAT_ROUTE, PROFILE_ROUTE } from '../../utils/consts';
-import { fDateTime } from '../../utils/formatTime';
-import './ChatWindow.scss'
+import { emptyMessagesListRender } from '../EmptyListRender/EmptyListRender';
+import Loader from '../Loader';
+import { ChatServerEvent, SocketContext } from '../SocketProvider/SocketProvider';
+import './ChatWindow.scss';
 import MessageForm from './MessageForm';
 import MessagesList from './MessageList/MessagesList';
 
@@ -44,11 +43,14 @@ const ChatWindow :React.FC<ChatWindowProps> = ({}) =>
 
     const [filters, setFilters] = useState({...initialFilters});
     const [dialog,setDialog]:any = useState(dialogs?.find((d:any) => d.id === id));
+    const [selectedMessages,setSelectedMessages] = useState([]);
+    const messages:any = useAppSelector((state:any) => state.messages);
 
     useEffect(()=>
     {
-        setDialog(dialogs?.find((d:any) => d.id === id));
-    },[dialogs])
+        const currentDialog = dialogs?.find((d:any) => d.id === id);
+        setDialog(currentDialog);
+    },[dialogs,id])
 
     useEffect(() =>
     {
@@ -63,42 +65,87 @@ const ChatWindow :React.FC<ChatWindowProps> = ({}) =>
         }     
     },[!!socket])
 
+    const deleteMessages =  () =>
+    {
+        const messagesIds = selectedMessages.map((m:any) => m.id);
+        socket.emit(ChatServerEvent.CLIENT_DELETE_MESSAGES,
+        {
+            toUserId:dialog?.users[0]?.id,
+            messagesIds,
+            dialogId:dialog.id,
+            auth:{id:user.id},
+        });
+        setSelectedMessages([]);
+    }
 
-    if(isLoading && !dialog)
+
+    if(isLoading && !dialog && dialog.id !== id)
     {
         return <Loader/>;
     }
  
     return( 
-    <div className="chat-window">
+        <>
+            <Card className="chat-window">
 
-        <section className="header">
+                <section className="header">
+                    <div className="cover-div">
 
-            <Button icon={<ArrowLeftOutlined/>} onClick={() => navigate(CHAT_ROUTE)} shape={'circle'} size={'large'} ghost ></Button>
-            
-            <Typography.Title 
-                type="secondary" 
-                level={3} 
-                onClick={() => navigate(`${PROFILE_ROUTE}/${dialog?.users[0]?.id}`)}>
-                    {`${dialog?.users[0]?.firstname} ${dialog?.users[0]?.surname}`}
-            </Typography.Title>
+                    </div>
+                    <div className='header-div'>
+                    {
+                        selectedMessages.length === 0 ?
+                        <>
+                            <Button icon={<ArrowLeftOutlined/>} onClick={() => navigate(CHAT_ROUTE)} shape={'circle'} size={'large'} ></Button>
+                        
+                            <Typography.Text 
+                                style={{fontSize:'15px',textAlign:'center'}}
+                                type="secondary" 
+                                onClick={() => navigate(`${PROFILE_ROUTE}/${dialog?.users[0]?.id}`)}>
+                                    {`${dialog?.users[0]?.firstname} ${dialog?.users[0]?.surname}`}
+                            </Typography.Text>
 
-            <Avatar onClick={() => 
-                navigate(`${PROFILE_ROUTE}/${dialog?.users[0]?.id}`)} 
-                size={45} 
-                src={ dialog?.users[0]?.mainPhoto?process.env.REACT_APP_BACK_SERVER + dialog?.users[0]?.mainPhoto?.path : null} 
-                icon={<UserOutlined/>} />
-        </section>
+                            <Avatar onClick={() => 
+                                navigate(`${PROFILE_ROUTE}/${dialog?.users[0]?.id}`)} 
+                                size={45} 
+                                src={ dialog?.users[0]?.mainPhoto?process.env.REACT_APP_BACK_SERVER + dialog?.users[0]?.mainPhoto?.path : null} 
+                                icon={<UserOutlined/>} />
+                        </>
+                        :
+                        <>
+                            <Button 
+                                type="text"  
+                                onClick={() => {setSelectedMessages([])}}
+                            > 
+                                <CloseOutlined/>
+                                {`${ selectedMessages.length === 1 ? `1 message is choosen`:   `${selectedMessages.length} messages are choosen`} `}
+                            </Button>
+                            <Button icon={<DeleteFilled/>} onClick={() => deleteMessages()} >Delete messages</Button>
 
-        <section className="messages-list">
-            <MessagesList filters={filters} setFilters={setFilters}/>
-        </section>
+                        </>
+
+                    }
+                    
+                    </div>
+                </section>
+
+                <section className={`messages-list ${messages?.messages[dialog.id]?.count <= 7 ? 'messages-list-empty-hight' : ''}`}>
+                <ConfigProvider renderEmpty={emptyMessagesListRender}>
+                    <MessagesList selectedMessages={selectedMessages} setSelectedMessages={setSelectedMessages} filters={filters} setFilters={setFilters}/>
+                </ConfigProvider>
+                </section>
 
 
-        <section className="message-form">
-            <MessageForm dialog={dialog}/>
-        </section>
-    </div>
+                <section className="message-form">
+                <div className="message-form-cover-div">
+
+                </div>
+                <div className='message-form-div'>
+                    <MessageForm dialog={dialog}/>
+                </div>
+                </section>
+            </Card>
+    </>
     )
 }
 

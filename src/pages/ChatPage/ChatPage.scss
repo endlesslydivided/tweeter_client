@@ -4,18 +4,29 @@
 
     .chat-page-row
     {
+        margin-left: 10px !important;
+        margin-right: 0px !important;
         .chat-page-col
         {
-
 
             height: 100%;
         }
         color:white;
         height: 100%;
-        .dialogs-col
+ 
+
+        .watched-dialogs-col
         {
-            border-radius: 0 25px 0 0;
-            margin: 15px 0 0 0;
+            padding-left: 10px;
+            .side-chat-menu
+            {
+                display: flex;
+                flex-direction: column;
+                gap:10px;
+
+                top:74px;
+                position:sticky;
+            }
         }
     }
 }

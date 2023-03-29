@@ -12,12 +12,14 @@ import MessageItem from './MessageItem';
 interface MessagesListProps
 {
     filters:any,
-    setFilters:Function
+    setFilters:Function,
+    setSelectedMessages:Function,
+    selectedMessages:any
 }
 
 
 
-const MessagesList:React.FC<MessagesListProps> = ({filters,setFilters}) => {
+const MessagesList:React.FC<MessagesListProps> = ({filters,setFilters,setSelectedMessages,selectedMessages}) => {
 
     const dispatch = useAppDispatch();
 
@@ -30,7 +32,6 @@ const MessagesList:React.FC<MessagesListProps> = ({filters,setFilters}) => {
     const messages:any = useAppSelector((state:any) => state.messages.messages[id]);
     const isLoading:any = useAppSelector((state:any) => state.messages.isLoading);
     const user = useAppSelector((state:any) => state.auth.user);
-
 
 
     const lastItemRef = useRef(null);
@@ -68,10 +69,10 @@ const MessagesList:React.FC<MessagesListProps> = ({filters,setFilters}) => {
     <>
         <div ref={lastItemRef}></div>
         <Skeleton avatar paragraph={{rows:2}} loading={isLoading}/>
-        <List itemLayout='horizontal' className="messages" dataSource={messages?.entries} split={false}        
+        <List size='small' itemLayout='horizontal' className="messages" dataSource={messages?.entries} split={false}        
             renderItem={(message:any) => 
             (
-                <MessageItem message={message} />
+                <MessageItem selectedMessages={selectedMessages} setSelectedMessages={setSelectedMessages} message={message} />
             )}      
         />
     </>

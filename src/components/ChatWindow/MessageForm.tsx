@@ -1,9 +1,12 @@
 import { PictureOutlined, SendOutlined } from '@ant-design/icons';
-import { Button, Input, notification, Tooltip, Upload, UploadProps } from 'antd';
-import React, { useContext, useState } from 'react';
+import { Button, Col, Input, notification, Row, Tooltip, Upload, UploadProps } from 'antd';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
-import PostFormImages from '../MediaFormLists/MediaFormList';
+import { fDataFormat } from '../../utils/uploadFormats';
+import AudioFormList from '../MediaFormLists/AudioFormList';
+import DocumentsFormList from '../MediaFormLists/DocumentsFormList';
+import MediaFormList from '../MediaFormLists/MediaFormList';
 import { ChatServerEvent, SocketContext } from '../SocketProvider/SocketProvider';
 import './ChatWindow.scss';
 
@@ -23,7 +26,7 @@ const MessageForm:React.FC<MessageFormProps> = ({dialog}) => {
     const socket:any = useContext(SocketContext);
     const user = useAppSelector((state:any) => state.auth.user);
     const [messageContent,setMessageContent]:any = useState(initialMessage)
-
+    const [keys,setKeys]:any = useState([]);
     const {id}:any = useParams();
 
     const [files, setFiles] : any = useState([]);
@@ -58,44 +61,98 @@ const MessageForm:React.FC<MessageFormProps> = ({dialog}) => {
         maxCount: 10,
         itemRender:(originNode:any, file:any) => { return <></>},
         multiple:true,
-        beforeUpload: (file:any,fileList:any) => {
-            if(fileList.length > 1)
-                setFiles([...files,...fileList]);
-            else
-                setFiles([...files,file]);
-
+        beforeUpload: (file, fileList) => {
+            if (10 - files.length < fileList.length) 
+            {
+              notification.error({message: "Max files count: 10 files",placement: "topRight",duration: 2,});
+              const filesToSet = fileList.splice(10 - files.length);
+              setFiles([...files,...filesToSet.map((file: any) => {return { file, id: file.uid, type: fDataFormat(file.name)}})]);
+            } 
+            else 
+            {
+              setFiles([...files,...fileList.map((file: any) => {return { file, id: file.uid, type: fDataFormat(file.name) };})]);
+            }
+      
             return false;
-        },
+          },
 	};
+
+    const onPressEnterHandler = (e:any) =>
+    {
+        e.preventDefault();
+        if(messageContent.text.length !== 0)
+        {
+            sendMessage() 
+        }
+        if(keys.includes("Control") && e.key === "Enter"){
+            setKeys([])
+            setMessageContent((p:any) => {return {...p,text: p.text + '\n'}})
+        }
+    }
+
+    useEffect(() =>
+    {
+        window.addEventListener("keydown",
+            (e) =>
+            {
+                setKeys([...keys,e.key])
+            },
+        false);
+
+        window.addEventListener('keyup',
+            (e) => 
+            {
+                setKeys(keys.filter((k:any) => k !== e.key));
+            },
+        false);
+
+        return () =>
+        {
+            window.removeEventListener('keyup', (e) =>
+            {
+                setKeys([...keys,e.key])
+            },);
+            window.removeEventListener('keydown', (e) => 
+            {
+                setKeys(keys.filter((k:any) => k !== e.key));
+            },);
+        }
+    },[])
 										
-
-
     
     return(
-        <>
-            <Input.TextArea 
-                value={messageContent.text}
-                onChange={(e:any) => setMessageContent((p:any) => {return {...p, text:e.target.value}})}
-                autoSize={{minRows:2,maxRows:4}}  
-                maxLength={2000} 
-                className='message-form-textarea' 
-                placeholder="Text a message..."
-            />
-            
-            <div className='message-form-tooltip-container'>
+        <Row style={{width:'100%'}} className="message-form-row">
+            <Col span={24} style={{display:'flex'}} className="message-form-input-col">
+                <Input.TextArea 
+                    onPressEnter={(e:any) => onPressEnterHandler(e)}
+                    value={messageContent.text}
+                    onChange={(e:any) => setMessageContent((p:any) => {return {...p, text:e.target.value}})}
+                    autoSize={{minRows:2,maxRows:4}}  
+                    maxLength={2000} 
+                    className='message-form-textarea' 
+                    placeholder="Text a message..."
+                />
+                
+                <div className='message-form-tooltip-container'>
 
-                <Tooltip  title="Add photo">
-                    <Upload {...props} fileList={files} accept="image/*">
-                        <Button type="link" shape='circle'  icon={<PictureOutlined />} />
-                    </Upload>
-                </Tooltip>
+                    <Tooltip  title="Add photo">
+                        <Upload {...props} fileList={files} accept="image/*">
+                            <Button type="link" shape='circle'  icon={<PictureOutlined />} />
+                        </Upload>
+                    </Tooltip>
 
-                <Button type="text" onClick={() => sendMessage()} icon={<SendOutlined />}/>
+                    <Button type="text" disabled={messageContent.text.length === 0} onClick={() => sendMessage()} icon={<SendOutlined />}/>
 
-            </div>
-            <PostFormImages files={files} setFiles={setFiles}/>
+                </div>
+            </Col>
+            <Col span={24} className="message-form-media-col">
+                <MediaFormList files={files.filter((i: any) => i.type === "video" || i.type === "image")} setFiles={setFiles}/>
+                <AudioFormList files={files.filter((i: any) => i.type === "audio")} setFiles={setFiles} />
+                <DocumentsFormList files={files.filter((i: any) => i.type === "document")} setFiles={setFiles} />
+            </Col>
+         
             <div id={'lastElement'}></div>
-        </>
+        </Row>
     )
 }
 

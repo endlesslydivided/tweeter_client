@@ -6,6 +6,10 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { useCreateTweetMutation, useLazyGetOneTweetQuery } from "../../services/TweetApiSlice";
 import { appendComment } from "../../store/slices/CommentsSlice";
 import { incrementPostComments } from "../../store/slices/PostsSlice";
+import { fDataFormat } from "../../utils/uploadFormats";
+import AudioFormList from "../MediaFormLists/AudioFormList";
+import DocumentsFormList from "../MediaFormLists/DocumentsFormList";
+import MediaFormList from "../MediaFormLists/MediaFormList";
 import PostFormImages from "../MediaFormLists/MediaFormList";
 import './ReplyForm.scss';
 
@@ -54,9 +58,10 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost,
 	const onCreatePostSubmit= async (e:any) =>  
 	{
 		const formData = new FormData();
-        files.forEach((file:any) => {
-            formData.append('files', file, file.name);
-        })
+		files.forEach((file: any) => {
+		  formData.append("files", file.file, file.file.name);
+		});
+	
 
         formData.append('text', postValues.text);
         formData.append('isComment', postValues.isComment.toString());
@@ -78,16 +83,23 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost,
 			notification.error({message:error.message,placement:'topRight',duration:2})
 		}
 	};
+
 	const props: UploadProps = {
 		name: 'file',
 		maxCount: 2,
 		itemRender:(originNode, file) => { return <></>},
 		multiple:true,
-		beforeUpload: (file,fileList) => {
-			if(fileList.length > 1)
-				setFiles([...files,...fileList]);
-			else
-				setFiles([...files,file]);
+		 beforeUpload: (file, fileList) => {
+			if (2 - files.length < fileList.length) 
+			{
+				notification.error({message: "Max files count: 2 files",placement: "topRight",duration: 2,});
+				const filesToSet = fileList.splice(2 - files.length);
+				setFiles([...files,...filesToSet.map((file: any) => {return { file, id: file.uid, type: fDataFormat(file.name)}})]);
+			} 
+			else 
+			{
+				setFiles([...files,...fileList.map((file: any) => {return { file, id: file.uid, type: fDataFormat(file.name) };})]);
+			}
 
 			return false;
 		},
@@ -147,8 +159,11 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost,
 
 				</Col>
 
-				<PostFormImages files={files} setFiles={setFiles}/>
-
+				<Col span={24}>
+					<MediaFormList files={files.filter((i: any) => i.type === "video" || i.type === "image")} setFiles={setFiles}/>
+					<AudioFormList files={files.filter((i: any) => i.type === "audio")} setFiles={setFiles} />
+					<DocumentsFormList files={files.filter((i: any) => i.type === "document")} setFiles={setFiles} />
+				</Col>
 			</Row>
 		</div>
     )

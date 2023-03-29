@@ -1,7 +1,8 @@
-import { Card, Col, MenuProps, Row, Space, Typography } from "antd";
+import { Card, Col, ConfigProvider, MenuProps, Row, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ContentSection from "../../components/ContentSection/ContentSection";
+import { emptyPostListRender } from "../../components/EmptyListRender/EmptyListRender";
 import PeopleList from "../../components/PeopleList";
 import VerticalSideMenu from "../../components/VerticalSideMenu/VerticalSideMenu";
 import useMediaQuery from "../../hooks/useMediaQuery";
@@ -50,28 +51,34 @@ const ExplorePage = () => {
         switch(content)
         {
             case 'top':{ 
-                return (
-                    <ContentSection
-                    filtersProps={{limit:15}}
-                    page={PAGES.TOP_TWEETS}  
-                    fetchCB={useGetTopTweetsQuery} 
-                    errorMessage={'Server error occured during getting top tweets'}/>
+                return (            
+                <ConfigProvider renderEmpty={emptyPostListRender}>      
+                        <ContentSection
+                        filtersProps={{limit:15}}
+                        page={PAGES.TOP_TWEETS}  
+                        fetchCB={useGetTopTweetsQuery} 
+                        errorMessage={'Server error occured during getting top tweets'}/>
+                </ConfigProvider>
                 )};
             case 'latest':{
                 return (
+                <ConfigProvider renderEmpty={emptyPostListRender}>      
                     <ContentSection
                     filtersProps={{limit:15}}
                     page={PAGES.LAST_TWEETS}  
                     fetchCB={useGetAllTweetsQuery} 
                     errorMessage={'Server error occured during getting latest tweets'}/>
+                </ConfigProvider>
                 )};
             case 'people':{ return <PeopleList/>};
             case 'media':{ return (
+                <ConfigProvider renderEmpty={emptyPostListRender}>      
                     <ContentSection
                     filtersProps={{limit:20}}
                     page={PAGES.MEDIA_TWEETS}  
                     fetchCB={useGetMediaTweetsQuery} 
                     errorMessage={'Server error occured during getting media'}/>
+                </ConfigProvider>
                 )};
         }
     }

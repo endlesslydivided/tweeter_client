@@ -10,7 +10,11 @@ import { decrementCommentLikes, decrementCommentRetweets, incrementCommentLikes,
 import { decrementPostComments, incrementPostComments } from "../../store/slices/PostsSlice";
 import { PAGES } from "../../utils/consts";
 import { fDateTime } from "../../utils/formatTime";
+import { fDataFormat } from "../../utils/uploadFormats";
 import { PostListContext } from "../AppRouter/AppRouter";
+import AudioEntityList from "../MediaEntitiesList/AudioEntityList";
+import DocumentsEntityList from "../MediaEntitiesList/DocumentsEntityList";
+import MediaEntityList from "../MediaEntitiesList/MediaEntityList";
 import "./ReplyListItem.scss";
 
 
@@ -111,12 +115,11 @@ const ReplyListItem:React.FC<ReplyListItemProps> = ({reply,parentComment,setRepl
                                     </Typography.Text>   
 
                                     <div className='reply-item-images-container'>
-                                        <Image.PreviewGroup >
-                                            {
-                                                reply.tweetMedia?.map((item:any) => <Image style={{padding:3}}
-                                                src={process.env.REACT_APP_BACK_SERVER + item?.path} alt={item.id}/>)
-                                            }         
-                                        </Image.PreviewGroup>
+
+                                        <MediaEntityList files={reply.tweetMedia?.filter((i:any) => fDataFormat(i.originalName)=== 'video' || fDataFormat(i.originalName) === 'image')}/>
+                                        <AudioEntityList files={reply.tweetMedia?.filter((i:any) => fDataFormat(i.originalName)=== 'audio')}/>
+                                        <DocumentsEntityList files={reply.tweetMedia?.filter((i:any) => fDataFormat(i.originalName)=== 'document')}/>
+
                                     </div>
                                 </Space>
 

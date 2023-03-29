@@ -1,6 +1,7 @@
-import { Card, Col, Image, MenuProps, Modal, Row, Space, Typography } from "antd";
+import { Card, Col, ConfigProvider, Image, MenuProps, Modal, Row, Space, Typography } from "antd";
 import { useState } from "react";
 import ContentSection from "../../components/ContentSection/ContentSection";
+import { emptyLikedListRender, emptyPostListRender } from "../../components/EmptyListRender/EmptyListRender";
 import FollowersList from "../../components/FollowersList";
 import PostForm from "../../components/PostForm/PostForm";
 import UserCard from "../../components/UserCard/UserCard";
@@ -62,32 +63,41 @@ const ProfilePage = () => {
         {
             case 'tweets':{return (<>
                     <PostForm/> 
-                    <ContentSection  
-                    page={PAGES.USER_TWEETS}
-                    params={{id:userState?.id}}
-                    fetchCB={useGetUserTweetsQuery} 
-                    errorMessage={'Server error occured during getting user tweets'}/>
+                    <ConfigProvider renderEmpty={emptyPostListRender}>      
+
+                        <ContentSection  
+                        page={PAGES.USER_TWEETS}
+                        params={{id:userState?.id}}
+                        fetchCB={useGetUserTweetsQuery} 
+                        errorMessage={'Server error occured during getting user tweets'}/>
+                    </ConfigProvider>      
                 </>)};
             case 'tweetsReplies':{return (
+                <ConfigProvider renderEmpty={emptyPostListRender}>      
                     <ContentSection
                     page={PAGES.USER_REPLIES}
                     params={{id:userState?.id}}
                     fetchCB={useGetTweetsAndRepliesQuery} 
                     errorMessage={'Server error occured during getting user tweets and replies'}/>
+                </ConfigProvider>
                 )};
             case 'media':{ return (
+                 <ConfigProvider renderEmpty={emptyPostListRender}>      
                     <ContentSection 
                     page={PAGES.USER_REPLIES}
                     params={{id:userState?.id}}
                     fetchCB={useGetMediaQuery} 
                     errorMessage={'Server error occured during getting user tweets and replies'}/>
+                </ConfigProvider>
                 )};
             case 'likes':{ return (
+                <ConfigProvider renderEmpty={emptyLikedListRender}>      
                     <ContentSection  
                     page={PAGES.USER_LIKES}
                     params={{id:userState?.id}}
                     fetchCB={useGetLikedTweetsQuery} 
                     errorMessage={'Server error occured during getting user liked tweets'}/>
+                </ConfigProvider>
                 )};
         }
     }

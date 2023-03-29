@@ -87,7 +87,6 @@
     top: 0;
     bottom: 0;
     height: 100%;
-    position: absolute;
     .ant-layout-header
     {
         position: fixed;
@@ -96,9 +95,9 @@
 
     .ant-layout-content
     {
-        top: 64px;
-        position: absolute;
+        margin-top:64px;
     }
+ 
 }
 
 #headerPopover

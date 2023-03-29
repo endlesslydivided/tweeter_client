@@ -12,7 +12,7 @@ export const useNotify = (result: any,successMessage?:string,successCB?:Function
 
         if (result.isError && !result.isFetching) 
         {   
-            const message = errorMessage || result.error.data.message;
+            const message = errorMessage || result.error?.data?.message;
             notification.error({message,placement:"topRight",duration:2.5});
             errorCB && errorCB();
         }

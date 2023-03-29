@@ -1,49 +1,75 @@
 .dialogs-page-container
 {
     height:100%;
-    overflow-y: hidden;
     overflow: hidden;
+    overflow-y: auto;
+
+
 
     .dialogs-page-row
     {
         color:white;
+        margin-top: 10px;
+        margin-left: 10px !important;
+        margin-right: 0px !important;
 
         .dialogs-col
         {
-            background:white;
-            border-radius:25px !important;
-            margin: 10px auto;
-
-            .dialogs-space
+            .dialogs-list-card
             {
-                padding: 10px;
-                box-shadow: 0 5px 5px -3px rgba(0,0,0,0.1);
-            }
-
-            .ant-input-group-wrapper
-            {
-                &.dialogs-search-bar-input
-                {              
-                    .ant-input
-                    {
-
-                        &:focus
+                height: 100%;
+                .ant-card-body
+                {
+                    padding:0px;
+                }
+                border-radius:10px !important;
+                .dialogs-space
+                {
+                    padding: 10px 0px 5px 0px;
+                    box-shadow: 0 5px 5px -3px rgba(0,0,0,0.1);
+                }
+    
+                .ant-input-group-wrapper
+                {
+                    &.dialogs-search-bar-input
+                    {              
+                        .ant-input
                         {
-                            box-shadow: none;
+    
+                            &:focus
+                            {
+                                box-shadow: none;
+                            }
+                            background: transparent;
+                            border: none;
                         }
-                        background: transparent;
-                        border: none;
-                    }
-
-                    .ant-input-group-addon
-                    {
-                        display: none;
-                    }
-                }         
+    
+                        .ant-input-group-addon
+                        {
+                            display: none;
+                        }
+                    }         
+                }
             }
+          
 
             
            
         }
+
+        .watched-dialogs-col
+        {
+            padding-left: 10px;
+            .side-chat-menu
+            {
+                display: flex;
+                flex-direction: column;
+                gap:10px;
+                top:10px;
+                position:sticky;
+            }
+        }
+
+       
     }
 }

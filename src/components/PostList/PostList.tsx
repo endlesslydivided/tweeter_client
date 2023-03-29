@@ -19,7 +19,7 @@ const PostList:React.FC<PostListProps> = ({lastItemRef,isFetching}) =>
     return (
       <>
         <List 
-        className="post-list"
+        className={`post-list ${isFetching ? 'loading-list' : ''}`}
         split={false}
         size={"small"}
         dataSource={posts || []}
@@ -44,8 +44,17 @@ const PostList:React.FC<PostListProps> = ({lastItemRef,isFetching}) =>
             </>
           )
         }/>
-          <Skeleton loading={isFetching} paragraph={{rows:5}} title={true} active avatar>
-          </Skeleton>
+        {   isFetching &&
+            [...Array(3)].map((v:any,i:any) =>
+            ( <>
+                <Skeleton style={{marginTop:'5px'}} loading={isFetching} paragraph={{rows:3}}  title={true} active avatar/>
+
+
+
+              </>
+            ))
+
+          }
       </>
     )
 

@@ -30,7 +30,8 @@
     }
 
     .dialogs-list
-    {
+    {    
+
         .title
         {
             display: flex;
@@ -41,6 +42,11 @@
         {
             cursor: pointer;
 
+        }
+
+        .ant-list-item:hover
+        {
+            background: rgba(152, 197, 215, 0.16) !important;
         }
 
         .ant-list-item:hover,

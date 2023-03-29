@@ -8,6 +8,7 @@ import userReducer from "./slices/UserSlice";
 import subscriptionsReducer from "./slices/SubscriptionsSlice";
 import dialogsReduce from "./slices/DialogsSlice";
 import messagesReducer from "./slices/MessagesSlice";
+import favoriteMessagesReducer from "./slices/FavoriteMessagesSlice";
 
 
 export const store = configureStore({
@@ -20,7 +21,9 @@ export const store = configureStore({
         user:userReducer,
         dialogs:dialogsReduce,
         messages:messagesReducer,
-        subscriptions: subscriptionsReducer
+        subscriptions: subscriptionsReducer,
+        favoriteMessages: favoriteMessagesReducer
+
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({serializableCheck: false}).concat(apiSlice.middleware),

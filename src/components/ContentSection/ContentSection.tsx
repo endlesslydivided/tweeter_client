@@ -49,7 +49,7 @@ const ContentSection:React.FC<ContentSectionProps> = ({page,filtersProps,params,
 	
     return (    
 		<PostListContext.Provider value={{page}} >
-        	<PostList isFetching={getContentResult.isFetching} lastItemRef={lastItemRef}/>
+        	<PostList isFetching={getContentResult.isFetching || getContentResult.isLoading} lastItemRef={lastItemRef}/>
 		</PostListContext.Provider>
 
     )

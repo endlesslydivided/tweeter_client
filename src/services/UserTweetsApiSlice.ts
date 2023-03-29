@@ -43,6 +43,15 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
             result && [...result.rows.map(({ id }:any ) => ({ type: 'SavedTweet', id }))]
         }),
 
+        getFavoriteMessages: builder.query({
+            query: ({id, filters}) => ({
+                url: `/users/${id}/favorite-messages`,
+                method: `GET`,
+                params: filters
+            })
+        }),
+
+
         getMedia: builder.query({
             query: ({id, filters}) => ({
                 url: `/users/${id}/media`,
@@ -67,7 +76,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
             }),
             providesTags: (result, error, arg) =>
                 result &&[...result.rows.map(({id}: any) => ({type: 'Feed', id})), 'Feed']
-        }),
+        })
     })
 })
 
@@ -79,6 +88,6 @@ export const {
     useGetSavedTweetsQuery,
     useGetMediaQuery,
     useGetFeedQuery,
-    useGetDialogsQuery
-
+    useGetDialogsQuery,
+    useGetFavoriteMessagesQuery
 } = userTweetsSlice;

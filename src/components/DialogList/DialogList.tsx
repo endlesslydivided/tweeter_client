@@ -8,6 +8,8 @@ import { useObserver } from '../../hooks/useObserver';
 import { CHAT_ROUTE } from '../../utils/consts';
 import { fDateTime } from '../../utils/formatTime';
 import './DialogList.scss'
+import { useDispatch } from 'react-redux';
+import { addWatchedDialog } from '../../store/slices/DialogsSlice';
 
 interface DialogListsProps
 {
@@ -29,6 +31,7 @@ const DialogList:React.FC<DialogListsProps> = ({}) =>
     const socket:any = useContext(SocketContext);
     const dialogs = useAppSelector((state:any) => state.dialogs);
     const user = useAppSelector((state:any) => state.auth.user);
+    const dispatch = useDispatch();
 
     const [filters, setFilters] = useState({...initialFilters});
     const [isMore,setIsMore] = useState(false);
@@ -65,7 +68,12 @@ const DialogList:React.FC<DialogListsProps> = ({}) =>
         <Space direction="vertical" size='small' className='dialog-space'>
             <List className="dialogs-list" dataSource={dialogs.dialogs || []} loading={isLoading}
                 renderItem={(item:any) => (
-                    <List.Item key={item.id} onClick={(e) => navigate(`${CHAT_ROUTE}/${item.id}`)}>
+                    <>
+                    <List.Item key={item.id} onClick={(e) => 
+                        {
+                            dispatch(addWatchedDialog(item));
+                            navigate(`${CHAT_ROUTE}/${item.id}`);
+                        }}>
                         <List.Item.Meta
                         avatar={<Avatar size={45} icon={<UserOutlined/>} />}
                         title=
@@ -84,7 +92,9 @@ const DialogList:React.FC<DialogListsProps> = ({}) =>
                                 {item.messages[0] ? item.messages[0].messageTweet ? 'User sent a tweet' : item.messages[0]?.text:'No messages' }
                             </Typography.Text>}
                         />
-                </List.Item>
+                    </List.Item>
+                    
+                    </>
                 )}
             />
             <div ref={lastItemRef}></div>

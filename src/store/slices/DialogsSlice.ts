@@ -2,9 +2,24 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 export const dialogsSlice: any = createSlice({
-  initialState: {dialogs:<any>[],count: 0},
+  initialState: {dialogs:<any>[],count: 0,watchedDialogs:<any>[]},
   name: "dialogsSlice",
   reducers: {
+    addWatchedDialog: (state:any,action:any) =>
+    {
+      const data = action.payload;
+      let newState = [...state.watchedDialogs];
+      const retrievedEntries = newState.filter((d:any) => d.id !== data.id);
+
+      state.watchedDialogs = [data,...retrievedEntries];
+      return state;
+    },
+    removeWatchedDialog: (state:any,action:any) =>
+    {
+      const {id} = action.payload;
+      state.watchedDialogs = state.watchedDialogs.filter((d:any) => d.id !== id);
+      return state;
+    },
     appendDialogsPage:(state:any,action:any) =>
     {
       const {rows,count} = action.payload;
@@ -70,7 +85,7 @@ export const dialogsSlice: any = createSlice({
       return state;
     },
     
-    resetDialogs: () => {return {dialogs:<any>[], count: 0}},
+    resetDialogs: () => {return {dialogs:<any>[], count: 0,watchedDialogs:<any>[]}},
   },
 });
 
@@ -82,7 +97,9 @@ export const {
   incrementIncomeMessages,
   decrementIncomeMessages,
   swapDialog,
-  resetDialogs
+  resetDialogs,
+  addWatchedDialog,
+  removeWatchedDialog
 
 } = dialogsSlice.actions;
 

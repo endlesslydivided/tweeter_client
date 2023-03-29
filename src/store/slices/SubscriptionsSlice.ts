@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
-export const SubscriptionsSlice: any = createSlice({
+export const subscriptionsSlice: any = createSlice({
   initialState: <any>[],
   name: "subscriptionSlice",
   reducers: {
@@ -19,6 +19,6 @@ export const {
   appendPage:appendSubscriptionsPage,
   reset:resetSubscriptions
 
-} = SubscriptionsSlice.actions;
+} = subscriptionsSlice.actions;
 
-export default SubscriptionsSlice.reducer;
+export default subscriptionsSlice.reducer;

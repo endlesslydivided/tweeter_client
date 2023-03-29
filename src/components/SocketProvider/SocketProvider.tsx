@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 import { useLazyGetDialogQuery } from '../../services/ChatApiSlice';
 import { appendDialogsPage, pushDialog, swapDialog } from '../../store/slices/DialogsSlice';
-import { appendMessagesPage, pushMessage, setMessagesLoading } from '../../store/slices/MessagesSlice';
+import { appendMessagesPage, deleteMessages, pushMessage, setMessagesLoading } from '../../store/slices/MessagesSlice';
 import { CHAT_ROUTE } from '../../utils/consts';
 import './SocketProvider.scss'
 
@@ -20,6 +20,7 @@ export enum ChatClientEvent
     SERVER_SENDS_DIALOG_MESSAGES = 'SERVER_SENDS_DIALOG_MESSAGES',
     SERVER_RETURNS_MESSAGE = 'SERVER_RETURNS_MESSAGE',
     SERVER_SENDS_DIALOG = 'SERVER_SENDS_DIALOG',
+    SERVER_SENDS_DELETED_MESSAGES = 'SERVER_SENDS_DELETED_MESSAGES',
 }
 
 export enum ChatServerEvent 
@@ -29,6 +30,7 @@ export enum ChatServerEvent
     CLIENT_GET_DIALOG_MESSAGES = 'CLIENT_GET_DIALOG_MESSAGES',
     CLIENT_GET_DIALOGS = 'CLIENT_GET_DIALOGS',
     CLIENT_GET_DIALOG = 'CLIENT_GET_DIALOG',
+    CLIENT_DELETE_MESSAGES = 'CLIENT_DELETE_MESSAGES',
 }
 interface SocketProviderProps
 {
@@ -74,6 +76,10 @@ export const SocketProvider:React.FC<SocketProviderProps> = ({auth,children}) =>
         {
             socket.on(ChatClientEvent.SERVER_SENDS_DIALOGS, (dialogs: any) => {
                 dispatch(appendDialogsPage(dialogs));
+            });
+
+            socket.on(ChatClientEvent.SERVER_SENDS_DELETED_MESSAGES, (message: any) => {
+                dispatch(deleteMessages({messagesIds:message.messagesIds,dialogId:message.dialogId}));
             });
 
             socket.on(ChatClientEvent.SERVER_SENDS_TWEET,async (data: any) => {

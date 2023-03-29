@@ -3,31 +3,60 @@
 {
     height:100%;
     width:100%;
+    border-radius: 10px;
+    position: sticky;
+    top: 0;
+    margin-top: 10px;
+    .ant-card-body
+    {
+        padding:0px;
+
+    }
     display: flex;
     flex-direction: column;
     
     .header
     {
-        top: 64px;
+        top: 74px;
         position: sticky;
         z-index: 1;
-        width: 100%;
-        background-color: #2f80ed;
-        display: flex;
-        align-items: center;
-        box-Shadow:10px 5px 10px 0 rgba(0,0,0,0.1);
-        justify-content: space-between;
-        padding: 10px 20px 10px 30px;
+        .cover-div
+        {
+            width: 100%;
+            position: absolute;
+            background: #f2f2f2;
+            height: 33px;
+            top: -12px;
+            z-index: -1;
+        }
+        .header-div
+        {
+            z-index: 1;
+            width: 100%;
+            height: 75px;
+            border-radius: 10px 10px 0px 0px;
+            display: flex;
+            align-items: center;
+            background:white;
+            box-Shadow:0px 8px 20px 0 rgba(0,0,0,0.05);
+            justify-content: space-between;
+            padding: 10px 20px 10px 30px;
+        }
 
         .ant-typography
         {
             margin:0;
-
+            
         }
     }
 
     .messages-list
     {
+
+        &.messages-list-empty-hight
+        {
+            height: 75vh !important;
+        }
 
         .messages,
         .messages .ant-spin-container,
@@ -40,14 +69,50 @@
 
         .messages 
         {
+            .message.selected-message
+            {
+                background-color: rgba(45, 156, 219, 0.2);
+            }
+
             .ant-list-items
             {
                 display: flex;
                 flex-direction: column-reverse;
             }
 
+            .ant-list-item:hover
+            {
+                background: rgba(152, 197, 215, 0.16) !important;
+            }
+
             .ant-list-item
             {
+                .favorite-button
+                {
+                    color:transparent;
+                    background-color: transparent;
+                }
+
+                &:hover
+                {
+                    .favorite-button
+                    {
+                        color: rgba(0, 0,0, 0.5);
+
+                    }
+                }
+                .active
+                {
+                    &.favorite-button
+                    {
+                        color: rgba(45, 156, 219, 1);
+                        &:hover
+                        {
+                            background-color: rgba(45, 156, 219, 0.1);
+                        }
+                    }
+
+                }
                 .ant-typography.ant-typography-secondary
                 {
                     margin:10px;
@@ -58,33 +123,60 @@
 
     .message-form
     {
-        bottom: 0;
+        bottom: 10px;
         right: 0;
-        display: flex;
-        box-shadow:10px 0px 10px 0 rgba(0,0,0,0.1);
-        background-color: #ffffff;
         position: sticky;
-        .message-form-textarea
+        .message-form-cover-div
         {
-            resize: none;
-            padding-right: 0;
-            border:none !important;
-            box-shadow: none !important;
-            background: none;
+            width: 100%;
+            position: absolute;
+            background: #f2f2f2;
+            height: 33px;
+            bottom: -10px;
+            z-index: -1;
         }
-
-        .message-form-tooltip-container
+        .message-form-div
         {
-            display:flex;
-            align-items:center;
-            margin:0 10px 0 10px;
-            width:auto;
+           border-radius: 0px 0px 10px 10px;
+            display: flex;
+            box-shadow:10px 0px 10px 0 rgba(0,0,0,0.1);
+            background-color: #ffffff;            
+            margin-bottom: -10px;
 
-            .ant-button
+            .message-form-row
             {
-                margin-left: auto;
+                .message-form-input-col
+                {
+                    .message-form-textarea
+                    {
+                        resize: none;
+                        padding-right: 0;
+                        border:none !important;
+                        box-shadow: none !important;
+                        background: none;
+                    }
+            
+                    .message-form-tooltip-container
+                    {
+                        display:flex;
+                        align-items:center;
+                        margin:0 10px 0 10px;
+                        width:auto;
+            
+                        .ant-button
+                        {
+                            margin-left: auto;
+                        }
+                    }
+                }
+                .message-form-media-col
+                {
+                    padding:0px 5px;
+                }
             }
+            
         }
+        
     } 
 }
 
