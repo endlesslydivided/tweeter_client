@@ -23,14 +23,15 @@ const MediaFormList: FC<IMediaFormListProps> = ({files, setFiles}) => {
                     item.type === "image" ?
                     <Image src={URL.createObjectURL(item.file)}/> :
                     item.type === "video"
-                    && <video controls src={URL.createObjectURL(item.file)}/>
+                    && <video controls preload="false" src={URL.createObjectURL(item.file)}/>
 
                 }
                 <Button 
                     icon={<CloseOutlined/>} 
-                    danger block
+                    ghost type="link" 
+                    className="delete-media-button"
                     onClick={() => setFiles((p:any) => p.filter((x:any) => item.id !== x.id) || [])}
-                    type='primary'/>
+                    />
             </List.Item>
             )}
         />

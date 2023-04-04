@@ -57,6 +57,20 @@ video
 {
     .media-form-list-item
     {
+
+        .delete-media-button
+        {
+            position:absolute;
+            right: 25px;
+            border-radius: 0px;
+            color: rgba(0,0,0,0.2);
+
+            &:hover
+            {
+                background: rgba(0,0,0,0.1);
+                color:red;
+            }
+        }
         .ant-button
         {
             z-index: 1;

@@ -8,9 +8,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 url: `/users/${id}/tweets`,
                 method: `GET`,
                 params: filters
-            }),
-            providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'UserTweet', id })),'UserTweet']
+            })
         }),
         
         
@@ -19,9 +17,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 url: `/users/${id}/tweets-replies`,
                 method: `GET`,
                 params: filters
-            }),
-            providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'TweetAndReply', id }))]
+            })
         }),
 
         getLikedTweets: builder.query({
@@ -29,18 +25,14 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 url: `/users/${id}/likedTweets`,
                 method: `GET`,
                 params: filters
-            }),
-            providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'LikedTweet', id }))]
+            })
         }),
         getSavedTweets: builder.query({
             query: ({id, filters}) => ({
                 url: `/users/${id}/savedTweets`,
                 method: `GET`,
                 params: filters
-            }),
-            providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'SavedTweet', id }))]
+            })
         }),
 
         getFavoriteMessages: builder.query({
@@ -57,9 +49,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 url: `/users/${id}/media`,
                 method: `GET`,
                 params: filters
-            }),
-            providesTags: (result, error, arg) =>
-            result && [...result.rows.map(({ id }:any ) => ({ type: 'Media', id }))]
+            })
         }),
         getDialogs:builder.query({
             query: ({id,filters}) => ({
@@ -73,9 +63,7 @@ export const userTweetsSlice = apiSlice.injectEndpoints({
                 url: `/users/${id}/feed`,
                 method: `GET`,
                 params: filters
-            }),
-            providesTags: (result, error, arg) =>
-                result &&[...result.rows.map(({id}: any) => ({type: 'Feed', id})), 'Feed']
+            })
         })
     })
 })

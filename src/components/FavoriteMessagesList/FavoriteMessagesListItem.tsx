@@ -7,6 +7,10 @@ import { useUnmarkFavoriteMessageMutation } from '../../services/ChatApiSlice';
 import { removeFavoriteMessage } from '../../store/slices/FavoriteMessagesSlice';
 import { fDateTime } from '../../utils/formatTime';
 import MessagePost from '../ChatWindow/MessagePost/MessagePost';
+import MediaEntityList from '../MediaEntitiesList/MediaEntityList';
+import AudioEntityList from '../MediaEntitiesList/AudioEntityList';
+import DocumentsEntityList from '../MediaEntitiesList/DocumentsEntityList';
+import { fDataFormat } from '../../utils/uploadFormats';
 
 
 interface FavoriteMessageListItemProps
@@ -28,7 +32,7 @@ const FavoriteMessageListItem:React.FC<FavoriteMessageListItemProps> = ({message
       
     return (  
         <List.Item 
-            className={`message selected-message`}
+            className={`message`}
             extra=
             {
                 <Button type='text' 
@@ -50,11 +54,21 @@ const FavoriteMessageListItem:React.FC<FavoriteMessageListItemProps> = ({message
                     <Typography.Text type="secondary" >{fDateTime(message.createdAt)}</Typography.Text>
                 </>
             }
-            description={           
-                    message.messageTweet ?
-                    <MessagePost post={message.messageTweet}/>
-                    :<Typography.Text>{message.text}</Typography.Text>              
-                }
+            description={
+                
+                message.messageTweet ?
+                <MessagePost post={message.messageTweet}/>
+                :<>
+                    <Typography.Text>{message.text}</Typography.Text>
+                    <div>
+                        <MediaEntityList files={message.messageMedia.filter((i:any) => fDataFormat(i.originalName)=== 'video' || fDataFormat(i.originalName) === 'image')}/>
+                        <AudioEntityList files={message.messageMedia.filter((i:any) => fDataFormat(i.originalName)=== 'audio')}/>
+                        <DocumentsEntityList files={message.messageMedia.filter((i:any) => fDataFormat(i.originalName)=== 'document')}/>
+
+                    </div>
+                </>
+            
+            }
             />
             
         </List.Item>

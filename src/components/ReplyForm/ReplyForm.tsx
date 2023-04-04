@@ -1,5 +1,5 @@
 
-import { CloseOutlined, PictureOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
+import { CloseOutlined, FileOutlined, FileTwoTone, PictureOutlined, SendOutlined, UserOutlined } from "@ant-design/icons";
 import { Avatar, Button, Col, Input, notification, Row, Space, Tooltip, Typography, Upload, UploadProps } from "antd";
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
@@ -141,9 +141,9 @@ const ReplyForm: React.FC<ReplyFormProps> = ({parentPost,setReplyPost,replyPost,
 
 						<div className='reply-form-textarea-content'>
 
-								<Tooltip  title="Add photo">
-									<Upload {...props} fileList={files} accept="image/*" disabled = {disabled}>
-										<Button type="text" shape='circle'  icon={<PictureOutlined />} />
+								<Tooltip  title="Add file">
+									<Upload {...props} fileList={files} disabled = {disabled}>
+										<Button type="text" shape='circle'  icon={<FileTwoTone />} />
 									</Upload>
 								</Tooltip>									
 

@@ -6,6 +6,10 @@ import '../ChatWindow.scss';
 import { useFavorite } from '../../../hooks/useFavorite';
 import { removeFavoriteMessage } from '../../../store/slices/FavoriteMessagesSlice';
 import { useState } from 'react';
+import MediaEntityList from '../../MediaEntitiesList/MediaEntityList';
+import { fDataFormat } from '../../../utils/uploadFormats';
+import AudioEntityList from '../../MediaEntitiesList/AudioEntityList';
+import DocumentsEntityList from '../../MediaEntitiesList/DocumentsEntityList';
 
 
 interface MessageItemProps
@@ -36,6 +40,7 @@ const MessageItem:React.FC<MessageItemProps> = ({message,selectedMessages,setSel
             return[...p,message];
         })
     }
+    
       
     return (  
         <List.Item 
@@ -66,7 +71,15 @@ const MessageItem:React.FC<MessageItemProps> = ({message,selectedMessages,setSel
                 
                     message.messageTweet ?
                     <MessagePost post={message.messageTweet}/>
-                    :<Typography.Text>{message.text}</Typography.Text>
+                    :<>
+                        <Typography.Text>{message.text}</Typography.Text>
+                        <div>
+                            <MediaEntityList files={message.messageMedia.filter((i:any) => fDataFormat(i.originalName)=== 'video' || fDataFormat(i.originalName) === 'image')}/>
+                            <AudioEntityList files={message.messageMedia.filter((i:any) => fDataFormat(i.originalName)=== 'audio')}/>
+                            <DocumentsEntityList files={message.messageMedia.filter((i:any) => fDataFormat(i.originalName)=== 'document')}/>
+
+                        </div>
+                    </>
                 
                 }
             />

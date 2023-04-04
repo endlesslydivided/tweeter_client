@@ -14,7 +14,7 @@ interface FollowersListItemProps
 
 const listItemMeta = (item:any) => {return {
     avatar:(<Avatar size={40} shape={'square'} icon={<UserOutlined />} src={process.env.REACT_APP_BACK_SERVER + item?.mainPhoto?.path}/>),
-    title:(<Link to={`${PROFILE_ROUTE}/${item.id}`}>{item.surname + ' ' + item.firstname }</Link>),
+    title:(<Link to={`${PROFILE_ROUTE}/${item.id}`}>{item.firstname   + ' ' + item.surname}</Link>),
     description:(`${item.counts.followersCount} followers`)
   }}
 
@@ -31,7 +31,7 @@ const FollowersListItem:React.FC<FollowersListItemProps> = ({entity,isFetching})
             onClick={() => isSubscribed ? onDeleteClickHandler() : onCreateClickHandler()}
             type={isSubscribed ? "primary" : "default"} 
             icon={isSubscribed ? <CheckOutlined/> :<UserAddOutlined/>}>
-            Follow
+            {isSubscribed ? 'Unfollow' : 'Follow'}
         </Button>
     ]
     

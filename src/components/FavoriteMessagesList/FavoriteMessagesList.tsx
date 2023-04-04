@@ -47,7 +47,7 @@ const FavoriteMessagesList:React.FC<FavoriteMessagesListProps> = ({}) =>
         <List 
           itemLayout="horizontal" 
           loading={isFetching} 
-          className="favorite-messages-list" 
+          className="favorite-messages-list messages" 
           split={true} 
           bordered={false}
           size={"small"} 

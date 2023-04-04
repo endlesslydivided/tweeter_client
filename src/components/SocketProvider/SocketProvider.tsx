@@ -69,7 +69,6 @@ export const SocketProvider:React.FC<SocketProviderProps> = ({auth,children}) =>
                     path: '/chat',
                     withCredentials: true,
                     auth,
-                    forceNewConnection: true
                 }));
         }
         else
@@ -81,6 +80,8 @@ export const SocketProvider:React.FC<SocketProviderProps> = ({auth,children}) =>
             socket.on(ChatClientEvent.SERVER_SENDS_DELETED_MESSAGES, (message: any) => {
                 dispatch(deleteMessages({messagesIds:message.messagesIds,dialogId:message.dialogId}));
             });
+
+
 
             socket.on(ChatClientEvent.SERVER_SENDS_TWEET,async (data: any) => {
                 const {message, dialogId,user} = data;

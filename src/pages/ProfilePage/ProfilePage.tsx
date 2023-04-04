@@ -117,7 +117,7 @@ const ProfilePage = () => {
         <Modal
             destroyOnClose={true}
             className="modal"
-            title={`You follows`}
+            title={`You follow`}
             centered
             onCancel={() => setIsFollowingsOpen(false)}
             open={isFollowingsOpen}

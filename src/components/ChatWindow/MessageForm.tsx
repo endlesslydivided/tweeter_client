@@ -1,4 +1,4 @@
-import { PictureOutlined, SendOutlined } from '@ant-design/icons';
+import { FileTwoTone, SendOutlined } from '@ant-design/icons';
 import { Button, Col, Input, notification, Row, Tooltip, Upload, UploadProps } from 'antd';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -25,35 +25,46 @@ const MessageForm:React.FC<MessageFormProps> = ({dialog}) => {
 
     const socket:any = useContext(SocketContext);
     const user = useAppSelector((state:any) => state.auth.user);
-    const [messageContent,setMessageContent]:any = useState(initialMessage)
-    const [keys,setKeys]:any = useState([]);
+
     const {id}:any = useParams();
 
     const [files, setFiles] : any = useState([]);
-
+    const [messageContent,setMessageContent]:any = useState(initialMessage)
+ 
     const sendMessage =  () =>
     {
 
-        const formData = new FormData();
-        files.forEach((file:any) => {
-            formData.append('files', file, file.name);
+        const sentFiles = files.map((file:any) =>
+        {
+            return {...file,originalname:file.file.name};
         })
 
-        formData.append('text', messageContent.text);
-
-        socket.emit(ChatServerEvent.CLIENT_SEND_MESSAGE,
+        try
         {
-            dto:
-            {
-                dialogId:id,
-                text: messageContent.text,
-                userId:user.id,
-            },
-            toUserId:dialog?.users[0]?.id,
-            fromUserId:user.id,
-            auth:{id:user.id},
-        });
-        setMessageContent(initialMessage)
+            socket.emit(ChatServerEvent.CLIENT_SEND_MESSAGE,
+                {
+                    dto:
+                    {
+                        dialogId:id,
+                        text: messageContent.text,
+                        userId:user.id,
+                    },
+                    files:sentFiles,
+                    toUserId:dialog?.users[0]?.id,
+                    fromUserId:user.id,
+                    auth:{id:user.id},
+                },(response:any) =>
+                {
+                    console.log(response)
+                });
+        }
+        catch(error:any)
+        {
+            console.log(error);
+        }
+        
+        setMessageContent(initialMessage);
+        setFiles([]);
     }
 
     const props: UploadProps = {
@@ -76,68 +87,20 @@ const MessageForm:React.FC<MessageFormProps> = ({dialog}) => {
             return false;
           },
 	};
-
-    const onPressEnterHandler = (e:any) =>
-    {
-        e.preventDefault();
-        if(messageContent.text.length !== 0)
-        {
-            sendMessage() 
-        }
-        if(keys.includes("Control") && e.key === "Enter"){
-            setKeys([])
-            setMessageContent((p:any) => {return {...p,text: p.text + '\n'}})
-        }
-    }
-
-    useEffect(() =>
-    {
-        window.addEventListener("keydown",
-            (e) =>
-            {
-                setKeys([...keys,e.key])
-            },
-        false);
-
-        window.addEventListener('keyup',
-            (e) => 
-            {
-                setKeys(keys.filter((k:any) => k !== e.key));
-            },
-        false);
-
-        return () =>
-        {
-            window.removeEventListener('keyup', (e) =>
-            {
-                setKeys([...keys,e.key])
-            },);
-            window.removeEventListener('keydown', (e) => 
-            {
-                setKeys(keys.filter((k:any) => k !== e.key));
-            },);
-        }
-    },[])
-										
-    
+								
     return(
         <Row style={{width:'100%'}} className="message-form-row">
             <Col span={24} style={{display:'flex'}} className="message-form-input-col">
-                <Input.TextArea 
-                    onPressEnter={(e:any) => onPressEnterHandler(e)}
-                    value={messageContent.text}
-                    onChange={(e:any) => setMessageContent((p:any) => {return {...p, text:e.target.value}})}
-                    autoSize={{minRows:2,maxRows:4}}  
-                    maxLength={2000} 
-                    className='message-form-textarea' 
-                    placeholder="Text a message..."
-                />
+               <MessageFormTextarea 
+                    messageContent={messageContent} 
+                    setMessageContent={setMessageContent} 
+                    sendMessage={sendMessage}/>
                 
                 <div className='message-form-tooltip-container'>
 
-                    <Tooltip  title="Add photo">
-                        <Upload {...props} fileList={files} accept="image/*">
-                            <Button type="link" shape='circle'  icon={<PictureOutlined />} />
+                    <Tooltip  title="Add fille">
+                        <Upload {...props} fileList={files} >
+                            <Button type="link" shape='circle'  icon={<FileTwoTone />} />
                         </Upload>
                     </Tooltip>
 
@@ -153,6 +116,69 @@ const MessageForm:React.FC<MessageFormProps> = ({dialog}) => {
          
             <div id={'lastElement'}></div>
         </Row>
+    )
+}
+
+const MessageFormTextarea = ({messageContent,setMessageContent,sendMessage}:any) =>
+{
+    const [keys,setKeys]:any = useState([]);
+    useEffect(() =>
+       {
+           window.addEventListener("keydown",
+               (e) =>
+               {
+                   setKeys([...keys,e.key])
+               },
+           false);
+   
+           window.addEventListener('keyup',
+               (e) => 
+               {
+                   setKeys(keys.filter((k:any) => k !== e.key));
+               },
+           false);
+   
+           return () =>
+           {
+               window.removeEventListener('keyup', (e) =>
+               {
+                   setKeys([...keys,e.key])
+               },);
+               window.removeEventListener('keydown', (e) => 
+               {
+                   setKeys(keys.filter((k:any) => k !== e.key));
+               },);
+           }
+       },[])
+
+    const onPressEnterHandler = (e:any) =>
+    {
+        e.preventDefault();
+        if(messageContent.text.length !== 0)
+        {
+            sendMessage() 
+        }
+        if(keys.includes("Control") && e.key === "Enter"){
+            setKeys([])
+            setMessageContent((p:any) => {return {...p,text: p.text + '\n'}})
+        }
+    }
+
+    const onInputChangeHandler =(e:any) =>
+    {
+        setMessageContent((p:any) => {return {...p, text:e.target.value}})
+    }
+
+    return(
+        <Input.TextArea 
+        onPressEnter={(e:any) => onPressEnterHandler(e)}
+        value={messageContent.text}
+        onInput={(e:any) => onInputChangeHandler(e)}
+        autoSize={{minRows:2,maxRows:4}}  
+        maxLength={2000} 
+        className='message-form-textarea' 
+        placeholder="Text a message..."
+    />
     )
 }
 

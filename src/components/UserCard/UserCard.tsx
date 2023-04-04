@@ -26,6 +26,9 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
         incrementFollowers:incrementFollowers()
     })
 
+    const xs = useMediaQuery('(max-width:576px)');
+    const buttonaAlign = useMediaQuery('(max-width:1132px)');
+
     const [createDialog, createDialogResult] = useCreateDialogMutation();
     const navigate = useNavigate();
     const onSendMessageHandler = async () =>
@@ -49,12 +52,16 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
     }
    
     const renderButtons = (item:any) => (
-    <Space direction="horizontal">
+    <Space style={
+        {
+            width:"100%",
+            justifyContent: buttonaAlign ? xs ? "center" : 'flex-start' : 'flex-end'
+        }} direction="horizontal">
         <Button 
             onClick={() => isSubscribed ? onDeleteClickHandler() : onCreateClickHandler()}
             type={isSubscribed ? "primary" : "default"} 
             icon={isSubscribed ? <CheckOutlined/> :<UserAddOutlined/>}>
-            Follow
+            {isSubscribed ? 'Unfollow' : 'Follow'}
         </Button>
         <Button icon={<MailFilled/>} onClick={() => onSendMessageHandler()} disabled={
             (!isSubscribed || item.isSubscribed.length === 0) && item.isFollower.length === 0
@@ -63,7 +70,6 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
     )
 
     const {id} = useParams();
-    const xs = useMediaQuery('(max-width:576px)');
 
     return(
         <Card 
@@ -84,7 +90,7 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
                 {
                     xs && <Col style={{height: '65px'}} xs={{span:24}}></Col>
                 }
-                <Col md={{span:18}} xs={{span:24}} className={`${!xs ? 'user-card-info-col': 'user-card-info-col-xs'}`}>
+                <Col md={{span:24}} xs={{span:24}} className={`${!xs ? 'user-card-info-col': 'user-card-info-col-xs'}`}>
                     <Row gutter={[20,5]} className={`${!xs ? 'user-card-info-row': 'user-card-info-row-xs'}`}>
                         <Col>
                             <Typography.Title level={4}>{`${userData?.firstname} ${userData?.surname}`}</Typography.Title>                             
@@ -94,7 +100,7 @@ const UserCard: React.FC<UserCardProps> = ({userData,setIsFollowingsOpen,setIsFo
                             {'   '}
                             <Typography.Text type="secondary" onClick={() => setIsFollowersOpen(true)}><Typography.Text>{userData?.counts?.followersCount}</Typography.Text> Followers</Typography.Text>
                         </Col>
-                        {id && <Col className={`${!xs ? 'user-card-buttons-col': 'user-card-buttons-col-xs'}`} >
+                        {id && <Col flex={1} className={`${!xs ? 'user-card-buttons-col': 'user-card-buttons-col-xs'}`} >
                             {renderButtons(userData)}
                         </Col>}
                         <Col span={18} xs={{span:24}}>

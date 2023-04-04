@@ -40,8 +40,8 @@ export const emptySavedListRender = () => (
 
 export const emptyPostListRender = () => (
   <div style={{ textAlign: 'center' }}>
-    <ContactsOutlined style={{ fontSize: 20 }} />
-    <p>No liked posts are found</p>
+    <ContactsOutlined style={{ fontSize: 40 }} />
+    <p>No posts are found</p>
   </div>
 );
 

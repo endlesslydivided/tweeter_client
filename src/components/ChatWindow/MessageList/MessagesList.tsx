@@ -33,6 +33,8 @@ const MessagesList:React.FC<MessagesListProps> = ({filters,setFilters,setSelecte
     const isLoading:any = useAppSelector((state:any) => state.messages.isLoading);
     const user = useAppSelector((state:any) => state.auth.user);
 
+    
+
 
     const lastItemRef = useRef(null);
 
@@ -66,7 +68,8 @@ const MessagesList:React.FC<MessagesListProps> = ({filters,setFilters,setSelecte
     },[filters])
 
   return (
-    <>
+    <div className='messages-list-container'>
+
         <div ref={lastItemRef}></div>
         <Skeleton avatar paragraph={{rows:2}} loading={isLoading}/>
         <List size='small' itemLayout='horizontal' className="messages" dataSource={messages?.entries} split={false}        
@@ -75,7 +78,7 @@ const MessagesList:React.FC<MessagesListProps> = ({filters,setFilters,setSelecte
                 <MessageItem selectedMessages={selectedMessages} setSelectedMessages={setSelectedMessages} message={message} />
             )}      
         />
-    </>
+    </div>
   )
 }
 

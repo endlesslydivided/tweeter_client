@@ -78,6 +78,9 @@ const ChatWindow :React.FC<ChatWindowProps> = ({}) =>
         setSelectedMessages([]);
     }
 
+    const bodyHeight =  document?.querySelector("body")?.clientHeight || 0;
+    const messageListHeight =  document?.querySelector(".messages-list-container")?.clientHeight || 0;
+
 
     if(isLoading && !dialog && dialog.id !== id)
     {
@@ -129,7 +132,12 @@ const ChatWindow :React.FC<ChatWindowProps> = ({}) =>
                     </div>
                 </section>
 
-                <section className={`messages-list ${messages?.messages[dialog.id]?.count <= 7 ? 'messages-list-empty-hight' : ''}`}>
+                <section className={`messages-list `}>
+                
+
+                <div style={{color:'red',height:bodyHeight - messageListHeight}}></div>
+
+
                 <ConfigProvider renderEmpty={emptyMessagesListRender}>
                     <MessagesList selectedMessages={selectedMessages} setSelectedMessages={setSelectedMessages} filters={filters} setFilters={setFilters}/>
                 </ConfigProvider>

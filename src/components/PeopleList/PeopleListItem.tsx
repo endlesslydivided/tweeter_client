@@ -40,7 +40,7 @@ const PeopleListItem:React.FC<PeopleListItemProps> = ({entity,isFetching}) => {
                         onClick={() => isSubscribed ? onDeleteClickHandler() : onCreateClickHandler()}
                         type={isSubscribed ? "primary" : "default"} 
                         icon={isSubscribed ? <CheckOutlined/> :<UserAddOutlined/>}>
-                        Follow
+                        {isSubscribed ? 'Unfollow' : 'Follow'}
                     </Button>
                     <Button 
                         icon={<MailFilled/>} size={xs ? 'small': 'middle'}
